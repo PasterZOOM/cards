@@ -1,0 +1,9 @@
+.range {
+    width: 300px;
+}
+
+.value {
+    display: inline-block;
+    width: 25px;
+    text-align: center;
+}

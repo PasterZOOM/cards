@@ -1,0 +1,41 @@
+.default {
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    transition: 0.4s;
+}
+
+.default:hover {
+    box-shadow: 0 2px 5px black;
+    background: rgba(77, 182, 77, 0.66);
+}
+
+.default:active {
+    background: rgba(77, 182, 77, 0.99);
+    box-shadow: none;
+    transform: translateY(1px);
+}
+
+.default:disabled {
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, 0.20);
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.red {
+    border-radius: 3px;
+    background: rgba(255, 0, 0, 0.33);
+    transition: 0.4s;
+}
+
+.red:hover {
+    box-shadow: 0 2px 5px black;
+    background: rgba(255, 0, 0, 0.66);
+}
+
+.red:active {
+    background: rgba(255, 0, 0, 0.99);
+    box-shadow: 0 1px 2.5px black;
+    transform: translateY(1px);
+}
