@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 import {HashRouter} from 'react-router-dom'
-import {App} from './App'
 import {Provider} from 'react-redux/es/exports'
-import {store} from './bll/store'
+import {App, store} from 'app'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -22,3 +21,7 @@ root.render(
 )
 
 reportWebVitals()
+
+export * from './app'
+export * from './common'
+export * from './faetures'
