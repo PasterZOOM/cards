@@ -1,6 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import {PATH} from 'common/enums'
+import {PATH} from 'enums'
 
 export const Header = () => {
     return (

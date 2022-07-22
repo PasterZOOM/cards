@@ -1,6 +1,6 @@
 import React from 'react'
 import {Navigate, Route, Routes} from 'react-router-dom'
-import {PATH} from 'common/enums'
+import {PATH} from 'enums'
 import {Error404, Login, Profile, Registration} from 'faetures'
 
 

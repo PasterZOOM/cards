@@ -21,7 +21,3 @@ root.render(
 )
 
 reportWebVitals()
-
-export * from './app'
-export * from './common'
-export * from './faetures'

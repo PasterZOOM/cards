@@ -1,9 +1,10 @@
+import {ThemeReducerAT} from 'types'
+
 const initState = {
     value: 'white'
 }
 
 type InitialStateType = typeof initState
-export type ThemeReducerAT = ReturnType<typeof changeThemeAC>
 
 export const themeReducer = (state: InitialStateType = initState, action: ThemeReducerAT): InitialStateType => {
     switch (action.type) {

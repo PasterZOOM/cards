@@ -1,10 +1,10 @@
+import {LoadingReducerAT} from 'types'
+
 type InitStateType = typeof initState
 
 const initState = {
     isLoading: false
 }
-
-export type LoadingReducerAT = ReturnType<typeof loadingAC>
 
 export const loadingReducer = (state: InitStateType = initState, action: LoadingReducerAT): InitStateType => {
     switch (action.type) {
