@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-export const Registration = () => {
-    return (
-        <div>
-            <h1>REGISTRATION</h1>
-        </div>
-    )
-}
+export const Registration: React.FC = () => {
+  return (
+    <div>
+      <h1>REGISTRATION</h1>
+    </div>
+  );
+};

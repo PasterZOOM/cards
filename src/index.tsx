@@ -1,23 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import reportWebVitals from './reportWebVitals'
-import {HashRouter} from 'react-router-dom'
-import {Provider} from 'react-redux/es/exports'
-import {App, store} from 'app'
+import React from 'react';
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
-)
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import { Provider } from 'react-redux/es/exports';
+import { HashRouter } from 'react-router-dom';
+
+import reportWebVitals from './reportWebVitals';
+
+import { App, store } from 'app';
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-    <React.StrictMode>
-        <HashRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </HashRouter>
-    </React.StrictMode>
-)
+  <HashRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </HashRouter>,
+);
 
-reportWebVitals()
+reportWebVitals();

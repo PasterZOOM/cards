@@ -1,6 +1,6 @@
-import {changeThemeAC, loadingAC} from 'app'
+import { changeThemeAC, loadingAC } from 'app';
 
-export type ThemeReducerAT = ReturnType<typeof changeThemeAC>
-export type LoadingReducerAT = ReturnType<typeof loadingAC>
+export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
+export type LoadingReducerAT = ReturnType<typeof loadingAC>;
 
-export type AppActionsType = ThemeReducerAT | LoadingReducerAT
+export type AppActionsType = ThemeReducerAT | LoadingReducerAT;

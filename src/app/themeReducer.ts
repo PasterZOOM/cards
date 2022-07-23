@@ -1,19 +1,20 @@
-import {ThemeReducerAT} from 'types'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initState = {
-    value: 'white'
-}
+import { THEME } from 'enums';
 
-type InitialStateType = typeof initState
+const initialState = {
+  theme: THEME.LIGHT,
+};
 
-export const themeReducer = (state: InitialStateType = initState, action: ThemeReducerAT): InitialStateType => {
-    switch (action.type) {
-        case 'CHANGE-THEME': {
-            return {...state, value: action.value}
-        }
-        default:
-            return state
-    }
-}
+const slice = createSlice({
+  name: 'theme',
+  initialState,
+  reducers: {
+    changeThemeAC: (state, action: PayloadAction<{ theme: THEME }>) => {
+      state.theme = action.payload.theme;
+    },
+  },
+});
 
-export const changeThemeAC = (value: string) => ({type: 'CHANGE-THEME', value} as const)
+export const themeReducer = slice.reducer;
+export const { changeThemeAC } = slice.actions;

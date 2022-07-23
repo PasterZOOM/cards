@@ -1,1 +1,2 @@
-export {PATH} from './path'
+export { PATH } from './path';
+export { THEME } from './theme';

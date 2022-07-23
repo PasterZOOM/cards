@@ -1,14 +1,10 @@
-import {combineReducers} from 'redux'
-import {configureStore} from '@reduxjs/toolkit'
-import thunk from 'redux-thunk'
-import {loadingReducer, themeReducer} from 'app'
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 
-export const rootReducer = combineReducers({
-    loading: loadingReducer,
-    theme: themeReducer
-})
+export const rootReducer = combineReducers({});
 
 export const store = configureStore({
-    reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk),
-})
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk),
+});
