@@ -1,0 +1,1 @@
+export { minPasswordDigits } from './minPasswordDigits';

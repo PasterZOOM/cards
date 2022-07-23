@@ -2,14 +2,14 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { PATH } from 'enums';
+import { path } from 'enums';
 
 export const Header: React.FC = () => {
   return (
     <div>
-      <NavLink to={PATH.LOGIN}> Login </NavLink>
-      <NavLink to={PATH.REGISTRATION}> Registration </NavLink>
-      <NavLink to={PATH.PROFILE}> Profile </NavLink>
+      <NavLink to={path.LOGIN}> Login </NavLink>
+      <NavLink to={path.REGISTRATION}> Registration </NavLink>
+      <NavLink to={path.PROFILE}> Profile </NavLink>
       <NavLink to="/a"> ERROR_404 </NavLink>
     </div>
   );

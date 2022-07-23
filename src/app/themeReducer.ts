@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { THEME } from 'enums';
+import { theme } from 'enums';
 
 const initialState = {
-  theme: THEME.LIGHT,
+  theme: theme.LIGHT,
 };
 
 const slice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    changeThemeAC: (state, action: PayloadAction<{ theme: THEME }>) => {
+    changeThemeAC: (state, action: PayloadAction<{ theme: theme }>) => {
       state.theme = action.payload.theme;
     },
   },

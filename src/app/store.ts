@@ -2,7 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
-export const rootReducer = combineReducers({});
+import { appReducer } from './appReducer';
+
+import { registrationReducer } from 'faetures';
+
+export const rootReducer = combineReducers({
+  registration: registrationReducer,
+  app: appReducer,
+});
 
 export const store = configureStore({
   reducer: rootReducer,
