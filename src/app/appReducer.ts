@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
-import { requestStatus } from 'enums';
-import { AppThunkType } from 'types';
+import { requestStatus } from 'enums/requestStatus';
+import { AppThunkType } from 'types/AppRootStateTypes';
 
 const initialState = {
   status: requestStatus.IDLE,

@@ -7,7 +7,8 @@ import { HashRouter } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
 
-import { App, store } from 'app';
+import { App } from 'app/App';
+import { store } from 'app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

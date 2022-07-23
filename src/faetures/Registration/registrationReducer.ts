@@ -3,8 +3,9 @@ import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
 import { setAppErrorAC, setAppStatusAC } from 'app/appReducer';
-import { requestStatus } from 'enums';
-import { AppThunkType, RegisterParamsType } from 'types';
+import { requestStatus } from 'enums/requestStatus';
+import { AppThunkType } from 'types/AppRootStateTypes';
+import { RegisterParamsType } from 'types/RegistrationTypes';
 
 const initialState = {
   isRegistered: false,

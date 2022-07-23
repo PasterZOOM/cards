@@ -10,17 +10,19 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 import styles from './Registration.module.css';
 
-import { useAppDispatch } from 'common';
-import { minPasswordDigits } from 'const';
-import { path } from 'enums';
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { minPasswordDigits } from 'const/minPasswordDigits';
+import { path } from 'enums/path';
 import { createUser } from 'faetures/Registration/registrationReducer';
-import { RegistrationFormErrorType } from 'types';
+import { RegistrationFormErrorType } from 'types/RegistrationTypes';
 
 export const Registration: React.FC = () => {
+  const isRegistered = useAppSelector(state => state.registration.isRegistered);
+
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -54,6 +56,8 @@ export const Registration: React.FC = () => {
       registrationForm.resetForm();
     },
   });
+
+  if (isRegistered) return <Navigate to={path.PROFILE} />;
 
   return (
     <div className={styles.main}>

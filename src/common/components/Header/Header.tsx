@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { path } from 'enums';
+import { path } from 'enums/path';
 
 export const Header: React.FC = () => {
   return (

@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 
 import { appReducer } from './appReducer';
 
-import { registrationReducer } from 'faetures';
+import { registrationReducer } from 'faetures/Registration/registrationReducer';
 
 export const rootReducer = combineReducers({
   registration: registrationReducer,

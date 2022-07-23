@@ -2,8 +2,11 @@ import React from 'react';
 
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { path } from 'enums';
-import { Error404, Login, Profile, Registration } from 'faetures';
+import { path } from 'enums/path';
+import { Error404 } from 'faetures/Error404/Error404';
+import { Login } from 'faetures/Login/Login';
+import { Profile } from 'faetures/Profile/Profile';
+import { Registration } from 'faetures/Registration/Registration';
 
 export const Pages: React.FC = () => (
   <div>

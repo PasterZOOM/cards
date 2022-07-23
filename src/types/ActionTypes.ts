@@ -1,6 +1,7 @@
-import { changeThemeAC, loadingAC } from 'app';
 import { setAppErrorAC, setAppStatusAC, setIsInitializedAC } from 'app/appReducer';
-import { confirmRegistration } from 'faetures';
+import { loadingAC } from 'app/loadReducer';
+import { changeThemeAC } from 'app/themeReducer';
+import { confirmRegistration } from 'faetures/Registration/registrationReducer';
 
 export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
 
