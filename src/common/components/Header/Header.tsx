@@ -3,8 +3,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { path } from 'enums/path';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
-export const Header: React.FC = () => {
+export const Header = (): ReturnComponentType => {
   return (
     <div>
       <NavLink to={path.LOGIN}> Login </NavLink>

@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const Profile: React.FC = () => {
+import { ReturnComponentType } from 'types/ReturnComponentType';
+
+export const Profile = (): ReturnComponentType => {
   return (
     <div>
       <h1>PROFILE</h1>

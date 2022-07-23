@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const Login: React.FC = () => {
+import { ReturnComponentType } from 'types/ReturnComponentType';
+
+export const Login = (): ReturnComponentType => {
   return (
     <div>
       <h1>LOGIN</h1>

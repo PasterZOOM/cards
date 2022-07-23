@@ -7,8 +7,9 @@ import { Error404 } from 'faetures/Error404/Error404';
 import { Login } from 'faetures/Login/Login';
 import { Profile } from 'faetures/Profile/Profile';
 import { Registration } from 'faetures/Registration/Registration';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
-export const Pages: React.FC = () => (
+export const Pages = (): ReturnComponentType => (
   <div>
     <Routes>
       <Route path="/" element={<Navigate to={path.PROFILE} />} />

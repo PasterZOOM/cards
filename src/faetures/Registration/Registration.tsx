@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Grid, IconButton, InputAdornment } from '@mui/material';
+import { FormHelperText, Grid, IconButton, InputAdornment } from '@mui/material';
 import Button from '@mui/material/Button/Button';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
-import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
 
 import styles from './Registration.module.css';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
-import { minPasswordDigits } from 'const/minPasswordDigits';
+import { minPasswordDigits } from 'constants/minPasswordDigits';
 import { path } from 'enums/path';
 import { createUser } from 'faetures/Registration/registrationReducer';
 import { RegistrationFormErrorType } from 'types/RegistrationTypes';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
-export const Registration: React.FC = () => {
+export const Registration = (): ReturnComponentType => {
   const isRegistered = useAppSelector(state => state.registration.isRegistered);
 
   const dispatch = useAppDispatch();
@@ -67,17 +67,20 @@ export const Registration: React.FC = () => {
             <FormLabel>
               <h1>Sing Up</h1>
             </FormLabel>
-
             <form onSubmit={registrationForm.handleSubmit}>
               <FormGroup>
-                <TextField
-                  label="Email"
-                  variant="standard"
-                  margin="normal"
-                  {...registrationForm.getFieldProps('email')}
-                />
+                <FormControl variant="standard">
+                  <InputLabel>Email</InputLabel>
+                  <Input margin="dense" {...registrationForm.getFieldProps('email')} />
+                  {registrationForm.touched.email &&
+                    registrationForm.errors.email !== undefined && (
+                      <FormHelperText error>
+                        {registrationForm.errors.email}
+                      </FormHelperText>
+                    )}
+                </FormControl>
 
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                <FormControl variant="standard">
                   <InputLabel>Password</InputLabel>
                   <Input
                     type={showPassword ? 'text' : 'password'}
@@ -96,9 +99,15 @@ export const Registration: React.FC = () => {
                       </InputAdornment>
                     }
                   />
+                  {registrationForm.touched.password &&
+                    registrationForm.errors.password !== undefined && (
+                      <FormHelperText error>
+                        {registrationForm.errors.password}
+                      </FormHelperText>
+                    )}
                 </FormControl>
 
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                <FormControl variant="standard">
                   <InputLabel>Password</InputLabel>
                   <Input
                     type={showPassword ? 'text' : 'password'}
@@ -117,6 +126,12 @@ export const Registration: React.FC = () => {
                       </InputAdornment>
                     }
                   />
+                  {registrationForm.touched.confirmPassword &&
+                    registrationForm.errors.confirmPassword !== undefined && (
+                      <FormHelperText error>
+                        {registrationForm.errors.confirmPassword}
+                      </FormHelperText>
+                    )}
                 </FormControl>
 
                 <Button type="submit" variant="contained" color="primary">
@@ -124,7 +139,8 @@ export const Registration: React.FC = () => {
                 </Button>
               </FormGroup>
             </form>
-            <NavLink to={path.LOGIN}>Do you have an account?</NavLink>
+            Do you have an account?
+            <NavLink to={path.LOGIN}>Sign In</NavLink>
           </FormControl>
         </Grid>
       </Grid>
