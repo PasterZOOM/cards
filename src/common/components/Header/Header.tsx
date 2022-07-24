@@ -1,17 +1,37 @@
 import React from 'react';
 
+import Button from '@mui/material/Button/Button';
 import { NavLink } from 'react-router-dom';
 
+import styles from './Header.module.css';
+
+import logo from 'assets/images/logo.svg';
 import { path } from 'enums/path';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const Header = (): ReturnComponentType => {
   return (
     <div>
-      <NavLink to={path.LOGIN}> Login </NavLink>
-      <NavLink to={path.REGISTRATION}> Registration </NavLink>
-      <NavLink to={path.PROFILE}> Profile </NavLink>
-      <NavLink to="/a"> ERROR_404 </NavLink>
+      <div className={styles.main}>
+        <img src={logo} alt="logo" className={styles.logo} />
+        <Button variant="contained" color="primary" className={styles.button}>
+          Sign in
+        </Button>
+      </div>
+      <div className={styles.helper}>
+        <NavLink to={path.LOGIN} className={styles.helperItem}>
+          Login
+        </NavLink>
+        <NavLink to={path.REGISTRATION} className={styles.helperItem}>
+          Registration
+        </NavLink>
+        <NavLink to={path.PROFILE} className={styles.helperItem}>
+          Profile
+        </NavLink>
+        <NavLink to="/a" className={styles.helperItem}>
+          ERROR_404
+        </NavLink>
+      </div>
     </div>
   );
 };

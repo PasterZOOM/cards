@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
-import { setAppErrorAC, setAppStatusAC } from 'app/appReducer';
+import { setAppError, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
 import { AppThunkType } from 'types/AppRootStateTypes';
 
 const initialState = {
   isRegistered: false,
-  submitButtonActive: false,
+  registerButtonActive: false,
 };
 
 const slice = createSlice({
@@ -21,9 +21,9 @@ const slice = createSlice({
     },
     toggleSubmitButton: (
       state,
-      action: PayloadAction<{ submitButtonActive: boolean }>,
+      action: PayloadAction<{ registerButtonActive: boolean }>,
     ) => {
-      state.submitButtonActive = action.payload.submitButtonActive;
+      state.registerButtonActive = action.payload.registerButtonActive;
     },
   },
 });
@@ -35,23 +35,23 @@ export const createUser =
   (data: RegisterParamsType): AppThunkType =>
   async dispatch => {
     try {
-      dispatch(setAppStatusAC({ status: requestStatus.LOADING }));
-      dispatch(toggleSubmitButton({ submitButtonActive: false }));
+      dispatch(setAppStatus({ status: requestStatus.LOADING }));
+      dispatch(toggleSubmitButton({ registerButtonActive: false }));
       await cardsAPI.register(data);
       dispatch(confirmRegister({ isRegistered: true }));
-      dispatch(setAppStatusAC({ status: requestStatus.SUCCEEDED }));
+      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
-      dispatch(toggleSubmitButton({ submitButtonActive: true }));
+      dispatch(toggleSubmitButton({ registerButtonActive: true }));
       if (axios.isAxiosError(err)) {
         const error = err.response?.data ? err.response.data.error : err.message;
 
-        dispatch(setAppErrorAC({ error }));
-        dispatch(setAppStatusAC({ status: requestStatus.FAILED }));
+        dispatch(setAppError({ error }));
+        dispatch(setAppStatus({ status: requestStatus.FAILED }));
       } else {
-        dispatch(setAppErrorAC({ error: `Native error ${err.message}` }));
-        dispatch(setAppStatusAC({ status: requestStatus.FAILED }));
+        dispatch(setAppError({ error: `Native error ${err.message}` }));
+        dispatch(setAppStatus({ status: requestStatus.FAILED }));
       }
     }
   };
