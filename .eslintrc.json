@@ -88,7 +88,12 @@
                 ]
             }
         ],
-        "no-trailing-spaces": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
         "no-use-before-define": "off",
         "no-param-reassign": ["error", {
             "props": true,
