@@ -6,11 +6,11 @@
     },
     "extends": [
         "airbnb",
-        "prettier",
         "plugin:react/recommended",
         "plugin:import/recommended",
         "plugin:prettier/recommended",
-        "plugin:react-hooks/recommended"
+        "plugin:react-hooks/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -88,6 +88,7 @@
                 ]
             }
         ],
+        "no-trailing-spaces": "off",
         "no-use-before-define": "off",
         "no-param-reassign": ["error", {
             "props": true,

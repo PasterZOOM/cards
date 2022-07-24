@@ -17,7 +17,7 @@ export const EmailField: React.FC<PropsType> = ({ label, name }): ReturnComponen
   const [field, meta] = useField(name);
 
   return (
-    <FormControl variant="standard">
+    <FormControl fullWidth variant="standard">
       <InputLabel>{label}</InputLabel>
       <Input margin="dense" {...field} name={name} />
       {meta.touched && meta.error && <FormHelperText error>{meta.error}</FormHelperText>}

@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
     "@mui/styled-engine-sc": "^5.8.0",
+    "@mui/styles": "^5.9.1",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -40,7 +41,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "prepare": "husky install",
-    "lint-fix": "eslint --fix"
+    "lint-fix": "eslint --fix",
+    "lint": "eslint --debug src/",
+    "lint:write": "eslint --debug src/ --fix"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [

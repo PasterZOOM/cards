@@ -6,11 +6,21 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
   label: string;
+  disabled?: boolean;
 };
 
-export const SubmitButton: React.FC<PropsType> = ({ label }): ReturnComponentType => {
+export const SubmitButton: React.FC<PropsType> = ({
+  label,
+  disabled,
+}): ReturnComponentType => {
   return (
-    <Button type="submit" variant="contained" color="primary">
+    <Button
+      type="submit"
+      variant="contained"
+      color="primary"
+      fullWidth
+      disabled={disabled}
+    >
       {label}
     </Button>
   );

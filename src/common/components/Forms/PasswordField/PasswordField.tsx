@@ -26,7 +26,7 @@ export const PasswordField: React.FC<PropsType> = ({
   };
 
   return (
-    <FormControl variant="standard">
+    <FormControl variant="standard" fullWidth>
       <InputLabel>{label}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}

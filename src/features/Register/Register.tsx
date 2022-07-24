@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { FormGroup, Grid } from '@mui/material';
-import FormLabel from '@mui/material/FormLabel';
+import { FormGroup } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
+
+import styles from './Register.module.css';
 
 import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
@@ -23,7 +24,6 @@ const registerInitialValues = {
 
 export const Register = (): ReturnComponentType => {
   const isRegistered = useAppSelector(state => state.register.isRegistered);
-
   const dispatch = useAppDispatch();
 
   const submitRegisterForm = (values: RegisterFormErrorType): void => {
@@ -34,48 +34,40 @@ export const Register = (): ReturnComponentType => {
   if (isRegistered) return <Navigate to={path.PROFILE} />;
 
   return (
-    <Grid
-      style={{
-        position: 'absolute',
-        top: '120px',
-        width: '413px',
-        height: '528px',
-        left: '50%',
-        marginLeft: '-207px',
-        boxShadow: '1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1)',
-        borderRadius: '2px',
-        padding: '35px 33px 42px',
-      }}
-      container
-      direction="column"
-      justifyContent="space-around"
-      alignItems="center"
-    >
-      <Grid item>
-        <FormLabel>
-          <h1>Sing Up</h1>
-        </FormLabel>
-      </Grid>
-      <Grid item>
-        <Formik
-          initialValues={registerInitialValues}
-          validate={validateRegisterForm}
-          onSubmit={submitRegisterForm}
-        >
-          <Form>
-            <FormGroup>
-              <EmailField name="email" label="Email" />
-              <PasswordField name="password" label="Password" />
-              <PasswordField name="confirmPassword" label="Confirm Password" />
-              <SubmitButton label="Sing Up" />
-            </FormGroup>
-          </Form>
-        </Formik>
-      </Grid>
-      <Grid item>Do you have an account?</Grid>
-      <Grid item>
-        <NavLink to={path.LOGIN}>Sign In</NavLink>
-      </Grid>
-    </Grid>
+    <div className={styles.main}>
+      <h1>Sing Up</h1>
+      <Formik
+        initialValues={registerInitialValues}
+        validate={validateRegisterForm}
+        onSubmit={submitRegisterForm}
+        validateOnMount={false}
+      >
+        {formik => {
+          return (
+            <Form>
+              <FormGroup>
+                <div className={styles.field}>
+                  <EmailField name="email" label="Email" />
+                </div>
+                <div className={styles.field}>
+                  <PasswordField name="password" label="Password" />
+                </div>
+                <div className={styles.field}>
+                  <PasswordField name="confirmPassword" label="Confirm Password" />
+                </div>
+                <div className={styles.submitButton}>
+                  <SubmitButton
+                    label="Sing Up"
+                    disabled={!formik.isValid || formik.isSubmitting}
+                  />
+                </div>
+              </FormGroup>
+            </Form>
+          );
+        }}
+      </Formik>
+      <span>Do you have an account?</span>
+      <NavLink to={path.LOGIN}>Sign In</NavLink>
+    </div>
   );
 };
