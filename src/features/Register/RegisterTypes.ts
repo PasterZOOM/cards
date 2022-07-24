@@ -1,4 +1,4 @@
-export type RegistrationFormErrorType = {
+export type RegisterFormErrorType = {
   email?: string;
   password?: string;
   confirmPassword?: string;

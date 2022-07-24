@@ -1,11 +1,12 @@
 .main {
     position: absolute;
     top: 120px;
-    left: 50%;
-    margin-left: -207px;
-    width: 414px;
-    height: 528px;
+    /*left: 50%;
+    margin-left: -207px;*/
+    width: 348px;
+    height: 451px;
     text-align: center;
+    padding: 35px 33px 42px;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
 }

@@ -4,8 +4,8 @@ import axios, { AxiosError } from 'axios';
 import { cardsAPI } from 'api/api';
 import { setAppErrorAC, setAppStatusAC } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
+import { RegisterParamsType } from 'features/Register/RegisterTypes';
 import { AppThunkType } from 'types/AppRootStateTypes';
-import { RegisterParamsType } from 'types/RegistrationTypes';
 
 const initialState = {
   isRegistered: false,
@@ -15,14 +15,14 @@ const slice = createSlice({
   name: 'registration',
   initialState,
   reducers: {
-    confirmRegistration: (state, action: PayloadAction<{ isRegistered: boolean }>) => {
+    confirmRegister: (state, action: PayloadAction<{ isRegistered: boolean }>) => {
       state.isRegistered = action.payload.isRegistered;
     },
   },
 });
 
-export const registrationReducer = slice.reducer;
-export const { confirmRegistration } = slice.actions;
+export const registerReducer = slice.reducer;
+export const { confirmRegister } = slice.actions;
 
 export const createUser =
   (data: RegisterParamsType): AppThunkType =>
@@ -30,7 +30,7 @@ export const createUser =
     try {
       dispatch(setAppStatusAC({ status: requestStatus.LOADING }));
       await cardsAPI.register(data);
-      dispatch(confirmRegistration({ isRegistered: true }));
+      dispatch(confirmRegister({ isRegistered: true }));
       dispatch(setAppStatusAC({ status: requestStatus.SUCCEEDED }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
