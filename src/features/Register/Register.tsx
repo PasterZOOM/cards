@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
 import { FormRegister } from 'features/Register/FormRegister/FormRegister';
 import { createUser } from 'features/Register/registerReducer';
+import { getRegistered } from 'features/Register/registerSelectors';
 import { RegisterFormType } from 'features/Register/RegisterTypes';
 import { validateRegisterForm } from 'features/Register/validateRegisterForm';
 import { ReturnComponentType } from 'types/ReturnComponentType';
@@ -20,7 +21,7 @@ const registerInitialValues = {
 };
 
 export const Register = (): ReturnComponentType => {
-  const isRegistered = useAppSelector(state => state.register.isRegistered);
+  const isRegistered = useAppSelector(getRegistered);
   const dispatch = useAppDispatch();
 
   const submitRegisterForm = (values: RegisterFormType): void => {
@@ -42,7 +43,9 @@ export const Register = (): ReturnComponentType => {
         {formik => <FormRegister formik={formik} />}
       </Formik>
       <span>Do you have an account?</span>
-      <NavLink to={path.LOGIN}>Sign In</NavLink>
+      <NavLink to={path.LOGIN} className={styles.link}>
+        Sign In
+      </NavLink>
     </div>
   );
 };

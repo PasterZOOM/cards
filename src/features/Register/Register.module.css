@@ -33,4 +33,21 @@ h1 {
 span {
     display: block;
     margin: 0 0 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    opacity: 0.5;
+    color: #000000;
+}
+
+.link {
+    text-decoration-line: underline;
+    color: #366EFF;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
 }

@@ -10,6 +10,7 @@ import { PasswordField } from 'common/components/Forms/PasswordField/PasswordFie
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { toggleSubmitButton } from 'features/Register/registerReducer';
+import { getRegisterButtonActive } from 'features/Register/registerSelectors';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
@@ -17,13 +18,13 @@ type PropsType = {
 };
 export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, touched } = { ...formik };
-  const submitButtonActive = useAppSelector(state => state.register.submitButtonActive);
+  const registerButtonActive = useAppSelector(getRegisterButtonActive);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isValid && touched.email)
-      dispatch(toggleSubmitButton({ submitButtonActive: true }));
-    else dispatch(toggleSubmitButton({ submitButtonActive: false }));
+      dispatch(toggleSubmitButton({ registerButtonActive: true }));
+    else dispatch(toggleSubmitButton({ registerButtonActive: false }));
   }, [isValid, touched, dispatch]);
 
   return (
@@ -39,7 +40,7 @@ export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentTy
           <PasswordField name="confirmPassword" label="Confirm Password" />
         </div>
         <div className={styles.submitButton}>
-          <SubmitButton label="Sing Up" disabled={!submitButtonActive} />
+          <SubmitButton label="Sing Up" disabled={!registerButtonActive} />
         </div>
       </FormGroup>
     </Form>

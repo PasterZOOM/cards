@@ -1,4 +1,4 @@
-import { setAppErrorAC, setAppStatusAC, setIsInitializedAC } from 'app/appReducer';
+import { setAppError, setAppStatus, setIsInitialized } from 'app/appReducer';
 import { loadingAC } from 'app/loadReducer';
 import { changeThemeAC } from 'app/themeReducer';
 import { confirmRegister, toggleSubmitButton } from 'features/Register/registerReducer';
@@ -10,9 +10,9 @@ export type LoadingReducerAT = ReturnType<typeof loadingAC>;
 export type ConfirmRegisterType = ReturnType<typeof confirmRegister>;
 export type ToggleSubmitButtonType = ReturnType<typeof toggleSubmitButton>;
 
-export type SetAppStatusAT = ReturnType<typeof setAppStatusAC>;
-export type SetAppErrorAT = ReturnType<typeof setAppErrorAC>;
-export type SetIsInitializedAT = ReturnType<typeof setIsInitializedAC>;
+export type SetAppStatusAT = ReturnType<typeof setAppStatus>;
+export type SetAppErrorAT = ReturnType<typeof setAppError>;
+export type SetIsInitializedAT = ReturnType<typeof setIsInitialized>;
 
 export type AppActionsType =
   | ThemeReducerAT
