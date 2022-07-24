@@ -9,6 +9,7 @@ import { AppThunkType } from 'types/AppRootStateTypes';
 
 const initialState = {
   isRegistered: false,
+  submitButtonActive: false,
 };
 
 const slice = createSlice({
@@ -18,23 +19,31 @@ const slice = createSlice({
     confirmRegister: (state, action: PayloadAction<{ isRegistered: boolean }>) => {
       state.isRegistered = action.payload.isRegistered;
     },
+    toggleSubmitButton: (
+      state,
+      action: PayloadAction<{ submitButtonActive: boolean }>,
+    ) => {
+      state.submitButtonActive = action.payload.submitButtonActive;
+    },
   },
 });
 
 export const registerReducer = slice.reducer;
-export const { confirmRegister } = slice.actions;
+export const { confirmRegister, toggleSubmitButton } = slice.actions;
 
 export const createUser =
   (data: RegisterParamsType): AppThunkType =>
   async dispatch => {
     try {
       dispatch(setAppStatusAC({ status: requestStatus.LOADING }));
+      dispatch(toggleSubmitButton({ submitButtonActive: false }));
       await cardsAPI.register(data);
       dispatch(confirmRegister({ isRegistered: true }));
       dispatch(setAppStatusAC({ status: requestStatus.SUCCEEDED }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
+      dispatch(toggleSubmitButton({ submitButtonActive: true }));
       if (axios.isAxiosError(err)) {
         const error = err.response?.data ? err.response.data.error : err.message;
 
