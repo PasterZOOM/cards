@@ -1,4 +1,6 @@
-import { setAppError, setAppStatus, setIsInitialized } from 'app/appReducer';
+import { login } from '../features/Login/authReducer';
+
+import { setAppErrorAC, setAppStatusAC, setIsInitializedAC } from 'app/appReducer';
 import { loadingAC } from 'app/loadReducer';
 import { changeThemeAC } from 'app/themeReducer';
 import {
@@ -15,9 +17,10 @@ export type ConfirmRegisterType = ReturnType<typeof confirmRegister>;
 export type ToggleSubmitButtonType = ReturnType<typeof toggleSubmitButton>;
 export type ChangeDisabledFieldType = ReturnType<typeof changeDisabledField>;
 
-export type SetAppStatusAT = ReturnType<typeof setAppStatus>;
-export type SetAppErrorAT = ReturnType<typeof setAppError>;
-export type SetIsInitializedAT = ReturnType<typeof setIsInitialized>;
+export type SetAppStatusAT = ReturnType<typeof setAppStatusAC>;
+export type SetAppErrorAT = ReturnType<typeof setAppErrorAC>;
+export type SetIsInitializedAT = ReturnType<typeof setIsInitializedAC>;
+export type SetLogin = ReturnType<typeof login>;
 
 export type AppActionsType =
   | ThemeReducerAT
@@ -27,4 +30,5 @@ export type AppActionsType =
   | SetAppErrorAT
   | SetIsInitializedAT
   | ToggleSubmitButtonType
-  | ChangeDisabledFieldType;
+  | ChangeDisabledFieldType
+  | SetLogin;
