@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { ChangeUserNameType } from '../features/Profile/ProfileTypes';
+
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
 
 export const instance = axios.create({
@@ -13,5 +15,11 @@ export const cardsAPI = {
   },
   me() {
     return instance.post('auth/me', {});
+  },
+  changeUserName(data: ChangeUserNameType) {
+    return instance.put('auth/me', data);
+  },
+  logOut() {
+    return instance.delete('auth/me', {});
   },
 };

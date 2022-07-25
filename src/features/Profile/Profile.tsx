@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Avatar, Badge, Button, Card, Grid, Stack } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../common/hooks/hooks';
 
 import { EditableSpan } from './EditableSpan/EditableSpan';
 import { Camera } from './Icons/Camera';
 import { LogOut } from './Icons/LogOut';
 import s from './Profile.module.css';
+import { logOutTC, setUserTC } from './profileReducer';
 
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
@@ -37,6 +41,17 @@ const useStyles = makeStyles({
 
 export const Profile = (): ReturnComponentType => {
   const styles = useStyles();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const user = useAppSelector(state => state.profile.user);
+  const isInitialized = useAppSelector(state => state.app.isInitialized);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      return navigate('/login');
+    }
+    dispatch(setUserTC());
+  }, [dispatch, isInitialized, navigate]);
 
   return (
     <Grid container className={styles.container}>
@@ -53,11 +68,11 @@ export const Profile = (): ReturnComponentType => {
           </Badge>
         </Stack>
 
-        <EditableSpan />
+        <EditableSpan name={user.name} />
 
-        <div className={s.email}>j&johnson@gmail.com</div>
+        <div className={s.email}>{user.email}</div>
 
-        <Button className={s.button}>
+        <Button className={s.button} onClick={() => dispatch(logOutTC())}>
           <LogOut />
           Log out
         </Button>
