@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { FormHelperText } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText/FormHelperText';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
 import { useField } from 'formik';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { FormGroup } from '@mui/material';
+import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
 
 import styles from './FormRegister.module.css';
@@ -14,10 +14,11 @@ import {
   getDisabledField,
   getRegisterButtonActive,
 } from 'features/Register/registerSelectors';
+import { RegisterFormType } from 'features/Register/RegisterTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
-  formik: FormikProps<{ email: string; password: string; confirmPassword: string }>;
+  formik: FormikProps<RegisterFormType>;
 };
 export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, touched } = { ...formik };
