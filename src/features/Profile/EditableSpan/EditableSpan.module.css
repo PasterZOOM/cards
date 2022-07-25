@@ -1,0 +1,24 @@
+.container {
+    font-family: 'Montserrat', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    margin: 14px;
+    padding-left: 15px;
+}
+
+.container input {
+    width: 280px;
+    font-weight: 500;
+}
+
+.container .saveButton {
+    width: 52px;
+    height: 24px;
+    margin-right: 10px;
+    font-family: 'Montserrat', serif;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 24px;
+}

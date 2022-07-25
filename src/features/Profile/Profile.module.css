@@ -1,0 +1,35 @@
+.icoContainer span {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #808080;
+    color: white;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #FFFFFF;
+}
+
+.email {
+    font-family: 'Montserrat', serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    opacity: 0.5;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.button {
+    box-shadow: 0 5px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-radius: 30px !important;
+    background: #FCFCFC !important;
+    color: black !important;
+    width: 127px !important;
+    height: 36px !important;
+    text-transform: none !important;
+    font-family: 'Montserrat', serif !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    margin-bottom: 50px !important;
+}
