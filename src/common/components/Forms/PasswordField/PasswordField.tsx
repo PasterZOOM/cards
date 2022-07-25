@@ -13,12 +13,14 @@ type PropsType = {
   name: string;
   label: string;
   className?: string;
+  disabled?: boolean;
 };
 
 export const PasswordField: React.FC<PropsType> = ({
   label,
   name,
   className,
+  disabled,
 }): ReturnComponentType => {
   const [field, meta] = useField(name);
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +37,7 @@ export const PasswordField: React.FC<PropsType> = ({
         margin="dense"
         {...field}
         name={name}
+        disabled={disabled}
         endAdornment={
           <InputAdornment position="end">
             <IconButton

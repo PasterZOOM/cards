@@ -12,19 +12,21 @@ type PropsType = {
   name: string;
   label: string;
   className?: string;
+  disabled?: boolean;
 };
 
 export const EmailField: React.FC<PropsType> = ({
   label,
   name,
   className,
+  disabled,
 }): ReturnComponentType => {
   const [field, meta] = useField(name);
 
   return (
     <FormControl fullWidth variant="standard" className={className}>
       <InputLabel>{label}</InputLabel>
-      <Input margin="dense" {...field} name={name} />
+      <Input margin="dense" {...field} name={name} disabled={disabled} />
       {meta.touched && meta.error && <FormHelperText error>{meta.error}</FormHelperText>}
     </FormControl>
   );

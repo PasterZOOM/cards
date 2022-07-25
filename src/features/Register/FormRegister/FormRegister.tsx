@@ -10,7 +10,10 @@ import { PasswordField } from 'common/components/Forms/PasswordField/PasswordFie
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { toggleSubmitButton } from 'features/Register/registerReducer';
-import { getRegisterButtonActive } from 'features/Register/registerSelectors';
+import {
+  getDisabledField,
+  getRegisterButtonActive,
+} from 'features/Register/registerSelectors';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
@@ -18,8 +21,9 @@ type PropsType = {
 };
 export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, touched } = { ...formik };
-  const registerButtonActive = useAppSelector(getRegisterButtonActive);
   const dispatch = useAppDispatch();
+  const registerButtonActive = useAppSelector(getRegisterButtonActive);
+  const disabledField = useAppSelector(getDisabledField);
 
   useEffect(() => {
     if (isValid && touched.email)
@@ -30,14 +34,29 @@ export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentTy
   return (
     <Form>
       <FormGroup>
-        <EmailField name="email" label="Email" className={styles.field} />
-        <PasswordField name="password" label="Password" className={styles.field} />
-        <div className={styles.field}>
-          <PasswordField name="confirmPassword" label="Confirm Password" />
-        </div>
-        <div className={styles.submitButton}>
-          <SubmitButton label="Sing Up" disabled={!registerButtonActive} />
-        </div>
+        <EmailField
+          name="email"
+          label="Email"
+          className={styles.field}
+          disabled={disabledField}
+        />
+        <PasswordField
+          name="password"
+          label="Password"
+          className={styles.field}
+          disabled={disabledField}
+        />
+        <PasswordField
+          name="confirmPassword"
+          label="Confirm Password"
+          className={styles.field}
+          disabled={disabledField}
+        />
+        <SubmitButton
+          label="Sing Up"
+          disabled={!registerButtonActive}
+          className={styles.submitButton}
+        />
       </FormGroup>
     </Form>
   );
