@@ -17,7 +17,7 @@ export const Header = (): ReturnComponentType => {
       </NavLink>
       <NavLink to={path.LOGIN} className={styles.helperItem}>
         <Button variant="contained" color="primary" className={styles.button}>
-          Sign in
+          <span className={styles.buttonText}>Sign in</span>
         </Button>
       </NavLink>
     </div>
