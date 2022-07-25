@@ -9,16 +9,16 @@ import {
 } from 'features/Profile/profileReducer';
 import {
   changeDisabledField,
-  confirmRegister,
-  toggleSubmitButton,
+  changeRegisterStatus,
+  changeDisabledButton,
 } from 'features/Register/registerReducer';
 
 export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
 
 export type LoadingReducerAT = ReturnType<typeof loadingAC>;
 
-export type ConfirmRegisterType = ReturnType<typeof confirmRegister>;
-export type ToggleSubmitButtonType = ReturnType<typeof toggleSubmitButton>;
+export type ChangeRegisterStatusType = ReturnType<typeof changeRegisterStatus>;
+export type ToggleSubmitButtonType = ReturnType<typeof changeDisabledButton>;
 export type ChangeDisabledFieldType = ReturnType<typeof changeDisabledField>;
 
 export type SetAppStatusAT = ReturnType<typeof setAppStatus>;
@@ -32,7 +32,7 @@ export type clearUserDataAT = ReturnType<typeof clearUserDataAC>;
 export type AppActionsType =
   | ThemeReducerAT
   | LoadingReducerAT
-  | ConfirmRegisterType
+  | ChangeRegisterStatusType
   | SetAppStatusAT
   | SetAppErrorAT
   | SetIsInitializedAT

@@ -13,7 +13,7 @@ export const validateRegisterForm = (
   }
   if (!values.password) {
     errors.password = 'Required';
-  } else if (values.password.length < minPasswordDigits)
+  } else if (values.password.length <= minPasswordDigits)
     errors.password = `Password must be more than ${minPasswordDigits} digits`;
   if (!values.confirmPassword) {
     errors.confirmPassword = 'Required';
