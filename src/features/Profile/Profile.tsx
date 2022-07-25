@@ -2,12 +2,16 @@ import React from 'react';
 
 import { Avatar, Badge, Button, Card, Grid, Stack } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { Navigate } from 'react-router-dom';
 
 import { EditableSpan } from './EditableSpan/EditableSpan';
 import { Camera } from './Icons/Camera';
 import { LogOut } from './Icons/LogOut';
 import s from './Profile.module.css';
+import { logOutTC } from './profileReducer';
 
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { path } from 'enums/path';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 const useStyles = makeStyles({
@@ -37,6 +41,13 @@ const useStyles = makeStyles({
 
 export const Profile = (): ReturnComponentType => {
   const styles = useStyles();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.profile.user);
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
+
+  if (!isLoggedIn) {
+    return <Navigate to={path.LOGIN} />;
+  }
 
   return (
     <Grid container className={styles.container}>
@@ -53,11 +64,11 @@ export const Profile = (): ReturnComponentType => {
           </Badge>
         </Stack>
 
-        <EditableSpan />
+        <EditableSpan name={user.name} />
 
-        <div className={s.email}>j&johnson@gmail.com</div>
+        <div className={s.email}>{user.email}</div>
 
-        <Button className={s.button}>
+        <Button className={s.button} onClick={() => dispatch(logOutTC())}>
           <LogOut />
           Log out
         </Button>

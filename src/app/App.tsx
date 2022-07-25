@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
-import { initializeApp } from './appReducer';
-
+import { initializeApp } from 'app/appReducer';
 import { getInitialized } from 'app/appSelectors';
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import { Header } from 'common/components/Header/Header';
@@ -18,7 +17,7 @@ export const App = (): ReturnComponentType => {
 
   useEffect(() => {
     dispatch(initializeApp());
-  }, [dispatch]);
+  }, [dispatch, isInitialized]);
 
   if (!isInitialized) {
     return (

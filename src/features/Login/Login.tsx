@@ -6,15 +6,15 @@ import FormLabel from '@mui/material/FormLabel';
 import { useFormik } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
 
-import { SubmitButton } from '../../common/components/Forms/SubmitButton/SubmitButton';
-import { useAppDispatch, useAppSelector } from '../../common/hooks/hooks';
-import { path } from '../../enums/path';
-import { ReturnComponentType } from '../../types/ReturnComponentType';
-
 import { loginTC } from './authReducer';
 
+import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { path } from 'enums/path';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+
 export const Login = (): ReturnComponentType => {
-  const isInitialized = useAppSelector(state => state.app.isInitialized);
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
   const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
@@ -27,7 +27,7 @@ export const Login = (): ReturnComponentType => {
     },
   });
 
-  if (isInitialized) return <Navigate to={path.PROFILE} />;
+  if (isLoggedIn) return <Navigate to={path.PROFILE} />;
 
   return (
     <Grid

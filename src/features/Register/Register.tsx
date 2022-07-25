@@ -21,6 +21,7 @@ const registerInitialValues = {
 };
 
 export const Register = (): ReturnComponentType => {
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
   const isRegistered = useAppSelector(getRegistered);
   const dispatch = useAppDispatch();
 
@@ -29,7 +30,8 @@ export const Register = (): ReturnComponentType => {
       dispatch(createUser({ email: values.email, password: values.password }));
   };
 
-  if (isRegistered) return <Navigate to={path.PROFILE} />;
+  if (isLoggedIn) return <Navigate to={path.PROFILE} />;
+  if (isRegistered) return <Navigate to={path.LOGIN} />;
 
   return (
     <div className={styles.main}>

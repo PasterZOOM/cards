@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { cardsAPI } from '../../api/api';
-import { setAppStatusAC } from '../../app/appReducer';
-import { requestStatus } from '../../enums/requestStatus';
-import { AppThunkType } from '../../types/AppRootStateTypes';
-
 import { LoginFormType } from './loginTypes';
+
+import { cardsAPI } from 'api/api';
+import { setAppStatus } from 'app/appReducer';
+import { requestStatus } from 'enums/requestStatus';
+import { AppThunkType } from 'types/AppRootStateTypes';
 
 const initialState = {
   isLoggedIn: false,
@@ -27,12 +27,12 @@ export const { login } = slice.actions;
 export const loginTC =
   (data: LoginFormType): AppThunkType =>
   dispatch => {
-    dispatch(setAppStatusAC({ status: requestStatus.LOADING }));
+    dispatch(setAppStatus({ status: requestStatus.LOADING }));
     cardsAPI
       .login(data)
       .then(() => {
         dispatch(login({ isLoggedIn: true }));
-        dispatch(setAppStatusAC({ status: requestStatus.SUCCEEDED }));
+        dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       })
       .catch(() => {});
   };

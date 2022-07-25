@@ -34,7 +34,7 @@ export const { setAppStatus, setAppError, setIsInitialized } = slice.actions;
 export const initializeApp = (): AppThunkType => async dispatch => {
   try {
     dispatch(setAppStatus({ status: requestStatus.LOADING }));
-    await cardsAPI.me;
+    await cardsAPI.me();
 
     dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     dispatch(setIsInitialized({ isInitialized: true }));
