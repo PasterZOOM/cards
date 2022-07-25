@@ -9,6 +9,7 @@ import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import { Header } from 'common/components/Header/Header';
 import { Pages } from 'common/components/Pages/Pages';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { Helper } from 'features/Helper/Helper';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const App = (): ReturnComponentType => {
@@ -32,6 +33,7 @@ export const App = (): ReturnComponentType => {
       <ErrorSnackbar />
       <Header />
       <Pages />
+      <Helper />
     </div>
   );
 };

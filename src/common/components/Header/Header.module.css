@@ -13,12 +13,3 @@
     float: right;
     margin: 12px 136px 0 0 !important;
 }
-
-.helper {
-    position: absolute;
-    bottom: 20px;
-}
-
-.helperItem {
-    margin: 10px;
-}
