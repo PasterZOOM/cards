@@ -13,10 +13,14 @@ export const Header = (): ReturnComponentType => {
   return (
     <div>
       <div className={styles.main}>
-        <img src={logo} alt="logo" className={styles.logo} />
-        <Button variant="contained" color="primary" className={styles.button}>
-          Sign in
-        </Button>
+        <NavLink to={path.PROFILE} className={styles.helperItem}>
+          <img src={logo} alt="logo" className={styles.logo} />
+        </NavLink>
+        <NavLink to={path.LOGIN} className={styles.helperItem}>
+          <Button variant="contained" color="primary" className={styles.button}>
+            Sign in
+          </Button>
+        </NavLink>
       </div>
       <div className={styles.helper}>
         <NavLink to={path.LOGIN} className={styles.helperItem}>

@@ -11,13 +11,18 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 type PropsType = {
   name: string;
   label: string;
+  className?: string;
 };
 
-export const EmailField: React.FC<PropsType> = ({ label, name }): ReturnComponentType => {
+export const EmailField: React.FC<PropsType> = ({
+  label,
+  name,
+  className,
+}): ReturnComponentType => {
   const [field, meta] = useField(name);
 
   return (
-    <FormControl fullWidth variant="standard">
+    <FormControl fullWidth variant="standard" className={className}>
       <InputLabel>{label}</InputLabel>
       <Input margin="dense" {...field} name={name} />
       {meta.touched && meta.error && <FormHelperText error>{meta.error}</FormHelperText>}

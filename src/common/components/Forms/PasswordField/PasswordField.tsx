@@ -12,11 +12,13 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 type PropsType = {
   name: string;
   label: string;
+  className?: string;
 };
 
 export const PasswordField: React.FC<PropsType> = ({
   label,
   name,
+  className,
 }): ReturnComponentType => {
   const [field, meta] = useField(name);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +28,7 @@ export const PasswordField: React.FC<PropsType> = ({
   };
 
   return (
-    <FormControl variant="standard" fullWidth>
+    <FormControl variant="standard" fullWidth className={className}>
       <InputLabel>{label}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}

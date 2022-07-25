@@ -30,12 +30,8 @@ export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentTy
   return (
     <Form>
       <FormGroup>
-        <div className={styles.field}>
-          <EmailField name="email" label="Email" />
-        </div>
-        <div className={styles.field}>
-          <PasswordField name="password" label="Password" />
-        </div>
+        <EmailField name="email" label="Email" className={styles.field} />
+        <PasswordField name="password" label="Password" className={styles.field} />
         <div className={styles.field}>
           <PasswordField name="confirmPassword" label="Confirm Password" />
         </div>

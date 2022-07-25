@@ -33,7 +33,7 @@ export const Register = (): ReturnComponentType => {
 
   return (
     <div className={styles.main}>
-      <h1>Sing Up</h1>
+      <h1 className={styles.title}>Sing Up</h1>
       <Formik
         initialValues={registerInitialValues}
         validate={validateRegisterForm}
@@ -42,7 +42,7 @@ export const Register = (): ReturnComponentType => {
       >
         {formik => <FormRegister formik={formik} />}
       </Formik>
-      <span>Do you have an account?</span>
+      <span className={styles.span}>Do you have an account?</span>
       <NavLink to={path.LOGIN} className={styles.link}>
         Sign In
       </NavLink>

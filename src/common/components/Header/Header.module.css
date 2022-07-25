@@ -11,9 +11,8 @@
 
 .button {
     float: right;
-    margin: 12px 136px 0 0;
+    margin: 12px 136px 0 0 !important;
 }
-
 
 .helper {
     position: absolute;
