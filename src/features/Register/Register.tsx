@@ -8,10 +8,9 @@ import styles from './Register.module.css';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
 import { FormRegister } from 'features/Register/FormRegister/FormRegister';
+import { validateRegisterForm } from 'features/Register/FormRegister/validateRegisterForm';
 import { createUser } from 'features/Register/registerReducer';
-import { getRegistered } from 'features/Register/registerSelectors';
 import { RegisterFormType } from 'features/Register/RegisterTypes';
-import { validateRegisterForm } from 'features/Register/validateRegisterForm';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 const registerInitialValues = {
@@ -22,7 +21,6 @@ const registerInitialValues = {
 
 export const Register = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
-  const isRegistered = useAppSelector(getRegistered);
   const dispatch = useAppDispatch();
 
   const submitRegisterForm = (values: RegisterFormType): void => {
@@ -31,7 +29,6 @@ export const Register = (): ReturnComponentType => {
   };
 
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;
-  if (isRegistered) return <Navigate to={path.LOGIN} />;
 
   return (
     <div className={styles.main}>

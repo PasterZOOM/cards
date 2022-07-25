@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Checkbox, FormControlLabel, FormGroup, Grid, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
@@ -11,7 +11,6 @@ import { loginTC } from './authReducer';
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
-import { changeRegisterStatus } from 'features/Register/registerReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const Login = (): ReturnComponentType => {
@@ -27,10 +26,6 @@ export const Login = (): ReturnComponentType => {
       dispatch(loginTC(values));
     },
   });
-
-  useEffect(() => {
-    dispatch(changeRegisterStatus({ isRegistered: false }));
-  }, [dispatch]);
 
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;
 

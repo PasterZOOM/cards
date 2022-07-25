@@ -9,7 +9,6 @@ import {
 } from 'features/Profile/profileReducer';
 import {
   changeDisabledField,
-  changeRegisterStatus,
   changeDisabledButton,
 } from 'features/Register/registerReducer';
 
@@ -17,7 +16,6 @@ export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
 
 export type LoadingReducerAT = ReturnType<typeof loadingAC>;
 
-export type ChangeRegisterStatusType = ReturnType<typeof changeRegisterStatus>;
 export type ToggleSubmitButtonType = ReturnType<typeof changeDisabledButton>;
 export type ChangeDisabledFieldType = ReturnType<typeof changeDisabledField>;
 
@@ -32,7 +30,6 @@ export type clearUserDataAT = ReturnType<typeof clearUserDataAC>;
 export type AppActionsType =
   | ThemeReducerAT
   | LoadingReducerAT
-  | ChangeRegisterStatusType
   | SetAppStatusAT
   | SetAppErrorAT
   | SetIsInitializedAT
