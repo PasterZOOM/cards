@@ -10,7 +10,9 @@ import { loginTC } from './authReducer';
 
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { minPasswordDigits } from 'constants/minPasswordDigits';
 import { path } from 'enums/path';
+import { FormikErrorType } from 'features/Login/loginTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const Login = (): ReturnComponentType => {
@@ -21,6 +23,22 @@ export const Login = (): ReturnComponentType => {
       email: '',
       password: '',
       rememberMe: false,
+    },
+    validate: values => {
+      const errors: FormikErrorType = {};
+
+      if (!values.email) {
+        errors.email = 'Required';
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+      }
+      if (!values.password) {
+        errors.password = 'Required';
+      } else if (values.password.length < minPasswordDigits) {
+        errors.password = 'at least 8 characters';
+      }
+
+      return errors;
     },
     onSubmit: values => {
       dispatch(loginTC(values));
@@ -62,6 +80,9 @@ export const Login = (): ReturnComponentType => {
                 variant="standard"
                 {...formik.getFieldProps('email')}
               />
+              {formik.errors.email && formik.touched.email ? (
+                <div style={{ color: 'red' }}>{formik.errors.email}</div>
+              ) : null}
               <TextField
                 label="Password"
                 multiline
@@ -69,6 +90,9 @@ export const Login = (): ReturnComponentType => {
                 type="password"
                 {...formik.getFieldProps('password')}
               />
+              {formik.errors.password && formik.touched.password ? (
+                <div style={{ color: 'red' }}>{formik.errors.password}</div>
+              ) : null}
               <FormControlLabel
                 label="Remember me"
                 control={

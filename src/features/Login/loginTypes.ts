@@ -3,3 +3,8 @@ export type LoginFormType = {
   password: string;
   rememberMe: boolean;
 };
+export type FormikErrorType = {
+  email?: string;
+  password?: string;
+  rememberMe?: boolean;
+};

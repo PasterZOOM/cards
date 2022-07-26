@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { LoginFormType } from 'features/Login/loginTypes';
-import { ChangeUserNameType } from 'features/Profile/ProfileTypes';
+import { ChangeUserNameType, UserType } from 'features/Profile/ProfileTypes';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
 
 export const instance = axios.create({
@@ -17,7 +17,10 @@ export const cardsAPI = {
     return instance.post('auth/me', {});
   },
   login(data: LoginFormType) {
-    return instance.post('auth/login', data);
+    return instance.post<{ data: LoginFormType }, AxiosResponse<UserType>>(
+      'auth/login',
+      data,
+    );
   },
   changeUserName(data: ChangeUserNameType) {
     return instance.put('auth/me', data);

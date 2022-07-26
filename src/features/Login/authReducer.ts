@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 
 import { LoginFormType } from './loginTypes';
 
 import { cardsAPI } from 'api/api';
-import { setAppStatus } from 'app/appReducer';
+import { setAppError, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
+import { setUserDataAC } from 'features/Profile/profileReducer';
 import { AppThunkType } from 'types/AppRootStateTypes';
 
 const initialState = {
@@ -30,9 +32,20 @@ export const loginTC =
     dispatch(setAppStatus({ status: requestStatus.LOADING }));
     cardsAPI
       .login(data)
-      .then(() => {
+      .then(res => {
         dispatch(login({ isLoggedIn: true }));
+        dispatch(setUserDataAC({ user: res.data }));
         dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       })
-      .catch(() => {});
+      .catch(error => {
+        const err = error as Error | AxiosError<{ error: string }>;
+
+        if (axios.isAxiosError(err)) {
+          const error = err.response?.data ? err.response.data.error : err.message;
+
+          dispatch(setAppError({ error }));
+        } else {
+          dispatch(setAppError({ error: `Native error ${err.message}` }));
+        }
+      });
   };

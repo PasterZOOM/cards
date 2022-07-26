@@ -19,3 +19,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk),
 });
+
+// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
+// @ts-ignore
+window.store = store;
