@@ -1,5 +1,5 @@
 .main {
-    position: fixed;
+    position: absolute;
     height: 60px;
     width: 100%;
     background: #FCFCFC;

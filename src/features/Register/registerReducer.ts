@@ -43,14 +43,13 @@ export const createUser =
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
+      dispatch(setAppStatus({ status: requestStatus.FAILED }));
       if (axios.isAxiosError(err)) {
         const error = err.response?.data ? err.response.data.error : err.message;
 
         dispatch(setAppError({ error }));
-        dispatch(setAppStatus({ status: requestStatus.FAILED }));
       } else {
         dispatch(setAppError({ error: `Native error ${err.message}` }));
-        dispatch(setAppStatus({ status: requestStatus.FAILED }));
       }
     } finally {
       dispatch(changeDisabledButton({ disabledButton: false }));
