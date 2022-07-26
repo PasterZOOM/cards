@@ -19,9 +19,7 @@ export const Header = (): ReturnComponentType => {
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <NavLink to={path.LOGIN}>
-              <Button aria-controls="menu-appbar" aria-haspopup="true">
-                <img src={logo} alt="logo" className={styles.logo} />
-              </Button>
+              <img src={logo} alt="logo" className={styles.logo} />
             </NavLink>
           </Grid>
           <Grid item>
