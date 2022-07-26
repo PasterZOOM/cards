@@ -3,39 +3,49 @@ import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
 import { setAppError, setAppStatus } from 'app/appReducer';
+import { buttonStatus } from 'enums/buttonStatus';
+import { fieldStatus } from 'enums/fieldStatus';
 import { requestStatus } from 'enums/requestStatus';
 import { loginTC } from 'features/Login/authReducer';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
 import { AppThunkType } from 'types/AppRootStateTypes';
 
 const initialState = {
-  disabledButton: false,
-  disabledField: false,
+  registerButtonStatus: buttonStatus.DISABLED,
+  registerFieldsStatus: fieldStatus.ACTIVE,
 };
 
 const slice = createSlice({
   name: 'registration',
   initialState,
   reducers: {
-    changeDisabledButton: (state, action: PayloadAction<{ disabledButton: boolean }>) => {
-      state.disabledButton = action.payload.disabledButton;
+    changeRegisterButtonStatus: (
+      state,
+      action: PayloadAction<{ registerButtonStatus: buttonStatus }>,
+    ) => {
+      state.registerButtonStatus = action.payload.registerButtonStatus;
     },
-    changeDisabledField: (state, action: PayloadAction<{ disabledField: boolean }>) => {
-      state.disabledField = action.payload.disabledField;
+    changeRegisterFieldStatus: (
+      state,
+      action: PayloadAction<{ registerFieldsStatus: fieldStatus }>,
+    ) => {
+      state.registerFieldsStatus = action.payload.registerFieldsStatus;
     },
   },
 });
 
 export const registerReducer = slice.reducer;
-export const { changeDisabledButton, changeDisabledField } = slice.actions;
+export const { changeRegisterButtonStatus, changeRegisterFieldStatus } = slice.actions;
 
 export const createUser =
   (data: RegisterParamsType): AppThunkType =>
   async dispatch => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      dispatch(changeDisabledButton({ disabledButton: true }));
-      dispatch(changeDisabledField({ disabledField: true }));
+      dispatch(
+        changeRegisterButtonStatus({ registerButtonStatus: buttonStatus.DISABLED }),
+      );
+      dispatch(changeRegisterFieldStatus({ registerFieldsStatus: fieldStatus.DISABLED }));
 
       await cardsAPI.register(data);
       dispatch(loginTC({ ...data, rememberMe: false }));
@@ -52,7 +62,7 @@ export const createUser =
         dispatch(setAppError({ error: `Native error ${err.message}` }));
       }
     } finally {
-      dispatch(changeDisabledButton({ disabledButton: false }));
-      dispatch(changeDisabledField({ disabledField: false }));
+      dispatch(changeRegisterButtonStatus({ registerButtonStatus: buttonStatus.ACTIVE }));
+      dispatch(changeRegisterFieldStatus({ registerFieldsStatus: fieldStatus.ACTIVE }));
     }
   };

@@ -44,7 +44,7 @@ export const Register = (): ReturnComponentType => {
       >
         {formik => <FormRegister formik={formik} />}
       </Formik>
-      <Typography className={styles.span}>Do you have an account?</Typography>
+      <Typography className={styles.question}>Do you have an account?</Typography>
       <NavLink to={path.LOGIN} className={styles.link}>
         Sign In
       </NavLink>

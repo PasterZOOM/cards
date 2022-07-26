@@ -1,23 +1,32 @@
 import { setAppError, setAppStatus, setIsInitialized } from 'app/appReducer';
 import { loadingAC } from 'app/loadReducer';
 import { changeThemeAC } from 'app/themeReducer';
+import {
+  changeForgotButtonStatus,
+  changeForgotFieldStatus,
+} from 'features/ForgotPassword/ForgotPassword/forgotReducer';
 import { login } from 'features/Login/authReducer';
 import {
+  clearUserDataAC,
   setUserDataAC,
   setUserNameAC,
-  clearUserDataAC,
 } from 'features/Profile/profileReducer';
 import {
-  changeDisabledField,
-  changeDisabledButton,
+  changeRegisterButtonStatus,
+  changeRegisterFieldStatus,
 } from 'features/Register/registerReducer';
 
 export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
 
 export type LoadingReducerAT = ReturnType<typeof loadingAC>;
 
-export type ToggleSubmitButtonType = ReturnType<typeof changeDisabledButton>;
-export type ChangeDisabledFieldType = ReturnType<typeof changeDisabledField>;
+export type ChangeRegisterButtonStatusType = ReturnType<
+  typeof changeRegisterButtonStatus
+>;
+export type ChangeRegisterFieldStatusType = ReturnType<typeof changeRegisterFieldStatus>;
+
+export type ChangeForgotButtonStatusType = ReturnType<typeof changeForgotButtonStatus>;
+export type ChangeForgotFieldStatusType = ReturnType<typeof changeForgotFieldStatus>;
 
 export type SetAppStatusAT = ReturnType<typeof setAppStatus>;
 export type SetAppErrorAT = ReturnType<typeof setAppError>;
@@ -33,9 +42,11 @@ export type AppActionsType =
   | SetAppStatusAT
   | SetAppErrorAT
   | SetIsInitializedAT
-  | ToggleSubmitButtonType
-  | ChangeDisabledFieldType
+  | ChangeRegisterButtonStatusType
+  | ChangeRegisterFieldStatusType
   | SetLoginAT
   | setUserAT
   | setUserNameAT
-  | clearUserDataAT;
+  | clearUserDataAT
+  | ChangeForgotButtonStatusType
+  | ChangeForgotFieldStatusType;

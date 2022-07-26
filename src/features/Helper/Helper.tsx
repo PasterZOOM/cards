@@ -19,6 +19,12 @@ export const Helper = (): ReturnComponentType => {
       <NavLink to={path.PROFILE} className={styles.helperItem}>
         Profile
       </NavLink>
+      <NavLink to={path.CHECK_EMAIL} className={styles.helperItem}>
+        CheckEmail
+      </NavLink>
+      <NavLink to={path.FORGOT_PASSWORD} className={styles.helperItem}>
+        ForgotPassword
+      </NavLink>
       <NavLink to="/a" className={styles.helperItem}>
         ERROR_404
       </NavLink>

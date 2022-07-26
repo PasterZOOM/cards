@@ -4,9 +4,9 @@
     left: 50%;
     margin-left: -207px;
     width: 348px;
-    height: 451px;
+    height: 325px;
     text-align: center;
-    padding: 35px 33px 42px;
+    padding: 35px 33px 48px;
 }
 
 .title {
@@ -16,14 +16,17 @@
     font-weight: 600 !important;
     font-size: 26px !important;
     line-height: 32px !important;
-    margin: 0 0 41px !important;
 }
 
-.question {
-    margin: 0 0 10px !important;
+.checkEmail {
+    margin: 30px 0 0;
+}
+
+.span {
+    margin: 30px 0 0 !important;
     font-family: 'Montserrat', sans-serif !important;
     font-style: normal !important;
-    font-weight: 600 !important;
+    font-weight: 400 !important;
     font-size: 14px !important;
     line-height: 24px !important;
     opacity: 0.5 !important;
@@ -31,9 +34,18 @@
 }
 
 .link {
+    text-decoration: none !important;
+}
+
+.button {
+    height: 36px !important;
+    border-radius: 30px !important;
     font-family: 'Montserrat', sans-serif !important;
     font-style: normal !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
     font-size: 16px !important;
-    line-height: 24px !important;
+    line-height: 20px !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    margin: 40px 0 0 !important;
 }

@@ -11,12 +11,13 @@ import InputLabel from '@mui/material/InputLabel/InputLabel';
 import { useField } from 'formik';
 
 import styles from 'assets/styles/FieldStyles.module.css';
+import { fieldStatus } from 'enums/fieldStatus';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
   name: string;
   label: string;
-  disabled?: boolean;
+  disabled?: fieldStatus;
 };
 
 export const PasswordField: React.FC<PropsType> = ({
@@ -39,7 +40,7 @@ export const PasswordField: React.FC<PropsType> = ({
         margin="dense"
         {...field}
         name={name}
-        disabled={disabled}
+        disabled={disabled === fieldStatus.DISABLED}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
