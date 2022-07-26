@@ -23,7 +23,11 @@ export const ErrorSnackbar = (): ReturnComponentType => {
   };
 
   return (
-    <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar
+      open={!!error && error !== 'you are not authorized /ᐠ-ꞈ-ᐟ\\'}
+      autoHideDuration={6000}
+      onClose={handleClose}
+    >
       <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
         {error}
       </Alert>

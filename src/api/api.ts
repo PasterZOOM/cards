@@ -13,19 +13,19 @@ export const cardsAPI = {
   register(data: RegisterParamsType) {
     return instance.post('auth/register', data);
   },
-  me() {
-    return instance.post('auth/me', {});
-  },
   login(data: LoginFormType) {
     return instance.post<{ data: LoginFormType }, AxiosResponse<UserType>>(
       'auth/login',
       data,
     );
   },
-  changeUserName(data: ChangeUserNameType) {
-    return instance.put('auth/me', data);
-  },
   logOut() {
     return instance.delete('auth/me', {});
+  },
+  me() {
+    return instance.post('auth/me', {});
+  },
+  changeUserName(data: ChangeUserNameType) {
+    return instance.put('auth/me', data);
   },
 };

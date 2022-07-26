@@ -8,7 +8,7 @@ import { AppThunkType } from 'types/AppRootStateTypes';
 const initialState = {
   status: requestStatus.IDLE,
   error: null as string | null,
-  isInitialized: true,
+  isInitialized: false,
 };
 
 const slice = createSlice({
@@ -42,6 +42,7 @@ export const initializeApp = (): AppThunkType => async dispatch => {
     const err = e as Error | AxiosError<{ error: string }>;
 
     dispatch(setIsInitialized({ isInitialized: true }));
+    dispatch(setAppStatus({ status: requestStatus.FAILED }));
     if (axios.isAxiosError(err)) {
       const error = err.response?.data ? err.response.data.error : err.message;
 
