@@ -44,8 +44,10 @@ export const loginTC =
           const error = err.response?.data ? err.response.data.error : err.message;
 
           dispatch(setAppError({ error }));
+          dispatch(setAppStatus({ status: requestStatus.FAILED }));
         } else {
           dispatch(setAppError({ error: `Native error ${err.message}` }));
+          dispatch(setAppStatus({ status: requestStatus.FAILED }));
         }
       });
   };
