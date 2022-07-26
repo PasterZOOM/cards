@@ -9,19 +9,18 @@ import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
 import { useField } from 'formik';
 
+import styles from 'assets/styles/FieldStyles.module.css';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
   name: string;
   label: string;
-  className?: string;
   disabled?: boolean;
 };
 
 export const PasswordField: React.FC<PropsType> = ({
   label,
   name,
-  className,
   disabled,
 }): ReturnComponentType => {
   const [field, meta] = useField(name);
@@ -32,7 +31,7 @@ export const PasswordField: React.FC<PropsType> = ({
   };
 
   return (
-    <FormControl variant="standard" fullWidth className={className}>
+    <FormControl variant="standard" fullWidth className={styles.field}>
       <InputLabel>{label}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Paper from '@mui/material/Paper/Paper';
+import Typography from '@mui/material/Typography/Typography';
 import { Formik } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
 
@@ -32,20 +34,20 @@ export const Register = (): ReturnComponentType => {
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;
 
   return (
-    <div className={styles.main}>
-      <h1 className={styles.title}>Sing Up</h1>
+    <Paper elevation={3} className={styles.main}>
+      <Typography className={styles.title}>Sing Up</Typography>
       <Formik
         initialValues={registerInitialValues}
-        validate={validateRegisterForm}
+        validationSchema={validateRegisterForm}
         onSubmit={submitRegisterForm}
         validateOnMount={false}
       >
         {formik => <FormRegister formik={formik} />}
       </Formik>
-      <span className={styles.span}>Do you have an account?</span>
-      <NavLink to={path.LOGIN}>
-        <span className={styles.link}>Sign In</span>
+      <Typography className={styles.span}>Do you have an account?</Typography>
+      <NavLink to={path.LOGIN} className={styles.link}>
+        Sign In
       </NavLink>
-    </div>
+    </Paper>
   );
 };

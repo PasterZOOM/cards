@@ -22,10 +22,11 @@ export const Header = (): ReturnComponentType => {
               <img src={logo} alt="logo" className={styles.logo} />
             </NavLink>
           </Grid>
+
           <Grid item>
             <NavLink to={path.LOGIN} className={styles.link}>
               <Button variant="contained" color="primary" className={styles.button}>
-                Sign in
+                Sign In
               </Button>
             </NavLink>
           </Grid>

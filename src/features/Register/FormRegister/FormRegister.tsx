@@ -3,8 +3,6 @@ import React, { useEffect } from 'react';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
 
-import styles from './FormRegister.module.css';
-
 import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
@@ -32,29 +30,14 @@ export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentTy
   return (
     <Form>
       <FormGroup>
-        <EmailField
-          name="email"
-          label="Email"
-          className={styles.field}
-          disabled={disabledField}
-        />
-        <PasswordField
-          name="password"
-          label="Password"
-          className={styles.field}
-          disabled={disabledField}
-        />
+        <EmailField name="email" label="Email" disabled={disabledField} />
+        <PasswordField name="password" label="Password" disabled={disabledField} />
         <PasswordField
           name="confirmPassword"
           label="Confirm Password"
-          className={styles.field}
           disabled={disabledField}
         />
-        <SubmitButton
-          label="Sing Up"
-          disabled={disabledButton}
-          className={styles.submitButton}
-        />
+        <SubmitButton label="Sing Up" disabled={disabledButton} />
       </FormGroup>
     </Form>
   );
