@@ -1,23 +1,23 @@
 .main {
-    position: absolute;
-    height: 60px;
-    width: 100%;
-    background: #FCFCFC;
-    box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: #FCFCFC !important;
 }
 
-.logo {
-    margin: 6px 0 0 136px;
+.toolbar {
+    padding: 0 136px !important;
+}
+
+.iconButton {
+    padding: 0 !important;
+}
+
+.link {
+    text-decoration: none !important;
 }
 
 .button {
-    float: right;
     height: 36px !important;
     width: 113px !important;
-    margin: 12px 136px 0 0 !important;
     border-radius: 30px !important;
-}
-.buttonText{
     font-family: 'Montserrat', sans-serif !important;
     font-style: normal !important;
     font-weight: 500 !important;
