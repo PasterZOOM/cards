@@ -1,1 +1,1 @@
-export const minPasswordDigits = 7;
+export const minPasswordDigits = 8;

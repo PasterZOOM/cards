@@ -4,8 +4,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { path } from 'enums/path';
 import { Error404 } from 'features/Error404/Error404';
-import { CheckEmail } from 'features/ForgotPassword/CheckEmail/CheckEmail';
-import { ForgotPassword } from 'features/ForgotPassword/ForgotPassword/ForgotPassword';
+import { CheckEmail } from 'features/Forgot/CheckEmail/CheckEmail';
+import { ForgotPassword } from 'features/Forgot/ForgotPassword/ForgotPassword';
 import { Login } from 'features/Login/Login';
 import { Profile } from 'features/Profile/Profile';
 import { Register } from 'features/Register/Register';

@@ -4,7 +4,7 @@ import { changeThemeAC } from 'app/themeReducer';
 import {
   changeForgotButtonStatus,
   changeForgotFieldStatus,
-} from 'features/ForgotPassword/ForgotPassword/forgotReducer';
+} from 'features/Forgot/ForgotPassword/forgotReducer';
 import { login } from 'features/Login/authReducer';
 import {
   clearUserDataAC,

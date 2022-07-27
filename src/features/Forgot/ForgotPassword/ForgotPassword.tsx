@@ -8,8 +8,8 @@ import { NavLink } from 'react-router-dom';
 import styles from './ForgotPassword.module.css';
 
 import { path } from 'enums/path';
-import { ForgotForm } from 'features/ForgotPassword/ForgotPassword/ForgotForm/ForgotForm';
-import { validateForgotForm } from 'features/ForgotPassword/ForgotPassword/ForgotForm/validateForgotForm';
+import { ForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/ForgotForm';
+import { validateForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/validateForgotForm';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const ForgotPassword = (): ReturnComponentType => {

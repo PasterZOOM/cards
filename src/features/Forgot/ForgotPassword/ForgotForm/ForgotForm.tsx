@@ -15,7 +15,7 @@ import { buttonStatus } from 'enums/buttonStatus';
 import {
   getForgotButtonStatus,
   getForgotFieldsStatus,
-} from 'features/ForgotPassword/ForgotPassword/forgotSelectors';
+} from 'features/Forgot/ForgotPassword/forgotSelectors';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {

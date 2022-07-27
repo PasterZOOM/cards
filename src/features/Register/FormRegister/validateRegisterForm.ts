@@ -5,7 +5,7 @@ import { minPasswordDigits } from 'constants/minPasswordDigits';
 export const validateRegisterForm = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Required'),
   password: Yup.string()
-    .min(minPasswordDigits + 1, `Password must be more than ${minPasswordDigits} digits`)
+    .min(minPasswordDigits, `Password must be more than ${minPasswordDigits - 1} digits`)
     .required('Required'),
   confirmPassword: Yup.string()
     .required('Required')
