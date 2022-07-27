@@ -20,7 +20,7 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 type PropsType = {
   formik: FormikProps<RegisterFormType>;
 };
-export const FormRegister: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
+export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, dirty } = { ...formik };
   const dispatch = useAppDispatch();
   const registerButtonStatus = useAppSelector(getRegisterButtonStatus);

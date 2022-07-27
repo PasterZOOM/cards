@@ -9,8 +9,8 @@ import styles from './Register.module.css';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
-import { FormRegister } from 'features/Register/FormRegister/FormRegister';
-import { validateRegisterForm } from 'features/Register/FormRegister/validateRegisterForm';
+import { RegisterForm } from 'features/Register/RegisterForm/RegisterForm';
+import { validateRegisterForm } from 'features/Register/RegisterForm/validateRegisterForm';
 import { createUser } from 'features/Register/registerReducer';
 import { RegisterFormType } from 'features/Register/RegisterTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
@@ -42,7 +42,7 @@ export const Register = (): ReturnComponentType => {
         onSubmit={submitRegisterForm}
         validateOnMount={false}
       >
-        {formik => <FormRegister formik={formik} />}
+        {formik => <RegisterForm formik={formik} />}
       </Formik>
       <Typography className={styles.question}>Do you have an account?</Typography>
       <NavLink to={path.LOGIN} className={styles.link}>
