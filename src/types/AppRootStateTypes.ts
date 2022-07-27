@@ -7,7 +7,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>;
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>;
 export type AppThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
-  AppRootStateType,
+  unknown,
   unknown,
   AppActionsType
 >;

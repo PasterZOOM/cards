@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 import { LoginFormType } from 'features/Login/loginTypes';
-import { ChangeUserNameType, UserType } from 'features/Profile/ProfileTypes';
+import { ChangeUserNameType } from 'features/Profile/ProfileTypes';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
 
 export const instance = axios.create({
@@ -11,7 +11,7 @@ export const instance = axios.create({
 
 export const cardsAPI = {
   register(data: RegisterParamsType) {
-    return instance.post('auth/register', data);
+    return instance.post<RegisterResponseType>('auth/register', data);
   },
   login(data: LoginFormType) {
     return instance.post<{ data: LoginFormType }, AxiosResponse<UserType>>(
@@ -20,12 +20,41 @@ export const cardsAPI = {
     );
   },
   logOut() {
-    return instance.delete('auth/me', {});
+    return instance.delete<LogOutResponseType>('auth/me', {});
   },
   me() {
-    return instance.post('auth/me', {});
+    return instance.post<UserType>('auth/me', {});
   },
   changeUserName(data: ChangeUserNameType) {
-    return instance.put('auth/me', data);
+    return instance.put<UpdatedUserType>('auth/me', data);
   },
+};
+export type NewUserType = {
+  _id: string;
+  email: string;
+  rememberMe: boolean;
+  isAdmin: boolean;
+  name: string;
+  verified: boolean;
+  publicCardPacksCount: number;
+  created: string;
+  updated: string;
+  __v: number;
+};
+export type UserType = NewUserType & {
+  token: string;
+  tokenDeathTime: number;
+  avatar: string | null;
+};
+
+export type RegisterResponseType = {
+  addedUser: NewUserType;
+};
+export type UpdatedUserType = {
+  updatedUser: UserType;
+  token: string;
+  tokenDeathTime: number;
+};
+export type LogOutResponseType = {
+  info: string;
 };

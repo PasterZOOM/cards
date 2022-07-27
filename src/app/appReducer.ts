@@ -1,19 +1,44 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
 import { requestStatus } from 'enums/requestStatus';
-import { AppThunkType } from 'types/AppRootStateTypes';
+import { login } from 'features/Login/authReducer';
+import { setUserDataAC } from 'features/Profile/profileReducer';
 
-const initialState = {
-  status: requestStatus.IDLE,
-  error: null as string | null,
-  isInitialized: false,
-};
+export const initializeApp = createAsyncThunk(
+  'app/initializeApp',
+  async (param, { dispatch }) => {
+    try {
+      dispatch(setAppStatus({ status: requestStatus.LOADING }));
+      const res = await cardsAPI.me();
+
+      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+      dispatch(setUserDataAC({ user: res.data }));
+      dispatch(login({ isLoggedIn: true }));
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>;
+
+      dispatch(setAppStatus({ status: requestStatus.FAILED }));
+      if (axios.isAxiosError(err)) {
+        const error = err.response?.data ? err.response.data.error : err.message;
+
+        dispatch(setAppError({ error }));
+
+        return;
+      }
+      dispatch(setAppError({ error: `Native error ${err.message}` }));
+    }
+  },
+);
 
 const slice = createSlice({
   name: 'app',
-  initialState,
+  initialState: {
+    status: requestStatus.IDLE,
+    error: null as string | null,
+    isInitialized: false,
+  },
   reducers: {
     setAppStatus(state, action: PayloadAction<{ status: requestStatus }>) {
       state.status = action.payload.status;
@@ -21,34 +46,13 @@ const slice = createSlice({
     setAppError(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error;
     },
-    setIsInitialized(state, action: PayloadAction<{ isInitialized: boolean }>) {
-      state.isInitialized = action.payload.isInitialized;
-    },
+  },
+  extraReducers: builder => {
+    builder.addCase(initializeApp.fulfilled, state => {
+      state.isInitialized = true;
+    });
   },
 });
 
 export const appReducer = slice.reducer;
-export const { setAppStatus, setAppError, setIsInitialized } = slice.actions;
-
-// thunks
-export const initializeApp = (): AppThunkType => async dispatch => {
-  try {
-    dispatch(setAppStatus({ status: requestStatus.LOADING }));
-    await cardsAPI.me();
-
-    dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-    dispatch(setIsInitialized({ isInitialized: true }));
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>;
-
-    dispatch(setIsInitialized({ isInitialized: true }));
-    dispatch(setAppStatus({ status: requestStatus.FAILED }));
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message;
-
-      dispatch(setAppError({ error }));
-    } else {
-      dispatch(setAppError({ error: `Native error ${err.message}` }));
-    }
-  }
-};
+export const { setAppStatus, setAppError } = slice.actions;

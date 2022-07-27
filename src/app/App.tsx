@@ -20,7 +20,7 @@ export const App = (): ReturnComponentType => {
 
   useEffect(() => {
     dispatch(initializeApp());
-  }, [dispatch, isInitialized]);
+  }, [dispatch]);
 
   if (!isInitialized) {
     return (
