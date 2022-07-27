@@ -6,6 +6,7 @@ import { path } from 'enums/path';
 import { Error404 } from 'features/Error404/Error404';
 import { CheckEmail } from 'features/Forgot/CheckEmail/CheckEmail';
 import { ForgotPassword } from 'features/Forgot/ForgotPassword/ForgotPassword';
+import { NewPassword } from 'features/Forgot/NewPassword/NewPassword';
 import { Login } from 'features/Login/Login';
 import { Profile } from 'features/Profile/Profile';
 import { Register } from 'features/Register/Register';
@@ -19,6 +20,7 @@ export const Pages = (): ReturnComponentType => (
       <Route path={path.REGISTRATION} element={<Register />} />
       <Route path={path.PROFILE} element={<Profile />} />
       <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
+      <Route path={path.CREATE_NEW_PASSWORD} element={<NewPassword />} />
       <Route path={path.CHECK_EMAIL} element={<CheckEmail />} />
       <Route path={'/*'} element={<Error404 />} />
     </Routes>

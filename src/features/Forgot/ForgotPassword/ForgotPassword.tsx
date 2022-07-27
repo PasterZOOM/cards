@@ -2,7 +2,7 @@ import React from 'react';
 
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { NavLink } from 'react-router-dom';
 
 import styles from './ForgotPassword.module.css';
@@ -10,10 +10,16 @@ import styles from './ForgotPassword.module.css';
 import { path } from 'enums/path';
 import { ForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/ForgotForm';
 import { validateForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/validateForgotForm';
+import { ForgotPasswordFormType } from 'features/Forgot/ForgotPassword/ForgotPasswordTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const ForgotPassword = (): ReturnComponentType => {
-  const submitRegisterForm = (): void => {};
+  const submitRegisterForm = async (
+    values: ForgotPasswordFormType,
+    formikHelpers: FormikHelpers<ForgotPasswordFormType>,
+  ): Promise<void> => {
+    formikHelpers.setSubmitting(false);
+  };
 
   return (
     <Paper elevation={3} className={styles.main}>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
 
 import styles from './Register.module.css';
@@ -25,10 +25,14 @@ export const Register = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
   const dispatch = useAppDispatch();
 
-  const submitRegisterForm = (values: RegisterFormType): void => {
+  const submitRegisterForm = async (
+    values: RegisterFormType,
+    formikHelpers: FormikHelpers<RegisterFormType>,
+  ): Promise<void> => {
     const { email, password } = { ...values };
 
-    dispatch(createUser({ email, password }));
+    await dispatch(createUser({ email, password }));
+    formikHelpers.setSubmitting(false);
   };
 
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;
@@ -44,7 +48,7 @@ export const Register = (): ReturnComponentType => {
       >
         {formik => <RegisterForm formik={formik} />}
       </Formik>
-      <Typography className={styles.question}>Do you have an account?</Typography>
+      <Typography className={styles.question}>Already have an account?</Typography>
       <NavLink to={path.LOGIN} className={styles.link}>
         Sign In
       </NavLink>

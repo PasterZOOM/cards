@@ -104,7 +104,7 @@ export const Login = (): ReturnComponentType => {
                 }
               />
 
-              <NavLink to={path.PROFILE}>Forgot password?</NavLink>
+              <NavLink to={path.FORGOT_PASSWORD}>Forgot password?</NavLink>
 
               <SubmitButton label="Sing In" />
             </FormGroup>
