@@ -9,7 +9,7 @@ import { RegisterParamsType } from 'features/Register/RegisterTypes';
 import { NewUserType } from 'types/ResponseType';
 
 export const createUser = createAsyncThunk(
-  'registration/createUser',
+  'register/createUser',
   async (data: RegisterParamsType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
@@ -36,9 +36,14 @@ export const createUser = createAsyncThunk(
 );
 
 const slice = createSlice({
-  name: 'registration',
+  name: 'register',
   initialState: {} as NewUserType,
   reducers: {},
+  extraReducers: builder => {
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      return action.payload;
+    });
+  },
 });
 
 export const registerReducer = slice.reducer;

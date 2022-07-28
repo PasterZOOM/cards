@@ -1,5 +1,8 @@
 .main {
     background: #FCFCFC !important;
+    height: 60px !important;
+    display: flex;
+    justify-content: center;
 }
 
 .toolbar {

@@ -23,7 +23,7 @@ export const cardsAPI = {
     return instance.post<UserType>('auth/login', data);
   },
   logOut() {
-    return instance.delete<LogOutResponseType>('auth/me', {});
+    return instance.delete<LogOutResponseType>('auth/me');
   },
   me() {
     return instance.post<UserType>('auth/me', {});
