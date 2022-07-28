@@ -7,12 +7,12 @@ import InputLabel from '@mui/material/InputLabel/InputLabel';
 import { useFormik } from 'formik';
 
 import edit from '../Icons/edit.svg';
+import { updateUser } from '../profileReducer';
 
 import s from './EditableSpan.module.css';
 
 import { useAppDispatch } from 'common/hooks/hooks';
-import { maxNameLength } from 'constants/projectConstants';
-import { updateUser } from 'features/Profile/profileReducer';
+import { maxNameLength, minNameLength } from 'constants/projectConstants';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
@@ -28,11 +28,11 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
       const errors: { name?: string } = {};
 
       if (value.name.length > maxNameLength) {
-        errors.name = 'length incorrect';
+        errors.name = 'The length of the name is too long.';
       }
 
-      if (value.name === name) {
-        setEditMode(false);
+      if (value.name.length < minNameLength) {
+        errors.name = 'The length of the name is too short.';
       }
 
       return errors;
@@ -43,12 +43,18 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
     },
   });
 
+  const onEditMode = (): void => {
+    setEditMode(true);
+    formik.errors.name = '';
+    formik.values.name = name;
+  };
+
   useEffect(() => {
     if (editMode) {
       window.addEventListener('dblclick', () => setEditMode(false));
-    } else {
-      window.removeEventListener('dblclick', () => setEditMode(false));
     }
+
+    return window.removeEventListener('dblclick', () => setEditMode(false));
   }, [editMode]);
 
   return (
@@ -56,13 +62,17 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
       {!editMode ? (
         <Box component="span">
           {name}
-          <IconButton onClick={() => setEditMode(true)}>
+          <IconButton onClick={onEditMode}>
             <Box component="img" src={edit} alt="edit" />
           </IconButton>
         </Box>
       ) : (
         <FormControl variant="standard" component="form" onSubmit={formik.handleSubmit}>
-          <InputLabel>Nickname</InputLabel>
+          {!formik.errors.name ? (
+            <InputLabel>Nickname</InputLabel>
+          ) : (
+            <InputLabel color="error">{formik.errors.name}</InputLabel>
+          )}
           <Input
             name="name"
             autoFocus
@@ -70,7 +80,12 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
             onChange={formik.handleChange}
             endAdornment={
               <InputAdornment position="end">
-                <Button type="submit" variant="contained" className={s.saveButton}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  className={s.saveButton}
+                  disabled={!!formik.errors.name || formik.values.name === name}
+                >
                   save
                 </Button>
               </InputAdornment>
