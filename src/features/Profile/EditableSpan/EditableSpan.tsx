@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { IconButton, Input, InputAdornment } from '@mui/material';
+import { Box, IconButton, Input, InputAdornment } from '@mui/material';
 import Button from '@mui/material/Button/Button';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
+import { useFormik } from 'formik';
 
-import { Pencil } from '../Icons/Pencil';
+import edit from '../Icons/edit.svg';
 
 import s from './EditableSpan.module.css';
 
 import { useAppDispatch } from 'common/hooks/hooks';
+import { maxNameLength } from 'constants/projectConstants';
 import { updateUser } from 'features/Profile/profileReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
@@ -19,41 +21,56 @@ type PropsType = {
 
 export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType => {
   const [editMode, setEditMode] = useState(false);
-  const [newName, setNewName] = useState(name);
   const dispatch = useAppDispatch();
+  const formik = useFormik({
+    initialValues: { name },
+    validate: value => {
+      const errors: { name?: string } = {};
 
-  const activateEditMode = (): void => {
-    setEditMode(true);
-    setNewName(name);
-  };
+      if (value.name.length > maxNameLength) {
+        errors.name = 'length incorrect';
+      }
 
-  const saveNewName = (): void => {
-    dispatch(updateUser({ name: newName, avatar: '' }));
-    setEditMode(false);
-  };
+      if (value.name === name) {
+        setEditMode(false);
+      }
+
+      return errors;
+    },
+    onSubmit: value => {
+      dispatch(updateUser({ name: value.name, avatar: '' }));
+      setEditMode(false);
+    },
+  });
+
+  useEffect(() => {
+    if (editMode) {
+      window.addEventListener('dblclick', () => setEditMode(false));
+    } else {
+      window.removeEventListener('dblclick', () => setEditMode(false));
+    }
+  }, [editMode]);
 
   return (
-    <div className={s.container}>
+    <Box component="div" className={s.container}>
       {!editMode ? (
-        <span>
+        <Box component="span">
           {name}
-          <IconButton onClick={activateEditMode}>
-            <Pencil />
+          <IconButton onClick={() => setEditMode(true)}>
+            <Box component="img" src={edit} alt="edit" />
           </IconButton>
-        </span>
+        </Box>
       ) : (
-        <FormControl variant="standard">
+        <FormControl variant="standard" component="form" onSubmit={formik.handleSubmit}>
           <InputLabel>Nickname</InputLabel>
           <Input
-            defaultValue={newName}
-            onChange={e => setNewName(e.currentTarget.value)}
+            name="name"
+            autoFocus
+            defaultValue={name}
+            onChange={formik.handleChange}
             endAdornment={
               <InputAdornment position="end">
-                <Button
-                  variant="contained"
-                  className={s.saveButton}
-                  onClick={saveNewName}
-                >
+                <Button type="submit" variant="contained" className={s.saveButton}>
                   save
                 </Button>
               </InputAdornment>
@@ -61,6 +78,6 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
           />
         </FormControl>
       )}
-    </div>
+    </Box>
   );
 };

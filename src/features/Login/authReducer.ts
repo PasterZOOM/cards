@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
 import { LoginFormType } from './loginTypes';
@@ -6,17 +6,18 @@ import { LoginFormType } from './loginTypes';
 import { cardsAPI } from 'api/api';
 import { setAppError, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
-import { logOut } from 'features/Profile/profileReducer';
+import { sendUserDate } from 'features/Profile/profileReducer';
+import { UserType } from 'features/Profile/ProfileTypes';
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (param: LoginFormType, { dispatch, rejectWithValue }) => {
+  async (param: LoginFormType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
       const res = await cardsAPI.login(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-      dispatch(setAppError({ error: null }));
+      dispatch(sendUserDate(res.data));
 
       return res.data;
     } catch (e) {
@@ -28,19 +29,38 @@ export const login = createAsyncThunk(
 
         dispatch(setAppError({ error }));
 
-        return rejectWithValue(null);
+        return;
       }
       dispatch(setAppError({ error: `Native error ${err.message}` }));
-
-      return rejectWithValue(null);
     }
   },
 );
+export const logOut = createAsyncThunk('auth/logOut', async (param, { dispatch }) => {
+  try {
+    dispatch(setAppStatus({ status: requestStatus.LOADING }));
+    await cardsAPI.logOut();
+    dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+    dispatch(sendUserDate({} as UserType));
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>;
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message;
+
+      dispatch(setAppError({ error }));
+    }
+    dispatch(setAppError({ error: `Native error ${err.message}` }));
+  }
+});
 
 const slice = createSlice({
   name: 'auth',
   initialState: { isLoggedIn: false },
-  reducers: {},
+  reducers: {
+    changeLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+      state.isLoggedIn = action.payload.isLoggedIn;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(login.fulfilled, state => {
       state.isLoggedIn = true;
@@ -52,3 +72,4 @@ const slice = createSlice({
 });
 
 export const authReducer = slice.reducer;
+export const { changeLoggedIn } = slice.actions;

@@ -1,46 +1,20 @@
 import React from 'react';
 
-import { Avatar, Badge, Button, Card, Grid, Stack } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Avatar, Badge, Box, Button, Card, Stack } from '@mui/material';
+import Typography from '@mui/material/Typography/Typography';
 import { Navigate } from 'react-router-dom';
 
 import { EditableSpan } from './EditableSpan/EditableSpan';
-import { Camera } from './Icons/Camera';
-import { LogOut } from './Icons/LogOut';
+import camera from './Icons/camera.svg';
+import logout from './Icons/logout.svg';
 import s from './Profile.module.css';
-import { logOut } from './profileReducer';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
+import { logOut } from 'features/Login/authReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: 150,
-  },
-  card: {
-    width: 413,
-    height: 360,
-    boxShadow: '1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  title: {
-    fontFamily: 'Montserrat',
-    fontWeight: 700,
-    fontSize: 22,
-    margin: 27,
-  },
-  avatar: {
-    margin: 3,
-  },
-});
-
 export const Profile = (): ReturnComponentType => {
-  const styles = useStyles();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.profile.user);
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -50,29 +24,33 @@ export const Profile = (): ReturnComponentType => {
   }
 
   return (
-    <Grid container className={styles.container}>
-      <Card className={styles.card} variant="outlined">
-        <h2 className={styles.title}>Personal Information</h2>
+    <Box component="div" className={s.container}>
+      <Card className={s.card} variant="outlined">
+        <Typography component="h2" className={s.title}>
+          Personal Information
+        </Typography>
         <Stack>
           <Badge
             className={s.icoContainer}
             overlap="circular"
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            badgeContent={<Camera />}
+            badgeContent={<Box component="img" src={camera} alt="camera" />}
           >
-            <Avatar className={styles.avatar} sx={{ width: 96, height: 96 }} />
+            <Avatar className={s.avatar} sx={{ width: 96, height: 96 }} />
           </Badge>
         </Stack>
 
         <EditableSpan name={user.name} />
 
-        <div className={s.email}>{user.email}</div>
+        <Box component="span" className={s.email}>
+          {user.email}
+        </Box>
 
         <Button className={s.button} onClick={() => dispatch(logOut())}>
-          <LogOut />
+          <Box component="img" src={logout} alt="camera" className={s.logout} />
           Log out
         </Button>
       </Card>
-    </Grid>
+    </Box>
   );
 };
