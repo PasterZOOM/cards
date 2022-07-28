@@ -26,7 +26,7 @@ export const minPassword = 8;
 
 export const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   const submitLoginForm = async (
     values: LoginFormType,
