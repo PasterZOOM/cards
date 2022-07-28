@@ -6,17 +6,19 @@ import { setAppError, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { loginTC } from 'features/Login/authReducer';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
+import { NewUserType } from 'types/ResponseType';
 
 export const createUser = createAsyncThunk(
   'registration/createUser',
   async (data: RegisterParamsType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      await cardsAPI.register({ ...data, email: data.email.toLowerCase() });
+      const res = await cardsAPI.register({ ...data, email: data.email.toLowerCase() });
+
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(loginTC({ ...data, rememberMe: false }));
 
-      return;
+      return res.data.addedUser;
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
@@ -35,7 +37,7 @@ export const createUser = createAsyncThunk(
 
 const slice = createSlice({
   name: 'registration',
-  initialState: {},
+  initialState: {} as NewUserType,
   reducers: {},
 });
 
