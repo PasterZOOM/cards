@@ -15,22 +15,14 @@ import { createUser } from 'features/Register/registerReducer';
 import { RegisterFormType } from 'features/Register/RegisterTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
-const registerInitialValues = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
-
 export const Register = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const dispatch = useAppDispatch();
 
   const submitRegisterForm = async (
-    values: RegisterFormType,
+    { email, password }: RegisterFormType,
     formikHelpers: FormikHelpers<RegisterFormType>,
   ): Promise<void> => {
-    const { email, password } = { ...values };
-
     await dispatch(createUser({ email, password }));
     formikHelpers.setSubmitting(false);
   };
@@ -41,7 +33,7 @@ export const Register = (): ReturnComponentType => {
     <Paper elevation={3} className={styles.main}>
       <Typography className={styles.title}>Sing Up</Typography>
       <Formik
-        initialValues={registerInitialValues}
+        initialValues={{} as RegisterFormType}
         validationSchema={validateRegisterForm}
         onSubmit={submitRegisterForm}
         validateOnMount={false}

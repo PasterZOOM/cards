@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { LoginFormType } from './loginTypes';
 
 import { cardsAPI } from 'api/api';
-import { setAppError, setAppStatus } from 'app/appReducer';
+import { setAppError, setAppInfo, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { sendUserDate } from 'features/Profile/profileReducer';
 import { UserType } from 'features/Profile/ProfileTypes';
@@ -37,10 +37,12 @@ export const login = createAsyncThunk(
 export const logOut = createAsyncThunk('auth/logOut', async (param, { dispatch }) => {
   try {
     dispatch(setAppStatus({ status: requestStatus.LOADING }));
-    await cardsAPI.logOut();
+    const res = await cardsAPI.logOut();
+
     dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     dispatch(sendUserDate({} as UserType));
     dispatch(changeLoggedIn({ isLoggedIn: false }));
+    dispatch(setAppInfo({ info: res.data.info }));
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>;
 

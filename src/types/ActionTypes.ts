@@ -1,6 +1,6 @@
-import { setAppError, setAppStatus } from 'app/appReducer';
+import { setAppError, setAppInfo, setAppStatus } from 'app/appReducer';
 import { changeThemeAC } from 'app/themeReducer';
-import { changeEmail } from 'features/Forgot/forgotReducer';
+import { changeEmail, changeRedirect } from 'features/Forgot/forgotReducer';
 import { changeLoggedIn } from 'features/Login/authReducer';
 import { sendUserDate } from 'features/Profile/profileReducer';
 
@@ -10,4 +10,6 @@ export type AppActionsType =
   | ReturnType<typeof sendUserDate>
   | ReturnType<typeof setAppStatus>
   | ReturnType<typeof setAppError>
-  | ReturnType<typeof changeEmail>;
+  | ReturnType<typeof setAppInfo>
+  | ReturnType<typeof changeEmail>
+  | ReturnType<typeof changeRedirect>;

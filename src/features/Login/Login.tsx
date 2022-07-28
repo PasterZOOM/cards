@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Box, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper/Paper';
@@ -12,6 +12,7 @@ import style from './Login.module.css';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
+import { changeRedirect } from 'features/Forgot/forgotReducer';
 import { LoginFormType } from 'features/Login/loginTypes';
 import styles from 'features/Register/Register.module.css';
 import { ReturnComponentType } from 'types/ReturnComponentType';
@@ -35,6 +36,10 @@ export const Login = (): ReturnComponentType => {
     dispatch(login(values));
     formikHelpers.setSubmitting(false);
   };
+
+  useEffect(() => {
+    dispatch(changeRedirect({ redirect: false }));
+  }, [dispatch]);
 
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;
 

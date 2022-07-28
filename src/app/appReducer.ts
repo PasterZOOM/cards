@@ -16,7 +16,6 @@ export const initializeApp = createAsyncThunk(
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(sendUserDate(res.data));
       dispatch(changeLoggedIn({ isLoggedIn: true }));
-      dispatch(setAppError({ error: null }));
 
       return res.data;
     } catch (e) {
@@ -40,6 +39,7 @@ const slice = createSlice({
   initialState: {
     status: requestStatus.IDLE,
     error: null as string | null,
+    info: null as string | null,
     isInitialized: false,
   },
   reducers: {
@@ -48,6 +48,9 @@ const slice = createSlice({
     },
     setAppError(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error;
+    },
+    setAppInfo(state, action: PayloadAction<{ info: string | null }>) {
+      state.info = action.payload.info;
     },
   },
   extraReducers: builder => {
@@ -58,4 +61,4 @@ const slice = createSlice({
 });
 
 export const appReducer = slice.reducer;
-export const { setAppStatus, setAppError } = slice.actions;
+export const { setAppStatus, setAppError, setAppInfo } = slice.actions;

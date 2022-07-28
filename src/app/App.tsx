@@ -7,6 +7,7 @@ import { initializeApp } from 'app/appReducer';
 import { getAppStatus, getInitialized } from 'app/appSelectors';
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import { Header } from 'common/components/Header/Header';
+import { InfoSnackbar } from 'common/components/InfoSnackbar/InfoSnackbar';
 import { Pages } from 'common/components/Pages/Pages';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { requestStatus } from 'enums/requestStatus';
@@ -36,6 +37,7 @@ export const App = (): ReturnComponentType => {
         <LinearProgress style={{ position: 'fixed', top: '60px', width: '100%' }} />
       )}
       <ErrorSnackbar />
+      <InfoSnackbar />
       <Header />
       <Pages />
       <Helper />

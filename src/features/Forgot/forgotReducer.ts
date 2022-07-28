@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
+import { mail } from './mail';
+
 import { repairPassword } from 'api/api';
-import { setAppError, setAppStatus } from 'app/appReducer';
+import { setAppError, setAppInfo, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 
 export const sendEmail = createAsyncThunk(
@@ -10,18 +12,16 @@ export const sendEmail = createAsyncThunk(
   async (email: string, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      await repairPassword.sendEmail({
+      const res = await repairPassword.sendEmail({
         email,
         from: 'test-front-admin <pasterzoom@gmail.com',
-        message: `<div style='padding: 15px'>
-password recovery link: 
-<a href='http://localhost:3000/createNewPassword/$token$'>
-link</a>
-</div>`,
+        message: mail,
       });
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(changeEmail({ email }));
+      dispatch(changeRedirect({ redirect: true }));
+      dispatch(setAppInfo({ info: res.data.info }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
@@ -42,9 +42,11 @@ export const sendNewPassword = createAsyncThunk(
   async (param: { password: string; resetPasswordToken: string }, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      await repairPassword.sendNewPassword(param);
+      const res = await repairPassword.sendNewPassword(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+      dispatch(changeRedirect({ redirect: true }));
+      dispatch(setAppInfo({ info: res.data.info }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
@@ -63,13 +65,16 @@ export const sendNewPassword = createAsyncThunk(
 
 const slice = createSlice({
   name: 'forgot',
-  initialState: { email: undefined as string | undefined },
+  initialState: { email: undefined as string | undefined, redirect: false },
   reducers: {
     changeEmail: (state, action: PayloadAction<{ email: string | undefined }>) => {
       state.email = action.payload.email;
+    },
+    changeRedirect: (state, action: PayloadAction<{ redirect: boolean }>) => {
+      state.redirect = action.payload.redirect;
     },
   },
 });
 
 export const forgotReducer = slice.reducer;
-export const { changeEmail } = slice.actions;
+export const { changeEmail, changeRedirect } = slice.actions;

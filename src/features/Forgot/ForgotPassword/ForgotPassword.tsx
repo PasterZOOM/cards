@@ -17,17 +17,17 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const ForgotPassword = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const email = useAppSelector(state => state.forgot.email);
+  const redirect = useAppSelector(state => state.forgot.redirect);
 
   const submitRegisterForm = async (
-    values: ForgotPasswordFormType,
-    formikHelpers: FormikHelpers<ForgotPasswordFormType>,
+    { email }: ForgotPasswordFormType,
+    { setSubmitting }: FormikHelpers<ForgotPasswordFormType>,
   ): Promise<void> => {
-    await dispatch(sendEmail(values.email));
-    formikHelpers.setSubmitting(false);
+    await dispatch(sendEmail(email));
+    setSubmitting(false);
   };
 
-  if (email) return <Navigate to={path.CHECK_EMAIL} />;
+  if (redirect) return <Navigate to={path.CHECK_EMAIL} />;
 
   return (
     <Paper elevation={3} className={styles.main}>

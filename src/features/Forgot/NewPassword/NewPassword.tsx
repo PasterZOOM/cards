@@ -3,11 +3,12 @@ import React from 'react';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { Formik, FormikHelpers } from 'formik';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import styles from './NewPassword.module.css';
 
-import { useAppDispatch } from 'common/hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { path } from 'enums/path';
 import { sendNewPassword } from 'features/Forgot/forgotReducer';
 import { NewPasswordForm } from 'features/Forgot/NewPassword/NewPasswordForm/NewPasswordForm';
 import { validateNewPasswordForm } from 'features/Forgot/NewPassword/NewPasswordForm/validateNewPasswordForm';
@@ -16,6 +17,7 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const NewPassword = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+  const redirect = useAppSelector(state => state.forgot.redirect);
   const { token } = useParams();
 
   const submitNewPasswordForm = async (
@@ -30,6 +32,8 @@ export const NewPassword = (): ReturnComponentType => {
     );
     formikHelpers.setSubmitting(false);
   };
+
+  if (redirect) return <Navigate to={path.LOGIN} />;
 
   return (
     <Paper elevation={3} className={styles.main}>
