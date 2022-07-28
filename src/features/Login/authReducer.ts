@@ -18,8 +18,7 @@ export const login = createAsyncThunk(
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(sendUserDate(res.data));
-
-      return res.data;
+      dispatch(changeLoggedIn({ isLoggedIn: true }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 
@@ -41,6 +40,7 @@ export const logOut = createAsyncThunk('auth/logOut', async (param, { dispatch }
     await cardsAPI.logOut();
     dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     dispatch(sendUserDate({} as UserType));
+    dispatch(changeLoggedIn({ isLoggedIn: false }));
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>;
 
@@ -48,6 +48,8 @@ export const logOut = createAsyncThunk('auth/logOut', async (param, { dispatch }
       const error = err.response?.data ? err.response.data.error : err.message;
 
       dispatch(setAppError({ error }));
+
+      return;
     }
     dispatch(setAppError({ error: `Native error ${err.message}` }));
   }
@@ -60,14 +62,6 @@ const slice = createSlice({
     changeLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
       state.isLoggedIn = action.payload.isLoggedIn;
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(login.fulfilled, state => {
-      state.isLoggedIn = true;
-    });
-    builder.addCase(logOut.fulfilled, state => {
-      state.isLoggedIn = false;
-    });
   },
 });
 
