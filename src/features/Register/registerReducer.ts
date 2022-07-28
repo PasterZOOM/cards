@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { cardsAPI } from 'api/api';
+import { cardsAPI, NewUserType } from 'api/api';
 import { setAppError, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { loginTC } from 'features/Login/authReducer';
