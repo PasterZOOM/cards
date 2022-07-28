@@ -1,24 +1,22 @@
-import { setAppError, setAppStatus } from 'app/appReducer';
+import { setAppErrorAC, setAppStatusAC, setIsInitializedAC } from 'app/appReducer';
 import { loadingAC } from 'app/loadReducer';
 import { changeThemeAC } from 'app/themeReducer';
-import { login } from 'features/Login/authReducer';
-import { setUserDataAC, setUserNameAC } from 'features/Profile/profileReducer';
+import { confirmRegister } from 'features/Register/registerReducer';
 
 export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
 
 export type LoadingReducerAT = ReturnType<typeof loadingAC>;
 
-export type SetAppStatusAT = ReturnType<typeof setAppStatus>;
-export type SetAppErrorAT = ReturnType<typeof setAppError>;
-export type SetLoginAT = ReturnType<typeof login>;
-export type setUserAT = ReturnType<typeof setUserDataAC>;
-export type setUserNameAT = ReturnType<typeof setUserNameAC>;
+export type ConfirmRegisterType = ReturnType<typeof confirmRegister>;
+
+export type SetAppStatusAT = ReturnType<typeof setAppStatusAC>;
+export type SetAppErrorAT = ReturnType<typeof setAppErrorAC>;
+export type SetIsInitializedAT = ReturnType<typeof setIsInitializedAC>;
 
 export type AppActionsType =
   | ThemeReducerAT
   | LoadingReducerAT
+  | ConfirmRegisterType
   | SetAppStatusAT
   | SetAppErrorAT
-  | SetLoginAT
-  | setUserAT
-  | setUserNameAT;
+  | SetIsInitializedAT;
