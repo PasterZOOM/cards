@@ -18,9 +18,19 @@
 }
 
 .linkToPassword {
-
+    width: 100%;
+    display: inline-block;
+    text-align: right!important;
+    margin-bottom: 20px;
 }
 
+.linkToPassword a {
+    text-decoration: none;
+}
+
+.linkToPassword a:hover {
+    text-decoration: underline;
+}
 
 
 .btn {
@@ -33,6 +43,20 @@
 }
 
 .linkToRegistration {
-
+    font-size: large;
+    font-weight: bold;
 }
+
+.linkToRegistration a {
+ text-decoration: none;
+}
+
+.linkToRegistration a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
 
