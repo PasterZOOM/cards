@@ -1,7 +1,7 @@
 import { setAppError, setAppStatus } from 'app/appReducer';
 import { loadingAC } from 'app/loadReducer';
 import { changeThemeAC } from 'app/themeReducer';
-import { changeEmail } from 'features/Forgot/ForgotPassword/forgotReducer';
+import { changeEmail } from 'features/Forgot/forgotReducer';
 
 export type ThemeReducerAT = ReturnType<typeof changeThemeAC>;
 

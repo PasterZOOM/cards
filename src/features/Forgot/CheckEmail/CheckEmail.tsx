@@ -10,7 +10,7 @@ import styles from './CheckEmail.module.css';
 import checkEmail from 'assets/images/checkEmail.svg';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
-import { changeEmail } from 'features/Forgot/ForgotPassword/forgotReducer';
+import { changeEmail } from 'features/Forgot/forgotReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const CheckEmail = (): ReturnComponentType => {

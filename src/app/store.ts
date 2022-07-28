@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 
 import { appReducer } from './appReducer';
 
-import { forgotReducer } from 'features/Forgot/ForgotPassword/forgotReducer';
+import { forgotReducer } from 'features/Forgot/forgotReducer';
 import { authReducer } from 'features/Login/authReducer';
 import { profileReducer } from 'features/Profile/profileReducer';
 import { registerReducer } from 'features/Register/registerReducer';

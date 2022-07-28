@@ -3,19 +3,31 @@ import React from 'react';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { Formik, FormikHelpers } from 'formik';
+import { useParams } from 'react-router-dom';
 
 import styles from './NewPassword.module.css';
 
+import { useAppDispatch } from 'common/hooks/hooks';
+import { sendNewPassword } from 'features/Forgot/forgotReducer';
 import { NewPasswordForm } from 'features/Forgot/NewPassword/NewPasswordForm/NewPasswordForm';
 import { validateNewPasswordForm } from 'features/Forgot/NewPassword/NewPasswordForm/validateNewPasswordForm';
 import { NewPasswordFormType } from 'features/Forgot/NewPassword/NewPasswordTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const NewPassword = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
+  const { token } = useParams();
+
   const submitNewPasswordForm = async (
     values: NewPasswordFormType,
     formikHelpers: FormikHelpers<NewPasswordFormType>,
   ): Promise<void> => {
+    await dispatch(
+      sendNewPassword({
+        password: values.password,
+        resetPasswordToken: token as string,
+      }),
+    );
     formikHelpers.setSubmitting(false);
   };
 

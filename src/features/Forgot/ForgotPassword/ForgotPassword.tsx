@@ -12,7 +12,7 @@ import { path } from 'enums/path';
 import { ForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/ForgotForm';
 import { validateForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/validateForgotForm';
 import { ForgotPasswordFormType } from 'features/Forgot/ForgotPassword/ForgotPasswordTypes';
-import { sendEmail } from 'features/Forgot/ForgotPassword/forgotReducer';
+import { sendEmail } from 'features/Forgot/forgotReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const ForgotPassword = (): ReturnComponentType => {

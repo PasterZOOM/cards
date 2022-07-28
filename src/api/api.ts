@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-import { RepairPasswordRequestType } from 'features/Forgot/ForgotPassword/ForgotPasswordTypes';
+import {
+  NewPasswordRequestType,
+  RepairPasswordRequestType,
+} from 'features/Forgot/ForgotPassword/ForgotPasswordTypes';
 import { LoginFormType } from 'features/Login/loginTypes';
 import { ChangeUserNameType } from 'features/Profile/ProfileTypes';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
@@ -37,5 +40,8 @@ export const cardsAPI = {
 export const repairPassword = {
   sendEmail(data: RepairPasswordRequestType) {
     return instance.post<InfoResponseType>('/auth/forgot', data);
+  },
+  sendNewPassword(data: NewPasswordRequestType) {
+    return instance.post<InfoResponseType>('/auth/set-new-password', data);
   },
 };
