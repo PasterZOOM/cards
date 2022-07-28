@@ -6,7 +6,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { useFormik } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
 
-import { loginTC } from './authReducer';
+import { login } from './authReducer';
 
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
@@ -16,7 +16,7 @@ import { FormikErrorType } from 'features/Login/loginTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const Login = (): ReturnComponentType => {
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
@@ -41,7 +41,7 @@ export const Login = (): ReturnComponentType => {
       return errors;
     },
     onSubmit: values => {
-      dispatch(loginTC(values));
+      dispatch(login(values));
     },
   });
 

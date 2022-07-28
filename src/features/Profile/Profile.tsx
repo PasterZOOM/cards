@@ -8,7 +8,7 @@ import { EditableSpan } from './EditableSpan/EditableSpan';
 import { Camera } from './Icons/Camera';
 import { LogOut } from './Icons/LogOut';
 import s from './Profile.module.css';
-import { logOutTC } from './profileReducer';
+import { logOut } from './profileReducer';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
@@ -43,7 +43,7 @@ export const Profile = (): ReturnComponentType => {
   const styles = useStyles();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.profile.user);
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -68,7 +68,7 @@ export const Profile = (): ReturnComponentType => {
 
         <div className={s.email}>{user.email}</div>
 
-        <Button className={s.button} onClick={() => dispatch(logOutTC())}>
+        <Button className={s.button} onClick={() => dispatch(logOut())}>
           <LogOut />
           Log out
         </Button>

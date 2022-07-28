@@ -3,19 +3,15 @@ import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
 import { requestStatus } from 'enums/requestStatus';
-import { login } from 'features/Login/authReducer';
-import { setUserDataAC } from 'features/Profile/profileReducer';
 
 export const initializeApp = createAsyncThunk(
   'app/initializeApp',
   async (param, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await cardsAPI.me();
+      await cardsAPI.me();
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-      dispatch(setUserDataAC({ user: res.data }));
-      dispatch(login({ isLoggedIn: true }));
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>;
 

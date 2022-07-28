@@ -22,7 +22,7 @@ const registerInitialValues = {
 };
 
 export const Register = (): ReturnComponentType => {
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const dispatch = useAppDispatch();
 
   const submitRegisterForm = async (

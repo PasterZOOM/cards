@@ -6,11 +6,11 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
 
 import { Pencil } from '../Icons/Pencil';
-import { changeUserNameTC } from '../profileReducer';
 
 import s from './EditableSpan.module.css';
 
 import { useAppDispatch } from 'common/hooks/hooks';
+import { updateUser } from 'features/Profile/profileReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
@@ -28,7 +28,7 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
   };
 
   const saveNewName = (): void => {
-    dispatch(changeUserNameTC(newName));
+    dispatch(updateUser({ name: newName, avatar: '' }));
     setEditMode(false);
   };
 
