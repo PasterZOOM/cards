@@ -1,122 +1,125 @@
 import React from 'react';
 
-import { Checkbox, FormControlLabel, FormGroup, Grid, TextField } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { useFormik } from 'formik';
+import { Box, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import Paper from '@mui/material/Paper/Paper';
+import Typography from '@mui/material/Typography/Typography';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
+import { object, string } from 'yup';
 
 import { login } from './authReducer';
+import style from './Login.module.css';
 
-import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
-import { minPasswordDigits } from 'constants/minPasswordDigits';
 import { path } from 'enums/path';
-import { FormikErrorType } from 'features/Login/loginTypes';
+import { LoginFormType } from 'features/Login/loginTypes';
+import styles from 'features/Register/Register.module.css';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
+const initialValues: LoginFormType = {
+  email: '',
+  password: '',
+  rememberMe: false,
+};
+
+export const minPassword = 8;
+
 export const Login = (): ReturnComponentType => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const dispatch = useAppDispatch();
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      rememberMe: false,
-    },
-    validate: values => {
-      const errors: FormikErrorType = {};
+  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
 
-      if (!values.email) {
-        errors.email = 'Required';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-      }
-      if (!values.password) {
-        errors.password = 'Required';
-      } else if (values.password.length < minPasswordDigits) {
-        errors.password = 'at least 8 characters';
-      }
-
-      return errors;
-    },
-    onSubmit: values => {
-      dispatch(login(values));
-    },
-  });
+  const submitLoginForm = async (
+    values: LoginFormType,
+    formikHelpers: FormikHelpers<LoginFormType>,
+  ): Promise<void> => {
+    dispatch(login(values));
+    formikHelpers.setSubmitting(false);
+  };
 
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;
 
   return (
-    <Grid
-      style={{
-        position: 'absolute',
-        top: '120px',
-        width: '413px',
-        height: '528px',
-        left: '50%',
-        marginLeft: '-207px',
-        boxShadow: '1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1)',
-        borderRadius: '2px',
-        padding: '35px 33px 42px',
-      }}
-      container
-      direction="column"
-      justifyContent="space-around"
-      alignItems="center"
-    >
-      <Grid item>
-        <FormLabel>
-          <h1>Sing In</h1>
-        </FormLabel>
-      </Grid>
-      <Grid item>
-        <form onSubmit={formik.handleSubmit}>
-          <FormControl>
-            <FormGroup>
-              <TextField
-                label="Email"
-                multiline
-                variant="standard"
-                {...formik.getFieldProps('email')}
-              />
-              {formik.errors.email && formik.touched.email ? (
-                <div style={{ color: 'red' }}>{formik.errors.email}</div>
-              ) : null}
-              <TextField
-                label="Password"
-                multiline
-                variant="standard"
-                type="password"
-                {...formik.getFieldProps('password')}
-              />
-              {formik.errors.password && formik.touched.password ? (
-                <div style={{ color: 'red' }}>{formik.errors.password}</div>
-              ) : null}
+    <Paper elevation={3} className={style.main}>
+      <Typography variant="h4" className={style.title}>
+        Sing In
+      </Typography>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={object({
+          email: string().required('Please enter email').email('Invalid email'),
+          password: string()
+            .required('Please enter password')
+            .min(minPassword, 'Password should be minimum 7 characters long'),
+        })}
+        onSubmit={submitLoginForm}
+      >
+        {({ isSubmitting, handleChange, values, errors, isValid, touched, dirty }) => (
+          <Form>
+            <Field
+              name="email"
+              type="email"
+              as={TextField}
+              variant="standard"
+              color="primary"
+              label="Email"
+              fullWidth
+              error={errors.email && touched.email}
+              helperText={touched.email && errors.email}
+            />
+
+            <Box height={14} />
+            <Field
+              name="password"
+              type="password"
+              as={TextField}
+              variant="standard"
+              color="primary"
+              label="Password"
+              fullWidth
+              error={errors.password && touched.password}
+              helperText={touched.password && errors.password}
+            />
+            <Box height={14} />
+
+            <div className={style.checkbox}>
               <FormControlLabel
-                label="Remember me"
                 control={
                   <Checkbox
-                    onChange={formik.handleChange}
-                    checked={formik.values.rememberMe}
                     name="rememberMe"
+                    onChange={handleChange}
+                    checked={values.rememberMe}
                   />
                 }
+                label="Remember Me"
               />
+            </div>
+            <Box height={14} />
 
-              <NavLink to={path.FORGOT_PASSWORD}>Forgot password?</NavLink>
+            <NavLink to={path.FORGOT_PASSWORD} className={styles.linkToPassword}>
+              Forgot password?
+            </NavLink>
 
-              <SubmitButton label="Sing In" />
-            </FormGroup>
-          </FormControl>
-        </form>
-      </Grid>
-      <Grid item>
-        <span>Dont have an account?</span>
-      </Grid>
-      <Grid item>
-        <NavLink to={path.REGISTRATION}>Sing Up</NavLink>
-      </Grid>
-    </Grid>
+            <Box height={14} />
+
+            <Button
+              type="submit"
+              className={style.btn}
+              variant="contained"
+              color="primary"
+              size="medium"
+              fullWidth
+              disabled={!isValid || !dirty || isSubmitting}
+            >
+              Sign in
+            </Button>
+          </Form>
+        )}
+      </Formik>
+      <div className={style.text}>Dont have an account?</div>
+
+      <NavLink className={styles.linkToRegistration} to={path.REGISTRATION}>
+        Sign Up
+      </NavLink>
+    </Paper>
   );
 };

@@ -1,0 +1,38 @@
+.main {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    margin-left: -207px;
+    width: 348px;
+    height: 451px;
+    text-align: center;
+    padding: 35px 33px 42px;
+}
+
+.title {
+
+}
+
+.checkbox {
+    text-align: left!important;
+}
+
+.linkToPassword {
+
+}
+
+
+
+.btn {
+    border-radius: 20px !important;
+}
+
+.text {
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
+.linkToRegistration {
+
+}
+
