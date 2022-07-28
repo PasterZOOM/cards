@@ -3,23 +3,31 @@ import React from 'react';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { Formik, FormikHelpers } from 'formik';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 import styles from './ForgotPassword.module.css';
 
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
 import { ForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/ForgotForm';
 import { validateForgotForm } from 'features/Forgot/ForgotPassword/ForgotForm/validateForgotForm';
 import { ForgotPasswordFormType } from 'features/Forgot/ForgotPassword/ForgotPasswordTypes';
+import { sendEmail } from 'features/Forgot/ForgotPassword/forgotReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const ForgotPassword = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
+  const email = useAppSelector(state => state.forgot.email);
+
   const submitRegisterForm = async (
     values: ForgotPasswordFormType,
     formikHelpers: FormikHelpers<ForgotPasswordFormType>,
   ): Promise<void> => {
+    await dispatch(sendEmail(values.email));
     formikHelpers.setSubmitting(false);
   };
+
+  if (email) return <Navigate to={path.CHECK_EMAIL} />;
 
   return (
     <Paper elevation={3} className={styles.main}>

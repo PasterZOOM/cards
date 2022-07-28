@@ -20,7 +20,7 @@ export const Pages = (): ReturnComponentType => (
       <Route path={path.REGISTRATION} element={<Register />} />
       <Route path={path.PROFILE} element={<Profile />} />
       <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
-      <Route path={path.CREATE_NEW_PASSWORD} element={<NewPassword />} />
+      <Route path={`${path.CREATE_NEW_PASSWORD}/:token`} element={<NewPassword />} />
       <Route path={path.CHECK_EMAIL} element={<CheckEmail />} />
       <Route path={'/*'} element={<Error404 />} />
     </Routes>

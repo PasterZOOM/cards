@@ -1,6 +1,7 @@
 import { setAppError, setAppStatus } from 'app/appReducer';
 import { loadingAC } from 'app/loadReducer';
 import { changeThemeAC } from 'app/themeReducer';
+import { changeEmail } from 'features/Forgot/ForgotPassword/forgotReducer';
 import { login } from 'features/Login/authReducer';
 import {
   clearUserDataAC,
@@ -18,6 +19,7 @@ export type SetLoginAT = ReturnType<typeof login>;
 export type setUserAT = ReturnType<typeof setUserDataAC>;
 export type setUserNameAT = ReturnType<typeof setUserNameAC>;
 export type clearUserDataAT = ReturnType<typeof clearUserDataAC>;
+export type changeEmailAT = ReturnType<typeof changeEmail>;
 
 export type AppActionsType =
   | ThemeReducerAT
@@ -27,4 +29,5 @@ export type AppActionsType =
   | SetLoginAT
   | setUserAT
   | setUserNameAT
-  | clearUserDataAT;
+  | clearUserDataAT
+  | changeEmailAT;

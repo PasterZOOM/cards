@@ -22,11 +22,11 @@ export const Helper = (): ReturnComponentType => {
       <NavLink to={path.FORGOT_PASSWORD} className={styles.helperItem}>
         ForgotPassword
       </NavLink>
-      <NavLink to={path.CREATE_NEW_PASSWORD} className={styles.helperItem}>
-        CreateNewPassword
-      </NavLink>
       <NavLink to={path.CHECK_EMAIL} className={styles.helperItem}>
         CheckEmail
+      </NavLink>
+      <NavLink to={`${path.CREATE_NEW_PASSWORD}/a`} className={styles.helperItem}>
+        CreateNewPassword
       </NavLink>
       <NavLink to="/a" className={styles.helperItem}>
         ERROR_404

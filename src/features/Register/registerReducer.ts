@@ -5,8 +5,7 @@ import { cardsAPI } from 'api/api';
 import { setAppError, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { loginTC } from 'features/Login/authReducer';
-import { RegisterParamsType } from 'features/Register/RegisterTypes';
-import { NewUserType } from 'types/ResponseType';
+import { NewUserType, RegisterParamsType } from 'features/Register/RegisterTypes';
 
 export const createUser = createAsyncThunk(
   'register/createUser',

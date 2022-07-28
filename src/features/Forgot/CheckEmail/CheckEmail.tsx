@@ -8,12 +8,18 @@ import { NavLink } from 'react-router-dom';
 import styles from './CheckEmail.module.css';
 
 import checkEmail from 'assets/images/checkEmail.svg';
-import { useAppSelector } from 'common/hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
+import { changeEmail } from 'features/Forgot/ForgotPassword/forgotReducer';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const CheckEmail = (): ReturnComponentType => {
-  const email = useAppSelector(state => state.profile.user.email);
+  const email = useAppSelector(state => state.forgot.email);
+  const dispatch = useAppDispatch();
+
+  const onClickButton = (): void => {
+    dispatch(changeEmail({ email: undefined }));
+  };
 
   return (
     <Paper elevation={3} className={styles.main}>
@@ -24,6 +30,7 @@ export const CheckEmail = (): ReturnComponentType => {
       </Typography>
       <NavLink to={path.LOGIN} className={styles.link}>
         <Button
+          onClick={onClickButton}
           type="submit"
           fullWidth
           variant="contained"
