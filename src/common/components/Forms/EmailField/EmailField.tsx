@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel/InputLabel';
 import { useField } from 'formik';
 
 import styles from 'assets/styles/FieldStyles.module.css';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
   name: string;

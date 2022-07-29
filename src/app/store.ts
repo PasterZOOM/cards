@@ -4,10 +4,10 @@ import thunk from 'redux-thunk';
 
 import { appReducer } from './appReducer';
 
-import { forgotReducer } from 'features/Forgot/forgotReducer';
-import { authReducer } from 'features/Login/authReducer';
+import { forgotReducer } from 'features/Auth/Forgot/forgotReducer';
+import { authReducer } from 'features/Auth/Login/authReducer';
+import { registerReducer } from 'features/Auth/Register/registerReducer';
 import { profileReducer } from 'features/Profile/profileReducer';
-import { registerReducer } from 'features/Register/registerReducer';
 
 export const rootReducer = combineReducers({
   register: registerReducer,

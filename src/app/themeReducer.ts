@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { theme } from 'enums/theme';
+import { theme } from 'common/enums/theme';
 
 const initialState = {
   theme: theme.LIGHT,

@@ -10,7 +10,7 @@ import { setAppSnackbarValue } from 'app/appReducer';
 import { getAppSnackbar } from 'app/appSelectors';
 import { SnackbarType } from 'app/AppTypes';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

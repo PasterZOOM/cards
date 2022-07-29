@@ -4,7 +4,7 @@ import Button from '@mui/material/Button/Button';
 
 import styles from './SubmitButton.module.css';
 
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
   label: string;

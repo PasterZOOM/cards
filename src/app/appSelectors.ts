@@ -1,6 +1,6 @@
+import { AppRootStateType } from 'app/AppRootStateTypes';
 import { SnackbarType } from 'app/AppTypes';
-import { requestStatus } from 'enums/requestStatus';
-import { AppRootStateType } from 'types/AppRootStateTypes';
+import { requestStatus } from 'common/enums/requestStatus';
 
 export const getInitialized = (state: AppRootStateType): boolean =>
   state.app.isInitialized;

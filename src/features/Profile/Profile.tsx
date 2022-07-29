@@ -4,15 +4,15 @@ import { Avatar, Badge, Box, Button, Card, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate } from 'react-router-dom';
 
-import { EditableSpan } from './EditableSpan/EditableSpan';
-import camera from './Icons/camera.svg';
-import logout from './Icons/logout.svg';
 import s from './Profile.module.css';
 
+import camera from 'assets/images/camera.svg';
+import logout from 'assets/images/logout.svg';
+import { EditableSpan } from 'common/components/EditableSpan/EditableSpan';
+import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
-import { path } from 'enums/path';
-import { logOut } from 'features/Login/authReducer';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { logOut } from 'features/Auth/Login/authReducer';
 
 export const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();

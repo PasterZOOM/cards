@@ -4,8 +4,8 @@ import { UserType } from './ProfileTypes';
 
 import { userAPI } from 'api/api';
 import { setAppStatus } from 'app/appReducer';
-import { requestStatus } from 'enums/requestStatus';
-import { handleError } from 'utils/handleError';
+import { requestStatus } from 'common/enums/requestStatus';
+import { handleError } from 'common/utils/handleError';
 
 export const updateUser = createAsyncThunk(
   'profile/updateUser',

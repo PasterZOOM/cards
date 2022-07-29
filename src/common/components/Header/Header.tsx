@@ -9,8 +9,8 @@ import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
 
 import logo from 'assets/images/logo.svg';
-import { path } from 'enums/path';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { path } from 'common/enums/path';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export const Header = (): ReturnComponentType => {
   return (
