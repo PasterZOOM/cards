@@ -9,7 +9,6 @@ import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
-import { object, string } from 'yup';
 
 import { login } from './authReducer';
 import style from './Login.module.css';
@@ -17,6 +16,7 @@ import style from './Login.module.css';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
 import { LoginFormType } from 'features/Login/loginTypes';
+import { validateLogin } from 'features/Login/validateLogin';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 const initialValues: LoginFormType = {
@@ -24,8 +24,6 @@ const initialValues: LoginFormType = {
   password: '',
   rememberMe: false,
 };
-
-export const minPassword = 8;
 
 export const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -35,7 +33,7 @@ export const Login = (): ReturnComponentType => {
     values: LoginFormType,
     formikHelpers: FormikHelpers<LoginFormType>,
   ): Promise<void> => {
-    dispatch(login(values));
+    await dispatch(login(values));
     formikHelpers.setSubmitting(false);
   };
 
@@ -54,12 +52,7 @@ export const Login = (): ReturnComponentType => {
       </Typography>
       <Formik
         initialValues={initialValues}
-        validationSchema={object({
-          email: string().required('Please enter email').email('Invalid email'),
-          password: string()
-            .required('Please enter password')
-            .min(minPassword, 'Minimum 7 characters long'),
-        })}
+        validationSchema={validateLogin}
         onSubmit={submitLoginForm}
       >
         {({ isSubmitting, handleChange, values, errors, isValid, touched, dirty }) => (

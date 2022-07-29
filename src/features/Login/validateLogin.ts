@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 
-import { minPassword } from 'features/Login/Login';
+import { minPasswordLength } from 'constants/projectConstants';
 
 export const validateLogin = Yup.object().shape({
   email: Yup.string().required('Please enter email').email('Invalid email'),
   password: Yup.string()
     .required('Please enter password')
-    .min(minPassword, 'Minimum 7 characters long'),
+    .min(minPasswordLength, 'Minimum 8 characters long'),
 });
