@@ -16,6 +16,7 @@ export const Pages = (): ReturnComponentType => (
   <div>
     <Routes>
       <Route path="/" element={<Navigate to={path.REGISTRATION} />} />
+      <Route path="/cards" element={<Navigate to={path.REGISTRATION} />} />
       <Route path={path.LOGIN} element={<Login />} />
       <Route path={path.REGISTRATION} element={<Register />} />
       <Route path={path.PROFILE} element={<Profile />} />

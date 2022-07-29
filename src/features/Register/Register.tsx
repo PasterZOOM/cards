@@ -22,10 +22,10 @@ export const Register = (): ReturnComponentType => {
 
   const submitRegisterForm = async (
     { email, password }: RegisterFormType,
-    formikHelpers: FormikHelpers<RegisterFormType>,
+    { setSubmitting }: FormikHelpers<RegisterFormType>,
   ): Promise<void> => {
     await dispatch(createUser({ email, password }));
-    formikHelpers.setSubmitting(false);
+    setSubmitting(false);
   };
 
   if (isLoggedIn) return <Navigate to={path.PROFILE} />;

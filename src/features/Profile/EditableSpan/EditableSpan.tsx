@@ -45,7 +45,6 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
 
   const onEditMode = (): void => {
     setEditMode(true);
-    formik.errors.name = '';
     formik.values.name = name;
   };
 
