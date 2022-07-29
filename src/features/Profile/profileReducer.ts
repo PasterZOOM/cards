@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UserType } from './ProfileTypes';
 
-import { cardsAPI } from 'api/api';
+import { userAPI } from 'api/api';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { handleError } from 'utils/handleError';
@@ -12,7 +12,7 @@ export const updateUser = createAsyncThunk(
   async (param: { name: string; avatar: string }, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await cardsAPI.changeUserName(param);
+      const res = await userAPI.changeUserName(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 

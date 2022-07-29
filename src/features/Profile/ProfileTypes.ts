@@ -1,6 +1,6 @@
 import { NewUserType } from 'features/Register/RegisterTypes';
 
-export type ChangeUserNameType = {
+export type UpdateUserType = {
   name: string;
   avatar: string;
 };

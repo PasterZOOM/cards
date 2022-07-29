@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { cardsAPI } from 'api/api';
+import { userAPI } from 'api/api';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { login } from 'features/Login/authReducer';
@@ -12,7 +12,7 @@ export const createUser = createAsyncThunk(
   async (data: RegisterParamsType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await cardsAPI.register({ ...data, email: data.email.toLowerCase() });
+      const res = await userAPI.register({ ...data, email: data.email.toLowerCase() });
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(login({ ...data, rememberMe: false }));

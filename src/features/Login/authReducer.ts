@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { LoginFormType } from './loginTypes';
 
-import { cardsAPI } from 'api/api';
+import { userAPI } from 'api/api';
 import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
 import { snackbarType } from 'enums/snackbarType';
@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
   async (param: LoginFormType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await cardsAPI.login(param);
+      const res = await userAPI.login(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(sendUserDate(res.data));
@@ -28,7 +28,7 @@ export const login = createAsyncThunk(
 export const logOut = createAsyncThunk('auth/logOut', async (param, { dispatch }) => {
   try {
     dispatch(setAppStatus({ status: requestStatus.LOADING }));
-    const res = await cardsAPI.logOut();
+    const res = await userAPI.logOut();
 
     dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     dispatch(sendUserDate({} as UserType));

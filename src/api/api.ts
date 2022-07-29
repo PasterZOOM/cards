@@ -5,7 +5,7 @@ import {
   RepairPasswordRequestType,
 } from 'features/Forgot/ForgotPassword/ForgotPasswordTypes';
 import { LoginFormType } from 'features/Login/loginTypes';
-import { ChangeUserNameType } from 'features/Profile/ProfileTypes';
+import { UpdateUserType } from 'features/Profile/ProfileTypes';
 import { RegisterParamsType } from 'features/Register/RegisterTypes';
 import {
   InfoResponseType,
@@ -19,7 +19,7 @@ export const instance = axios.create({
   withCredentials: true,
 });
 
-export const cardsAPI = {
+export const userAPI = {
   register(data: RegisterParamsType) {
     return instance.post<RegisterResponseType>('auth/register', data);
   },
@@ -32,7 +32,7 @@ export const cardsAPI = {
   me() {
     return instance.post<MeResponseType>('auth/me', {});
   },
-  changeUserName(data: ChangeUserNameType) {
+  changeUserName(data: UpdateUserType) {
     return instance.put<UpdatedUserResponseType>('auth/me', data);
   },
 };

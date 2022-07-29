@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { cardsAPI } from 'api/api';
+import { userAPI } from 'api/api';
 import { SnackbarType } from 'app/AppTypes';
 import { requestStatus } from 'enums/requestStatus';
 import { snackbarType } from 'enums/snackbarType';
@@ -13,7 +13,7 @@ export const initializeApp = createAsyncThunk(
   async (param, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await cardsAPI.me();
+      const res = await userAPI.me();
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(sendUserDate(res.data));
