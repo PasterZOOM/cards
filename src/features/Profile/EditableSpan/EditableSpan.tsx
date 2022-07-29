@@ -45,16 +45,19 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
 
   const onEditMode = (): void => {
     setEditMode(true);
-    formik.errors.name = '';
     formik.values.name = name;
   };
 
   useEffect(() => {
+    const listener = (): void => {
+      setEditMode(false);
+    };
+
     if (editMode) {
-      window.addEventListener('dblclick', () => setEditMode(false));
+      window.addEventListener('dblclick', listener);
     }
 
-    return window.removeEventListener('dblclick', () => setEditMode(false));
+    return () => window.removeEventListener('dblclick', listener);
   }, [editMode]);
 
   return (
