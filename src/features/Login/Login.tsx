@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Box, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import IconButton from '@mui/material/IconButton/IconButton';
+import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
-import { object, string } from 'yup';
 
 import { login } from './authReducer';
 import style from './Login.module.css';
@@ -14,7 +17,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
 import { changeRedirect } from 'features/Forgot/forgotReducer';
 import { LoginFormType } from 'features/Login/loginTypes';
-import styles from 'features/Register/Register.module.css';
+import { validateLogin } from 'features/Login/validateLogin';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 const initialValues: LoginFormType = {
@@ -22,8 +25,6 @@ const initialValues: LoginFormType = {
   password: '',
   rememberMe: false,
 };
-
-export const minPassword = 8;
 
 export const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -33,8 +34,14 @@ export const Login = (): ReturnComponentType => {
     values: LoginFormType,
     formikHelpers: FormikHelpers<LoginFormType>,
   ): Promise<void> => {
-    dispatch(login(values));
+    await dispatch(login(values));
     formikHelpers.setSubmitting(false);
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const onClickIconButtonHandler = (): void => {
+    setShowPassword(!showPassword);
   };
 
   useEffect(() => {
@@ -50,12 +57,7 @@ export const Login = (): ReturnComponentType => {
       </Typography>
       <Formik
         initialValues={initialValues}
-        validationSchema={object({
-          email: string().required('Please enter email').email('Invalid email'),
-          password: string()
-            .required('Please enter password')
-            .min(minPassword, 'Password should be minimum 7 characters long'),
-        })}
+        validationSchema={validateLogin}
         onSubmit={submitLoginForm}
       >
         {({ isSubmitting, handleChange, values, errors, isValid, touched, dirty }) => (
@@ -73,16 +75,29 @@ export const Login = (): ReturnComponentType => {
             />
 
             <Box height={14} />
+
             <Field
               name="password"
-              type="password"
-              as={TextField}
+              type={showPassword ? 'text' : 'password'}
               variant="standard"
+              as={TextField}
               color="primary"
               label="Password"
               fullWidth
               error={errors.password && touched.password}
               helperText={touched.password && errors.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={onClickIconButtonHandler}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Box height={14} />
 
@@ -99,10 +114,9 @@ export const Login = (): ReturnComponentType => {
               />
             </div>
             <Box height={14} />
-
-            <NavLink to={path.FORGOT_PASSWORD} className={styles.linkToPassword}>
-              Forgot password?
-            </NavLink>
+            <div className={style.linkToPassword}>
+              <NavLink to={path.FORGOT_PASSWORD}>Forgot password?</NavLink>
+            </div>
 
             <Box height={14} />
 
@@ -122,9 +136,9 @@ export const Login = (): ReturnComponentType => {
       </Formik>
       <div className={style.text}>Dont have an account?</div>
 
-      <NavLink className={styles.linkToRegistration} to={path.REGISTRATION}>
-        Sign Up
-      </NavLink>
+      <div className={style.linkToRegistration}>
+        <NavLink to={path.REGISTRATION}>Sign Up</NavLink>
+      </div>
     </Paper>
   );
 };
