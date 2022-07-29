@@ -9,6 +9,7 @@ import styles from './Register.module.css';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { path } from 'enums/path';
+import { getIsLoggedIn } from 'features/Login/authSelectors';
 import { RegisterForm } from 'features/Register/RegisterForm/RegisterForm';
 import { validateRegisterForm } from 'features/Register/RegisterForm/validateRegisterForm';
 import { createUser } from 'features/Register/registerReducer';
@@ -16,7 +17,7 @@ import { RegisterFormType } from 'features/Register/RegisterTypes';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export const Register = (): ReturnComponentType => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
   const dispatch = useAppDispatch();
 
   const submitRegisterForm = async (

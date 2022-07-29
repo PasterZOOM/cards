@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
 
 import { mail } from './mail';
 
 import { repairPassword } from 'api/api';
-import { setAppError, setAppInfo, setAppStatus } from 'app/appReducer';
+import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
+import { snackbarType } from 'enums/snackbarType';
+import { handleError } from 'utils/handleError';
 
 export const sendEmail = createAsyncThunk(
   'forgot/sendEmail',
@@ -19,21 +20,14 @@ export const sendEmail = createAsyncThunk(
       });
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-      dispatch(changeEmail({ email }));
+      dispatch(
+        setAppSnackbarValue({ type: snackbarType.SUCCESS, message: res.data.info }),
+      );
       dispatch(changeRedirect({ redirect: true }));
-      dispatch(setAppInfo({ info: res.data.info }));
+
+      return { email };
     } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>;
-
-      dispatch(setAppStatus({ status: requestStatus.FAILED }));
-      if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? err.response.data.error : err.message;
-
-        dispatch(setAppError({ error }));
-
-        return;
-      }
-      dispatch(setAppError({ error: `Native error ${err.message}` }));
+      handleError(e, dispatch);
     }
   },
 );
@@ -46,19 +40,11 @@ export const sendNewPassword = createAsyncThunk(
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(changeRedirect({ redirect: true }));
-      dispatch(setAppInfo({ info: res.data.info }));
+      dispatch(
+        setAppSnackbarValue({ type: snackbarType.SUCCESS, message: res.data.info }),
+      );
     } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>;
-
-      dispatch(setAppStatus({ status: requestStatus.FAILED }));
-      if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? err.response.data.error : err.message;
-
-        dispatch(setAppError({ error }));
-
-        return;
-      }
-      dispatch(setAppError({ error: `Native error ${err.message}` }));
+      handleError(e, dispatch);
     }
   },
 );
@@ -73,6 +59,11 @@ const slice = createSlice({
     changeRedirect: (state, action: PayloadAction<{ redirect: boolean }>) => {
       state.redirect = action.payload.redirect;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(sendEmail.fulfilled, (state, action) => {
+      if (action.payload !== undefined) state.email = action.payload.email;
+    });
   },
 });
 

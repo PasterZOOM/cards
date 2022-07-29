@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
 
 import { cardsAPI } from 'api/api';
+import { SnackbarType } from 'app/AppTypes';
 import { requestStatus } from 'enums/requestStatus';
+import { snackbarType } from 'enums/snackbarType';
 import { changeLoggedIn } from 'features/Login/authReducer';
 import { sendUserDate } from 'features/Profile/profileReducer';
+import { handleError } from 'utils/handleError';
 
 export const initializeApp = createAsyncThunk(
   'app/initializeApp',
@@ -19,17 +21,7 @@ export const initializeApp = createAsyncThunk(
 
       return res.data;
     } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>;
-
-      dispatch(setAppStatus({ status: requestStatus.FAILED }));
-      if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? err.response.data.error : err.message;
-
-        dispatch(setAppError({ error }));
-
-        return;
-      }
-      dispatch(setAppError({ error: `Native error ${err.message}` }));
+      handleError(e, dispatch);
     }
   },
 );
@@ -38,19 +30,18 @@ const slice = createSlice({
   name: 'app',
   initialState: {
     status: requestStatus.IDLE,
-    error: null as string | null,
-    info: null as string | null,
+    snackbar: {} as SnackbarType,
     isInitialized: false,
   },
   reducers: {
     setAppStatus(state, action: PayloadAction<{ status: requestStatus }>) {
       state.status = action.payload.status;
     },
-    setAppError(state, action: PayloadAction<{ error: string | null }>) {
-      state.error = action.payload.error;
-    },
-    setAppInfo(state, action: PayloadAction<{ info: string | null }>) {
-      state.info = action.payload.info;
+    setAppSnackbarValue(
+      state,
+      action: PayloadAction<{ type: snackbarType | undefined; message: string | null }>,
+    ) {
+      state.snackbar = action.payload;
     },
   },
   extraReducers: builder => {
@@ -61,4 +52,4 @@ const slice = createSlice({
 });
 
 export const appReducer = slice.reducer;
-export const { setAppStatus, setAppError, setAppInfo } = slice.actions;
+export const { setAppStatus, setAppSnackbarValue } = slice.actions;

@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
 
 import { LoginFormType } from './loginTypes';
 
 import { cardsAPI } from 'api/api';
-import { setAppError, setAppInfo, setAppStatus } from 'app/appReducer';
+import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'enums/requestStatus';
+import { snackbarType } from 'enums/snackbarType';
 import { sendUserDate } from 'features/Profile/profileReducer';
 import { UserType } from 'features/Profile/ProfileTypes';
+import { handleError } from 'utils/handleError';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -20,17 +21,7 @@ export const login = createAsyncThunk(
       dispatch(sendUserDate(res.data));
       dispatch(changeLoggedIn({ isLoggedIn: true }));
     } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>;
-
-      dispatch(setAppStatus({ status: requestStatus.FAILED }));
-      if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? err.response.data.error : err.message;
-
-        dispatch(setAppError({ error }));
-
-        return;
-      }
-      dispatch(setAppError({ error: `Native error ${err.message}` }));
+      handleError(e, dispatch);
     }
   },
 );
@@ -42,18 +33,9 @@ export const logOut = createAsyncThunk('auth/logOut', async (param, { dispatch }
     dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     dispatch(sendUserDate({} as UserType));
     dispatch(changeLoggedIn({ isLoggedIn: false }));
-    dispatch(setAppInfo({ info: res.data.info }));
+    dispatch(setAppSnackbarValue({ type: snackbarType.SUCCESS, message: res.data.info }));
   } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>;
-
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message;
-
-      dispatch(setAppError({ error }));
-
-      return;
-    }
-    dispatch(setAppError({ error: `Native error ${err.message}` }));
+    handleError(e, dispatch);
   }
 });
 
