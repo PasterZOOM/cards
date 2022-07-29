@@ -20,12 +20,6 @@ import { LoginFormType } from 'features/Login/loginTypes';
 import { validateLogin } from 'features/Login/validateLogin';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
-const initialValues: LoginFormType = {
-  email: '',
-  password: '',
-  rememberMe: false,
-};
-
 export const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -56,7 +50,7 @@ export const Login = (): ReturnComponentType => {
         Sing In
       </Typography>
       <Formik
-        initialValues={initialValues}
+        initialValues={{} as LoginFormType}
         validationSchema={validateLogin}
         onSubmit={submitLoginForm}
       >
