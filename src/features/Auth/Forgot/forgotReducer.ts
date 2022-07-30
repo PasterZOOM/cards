@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { repairPasswordAPI } from 'api/api';
+import { repairPasswordAPI } from 'api/authAPI';
 import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';

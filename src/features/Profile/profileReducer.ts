@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UserType } from './ProfileTypes';
 
-import { userAPI } from 'api/api';
+import { userAPI } from 'api/authAPI';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';

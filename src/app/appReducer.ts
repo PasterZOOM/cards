@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { userAPI } from 'api/api';
+import { userAPI } from 'api/authAPI';
 import { SnackbarType } from 'app/AppTypes';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
