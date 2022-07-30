@@ -1,6 +1,9 @@
 import axios from 'axios';
 
+import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
 import {
+  CreateCardResponseType,
+  CreatePackResponseType,
   InfoResponseType,
   MeResponseType,
   RegisterResponseType,
@@ -47,5 +50,15 @@ export const repairPasswordAPI = {
   },
   sendNewPassword(data: NewPasswordRequestType) {
     return instance.post<InfoResponseType>('/auth/set-new-password', data);
+  },
+};
+
+export const packsAPI = {
+  createPack(data: CreatePackType) {
+    return instance.post<CreatePackResponseType>(`cards/pack`, data);
+  },
+
+  createCard(data: CreateCardType) {
+    return instance.post<CreateCardResponseType>(`cards/card`, data);
   },
 };
