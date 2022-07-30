@@ -10,6 +10,7 @@ import { ForgotPassword } from 'features/Auth/Forgot/ForgotPassword/ForgotPasswo
 import { NewPassword } from 'features/Auth/Forgot/NewPassword/NewPassword';
 import { Login } from 'features/Auth/Login/Login';
 import { Register } from 'features/Auth/Register/Register';
+import { Options } from 'features/Cards/Options/Options';
 import { Profile } from 'features/Profile/Profile';
 
 export const RoutesPage = (): ReturnComponentType => {
@@ -21,6 +22,7 @@ export const RoutesPage = (): ReturnComponentType => {
     { path: `${path.CREATE_NEW_PASSWORD}/:token`, component: <NewPassword /> },
     { path: path.CHECK_EMAIL, component: <CheckEmail /> },
     { path: '*', component: <Error404 /> },
+    { path: '/options', component: <Options /> },
   ];
 
   return (

@@ -7,29 +7,23 @@ import { path } from 'common/enums/path';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export const Helper = (): ReturnComponentType => {
+  const helperItems = [
+    { path: path.LOGIN, title: 'Login' },
+    { path: path.REGISTRATION, title: 'Register' },
+    { path: path.PROFILE, title: 'Profile' },
+    { path: path.FORGOT_PASSWORD, title: 'ForgotPassword' },
+    { path: `${path.CREATE_NEW_PASSWORD}/:token`, title: 'NewPassword' },
+    { path: path.CHECK_EMAIL, title: 'CheckEmail' },
+    { path: '/options', title: 'Options' },
+  ];
+
   return (
     <div className={styles.helper}>
-      <NavLink to={path.LOGIN} className={styles.helperItem}>
-        Login
-      </NavLink>
-      <NavLink to={path.REGISTRATION} className={styles.helperItem}>
-        Registration
-      </NavLink>
-      <NavLink to={path.PROFILE} className={styles.helperItem}>
-        Profile
-      </NavLink>
-      <NavLink to={path.FORGOT_PASSWORD} className={styles.helperItem}>
-        ForgotPassword
-      </NavLink>
-      <NavLink to={path.CHECK_EMAIL} className={styles.helperItem}>
-        CheckEmail
-      </NavLink>
-      <NavLink to={`${path.CREATE_NEW_PASSWORD}/a`} className={styles.helperItem}>
-        CreateNewPassword
-      </NavLink>
-      <NavLink to="/a" className={styles.helperItem}>
-        ERROR_404
-      </NavLink>
+      {helperItems.map(item => (
+        <NavLink to={item.path} className={styles.helperItem} key={item.path}>
+          {item.title}
+        </NavLink>
+      ))}
     </div>
   );
 };
