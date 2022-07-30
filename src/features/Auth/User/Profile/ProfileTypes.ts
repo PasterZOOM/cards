@@ -1,4 +1,4 @@
-import { NewUserType } from 'features/Auth/Register/RegisterTypes';
+import { NewUserType } from 'features/Auth/User/Register/RegisterTypes';
 
 export type UpdateUserType = {
   name: string;

@@ -7,7 +7,7 @@ import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
 import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { RegisterFormType } from 'features/Auth/Register/RegisterTypes';
+import { RegisterFormType } from 'features/Auth/User/Register/RegisterTypes';
 
 type PropsType = {
   formik: FormikProps<RegisterFormType>;

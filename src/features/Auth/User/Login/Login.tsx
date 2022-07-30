@@ -14,10 +14,10 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { changeRedirect } from 'features/Auth/Forgot/forgotReducer';
-import { login } from 'features/Auth/Login/authReducer';
-import style from 'features/Auth/Login/Login.module.css';
-import { LoginFormType } from 'features/Auth/Login/loginTypes';
-import { validateLogin } from 'features/Auth/Login/validateLogin';
+import { login } from 'features/Auth/User/Login/authReducer';
+import style from 'features/Auth/User/Login/Login.module.css';
+import { LoginFormType } from 'features/Auth/User/Login/loginTypes';
+import { validateLogin } from 'features/Auth/User/Login/validateLogin';
 
 export const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();

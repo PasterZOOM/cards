@@ -4,8 +4,11 @@ import { userAPI } from 'api/authAPI';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
-import { login } from 'features/Auth/Login/authReducer';
-import { NewUserType, RegisterParamsType } from 'features/Auth/Register/RegisterTypes';
+import { login } from 'features/Auth/User/Login/authReducer';
+import {
+  NewUserType,
+  RegisterParamsType,
+} from 'features/Auth/User/Register/RegisterTypes';
 
 export const createUser = createAsyncThunk(
   'register/createUser',

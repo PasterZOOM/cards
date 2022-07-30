@@ -1,8 +1,8 @@
 import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { changeThemeAC } from 'app/themeReducer';
 import { changeEmail, changeRedirect } from 'features/Auth/Forgot/forgotReducer';
-import { changeLoggedIn } from 'features/Auth/Login/authReducer';
-import { sendUserDate } from 'features/Profile/profileReducer';
+import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
+import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
 
 export type AppActionsType =
   | ReturnType<typeof changeThemeAC>

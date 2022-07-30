@@ -11,7 +11,7 @@ import s from 'common/components/EditableSpan/EditableSpan.module.css';
 import { maxNameLength, minNameLength } from 'common/constants/projectConstants';
 import { useAppDispatch } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { updateUser } from 'features/Profile/profileReducer';
+import { updateUser } from 'features/Auth/User/Profile/profileReducer';
 
 type PropsType = {
   name: string;

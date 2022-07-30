@@ -5,9 +5,9 @@ import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
-import { LoginFormType } from 'features/Auth/Login/loginTypes';
-import { sendUserDate } from 'features/Profile/profileReducer';
-import { UserType } from 'features/Profile/ProfileTypes';
+import { LoginFormType } from 'features/Auth/User/Login/loginTypes';
+import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
+import { UserType } from 'features/Auth/User/Profile/ProfileTypes';
 
 export const login = createAsyncThunk(
   'auth/login',

@@ -8,12 +8,12 @@ import { Navigate, NavLink } from 'react-router-dom';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getIsLoggedIn } from 'features/Auth/Login/authSelectors';
-import styles from 'features/Auth/Register/Register.module.css';
-import { RegisterForm } from 'features/Auth/Register/RegisterForm/RegisterForm';
-import { validateRegisterForm } from 'features/Auth/Register/RegisterForm/validateRegisterForm';
-import { createUser } from 'features/Auth/Register/registerReducer';
-import { RegisterFormType } from 'features/Auth/Register/RegisterTypes';
+import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
+import styles from 'features/Auth/User/Register/Register.module.css';
+import { RegisterForm } from 'features/Auth/User/Register/RegisterForm/RegisterForm';
+import { validateRegisterForm } from 'features/Auth/User/Register/RegisterForm/validateRegisterForm';
+import { createUser } from 'features/Auth/User/Register/registerReducer';
+import { RegisterFormType } from 'features/Auth/User/Register/RegisterTypes';
 
 export const Register = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(getIsLoggedIn);

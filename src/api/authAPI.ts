@@ -10,9 +10,9 @@ import {
   NewPasswordRequestType,
   RepairPasswordRequestType,
 } from 'features/Auth/Forgot/ForgotPassword/ForgotPasswordTypes';
-import { LoginFormType } from 'features/Auth/Login/loginTypes';
-import { RegisterParamsType } from 'features/Auth/Register/RegisterTypes';
-import { UpdateUserType } from 'features/Profile/ProfileTypes';
+import { LoginFormType } from 'features/Auth/User/Login/loginTypes';
+import { UpdateUserType } from 'features/Auth/User/Profile/ProfileTypes';
+import { RegisterParamsType } from 'features/Auth/User/Register/RegisterTypes';
 
 // export const instance = axios.create({
 //   baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',

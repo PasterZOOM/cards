@@ -1,5 +1,5 @@
-import { NewUserType } from 'features/Auth/Register/RegisterTypes';
-import { UserType } from 'features/Profile/ProfileTypes';
+import { UserType } from 'features/Auth/User/Profile/ProfileTypes';
+import { NewUserType } from 'features/Auth/User/Register/RegisterTypes';
 
 export type MeResponseType = UserType & {
   error?: string;

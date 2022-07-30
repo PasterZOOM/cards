@@ -6,16 +6,14 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput';
 import Typography from '@mui/material/Typography/Typography';
 
-import styles from './SearchCardPacks.module.scss';
-
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import styles from 'features/Cards/Packs/Options/SearchCardPacks/SearchCardPacks.module.scss';
 
 export const SearchCardPacks = (): ReturnComponentType => {
   return (
     <Grid item className={styles.searchContainer}>
       <Typography className={styles.title}>Search</Typography>
       <OutlinedInput
-        type="search"
         placeholder="Provide your text"
         className={styles.input}
         startAdornment={

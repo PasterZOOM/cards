@@ -8,10 +8,10 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { CheckEmail } from 'features/Auth/Forgot/CheckEmail/CheckEmail';
 import { ForgotPassword } from 'features/Auth/Forgot/ForgotPassword/ForgotPassword';
 import { NewPassword } from 'features/Auth/Forgot/NewPassword/NewPassword';
-import { Login } from 'features/Auth/Login/Login';
-import { Register } from 'features/Auth/Register/Register';
-import { Options } from 'features/Cards/Options/Options';
-import { Profile } from 'features/Profile/Profile';
+import { Login } from 'features/Auth/User/Login/Login';
+import { Profile } from 'features/Auth/User/Profile/Profile';
+import { Register } from 'features/Auth/User/Register/Register';
+import { Packs } from 'features/Cards/Packs/Packs';
 
 export const RoutesPage = (): ReturnComponentType => {
   const routes = [
@@ -21,8 +21,8 @@ export const RoutesPage = (): ReturnComponentType => {
     { path: path.FORGOT_PASSWORD, component: <ForgotPassword /> },
     { path: `${path.CREATE_NEW_PASSWORD}/:token`, component: <NewPassword /> },
     { path: path.CHECK_EMAIL, component: <CheckEmail /> },
+    { path: path.PACKS, component: <Packs /> },
     { path: '*', component: <Error404 /> },
-    { path: '/options', component: <Options /> },
   ];
 
   return (

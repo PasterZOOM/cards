@@ -6,7 +6,7 @@ import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
 
 export const getPacks = createAsyncThunk(
-  'cards/getPacks',
+  'packs/getPacks',
   async (param: GetPacksParamsType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
@@ -24,7 +24,7 @@ export const getPacks = createAsyncThunk(
 );
 
 const slice = createSlice({
-  name: 'cards',
+  name: 'packs',
   initialState: {} as CardPacksType,
   reducers: {},
   extraReducers: builder => {
@@ -34,4 +34,4 @@ const slice = createSlice({
   },
 });
 
-export const appReducer = slice.reducer;
+export const packsReducer = slice.reducer;
