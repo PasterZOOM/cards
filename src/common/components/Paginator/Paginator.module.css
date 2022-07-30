@@ -1,0 +1,22 @@
+.paginator {
+    margin: 5px
+}
+
+.paginator span {
+    padding: 10px;
+}
+
+.selectedPage {
+    font-weight: bold;
+
+}
+
+.pageNumber {
+
+}
+
+.icon {
+    position: relative;
+    top: 5px;
+}
+
