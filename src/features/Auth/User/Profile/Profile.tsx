@@ -11,12 +11,14 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { logOut } from 'features/Auth/User/Login/authReducer';
+import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import s from 'features/Auth/User/Profile/Profile.module.css';
+import { getUser } from 'features/Auth/User/Profile/profileSelectors';
 
 export const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.profile.user);
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const user = useAppSelector(getUser);
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;

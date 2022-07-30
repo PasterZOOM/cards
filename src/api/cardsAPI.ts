@@ -1,12 +1,13 @@
 import { instance } from 'api/authAPI';
 import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
 import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
+import { PacksOptionsStateType } from 'features/Cards/Packs/Options/paksOptionsReducer';
 
 export const packsAPI = {
   createPack(data: CreatePackType) {
     return instance.post<CreatePackResponseType>(`cards/pack`, data);
   },
-  getPacks(params: GetPacksParamsType) {
+  getPacks(params: PacksOptionsStateType) {
     return instance.get<CardPacksType>(`cards/pack`, { params: { ...params } });
   },
 };
@@ -15,16 +16,6 @@ export const cardsAPI = {
   createCard(data: CreateCardType) {
     return instance.post<CreateCardResponseType>(`cards/card`, data);
   },
-};
-
-export type GetPacksParamsType = {
-  packName?: string;
-  sortPacks?: string;
-  user_id?: number;
-  page?: number;
-  pageCount?: number;
-  max?: number;
-  min?: number;
 };
 
 export type CardPacksType = {

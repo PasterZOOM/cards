@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { CardPacksType, GetPacksParamsType, packsAPI } from 'api/cardsAPI';
+import { CardPacksType, packsAPI } from 'api/cardsAPI';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
+import { PacksOptionsStateType } from 'features/Cards/Packs/Options/paksOptionsReducer';
 
 export const getPacks = createAsyncThunk(
   'packs/getPacks',
-  async (param: GetPacksParamsType, { dispatch, rejectWithValue }) => {
+  async (param: PacksOptionsStateType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
       const res = await packsAPI.getPacks(param);
