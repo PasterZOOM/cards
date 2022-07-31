@@ -6,31 +6,28 @@ import { Navigate } from 'react-router-dom';
 
 import { packsAPI } from 'api/cardsAPI';
 import { Paginator } from 'common/components/Paginator/Paginator';
-import { packsOwn } from 'common/enums/packsOwn';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getLocalStorage } from 'common/utils/localStorageUtil';
-import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { Options } from 'features/Cards/Packs/Options/Options';
-import { getPacksOptionsParams } from 'features/Cards/Packs/Options/packsOptionsSelectors';
-import { changeFilterByOwn } from 'features/Cards/Packs/Options/paksOptionsReducer';
 import style from 'features/Cards/Packs/Packs.module.css';
 import { getPacks } from 'features/Cards/Packs/packsReducer';
+import {
+  getCardPacksTotalCount,
+  getPageCount,
+  getPageNumber,
+} from 'features/Cards/Packs/packsSelectors';
 
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(getUserId);
-  const params = useAppSelector(getPacksOptionsParams);
+
+  const pageCount = useAppSelector(getPageCount);
+  const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
+  const pageNumber = useAppSelector(getPageNumber);
 
   useEffect(() => {
-    dispatch(
-      changeFilterByOwn({
-        userId: getLocalStorage('PacksOwn') === packsOwn.MY ? userId : null,
-      }),
-    );
-    dispatch(getPacks(params));
-  }, [dispatch, params, userId]);
+    dispatch(getPacks({ pageCount }));
+  }, []);
 
   const addNewPackHandler = (): void => {
     packsAPI.createPack({
@@ -63,7 +60,11 @@ export const Packs = (): ReturnComponentType => {
       <Options />
       <div className={style.table}>table</div>
       <div className={style.pagination}>
-        <Paginator portionSize={5} pageSize={15} totalItemsCount={100} />
+        <Paginator
+          cardPacksTotalCount={cardPacksTotalCount}
+          pageCount={pageCount}
+          pageNumber={pageNumber}
+        />
       </div>
     </div>
   );

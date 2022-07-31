@@ -54,13 +54,13 @@ export const {
 } = slice.actions;
 
 export type PacksOptionsStateType = {
-  packName: string | null;
-  min: number | null;
-  max: number | null;
-  sortPacks: sortPacks | null;
-  page: number | null;
-  pageCount: number | null;
-  user_id: string | null;
+  packName?: string | null;
+  min?: number | null;
+  max?: number | null;
+  sortPacks?: sortPacks | null;
+  page?: number | null;
+  pageCount?: number | null;
+  user_id?: string | null;
 };
 export enum sortPacks {
   ASC_USER_NAME = '1user_name',
