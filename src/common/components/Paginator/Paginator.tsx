@@ -13,11 +13,12 @@ import {
 import { getCardPacksTotalCount } from 'features/Cards/Packs/packsSelectors';
 
 export const Paginator: React.FC = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
   const pageCount = useAppSelector(getParamsPacksPageCount);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(pageCount as number);
-  const dispatch = useAppDispatch();
 
   const handleChangePage = useCallback(
     (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void => {

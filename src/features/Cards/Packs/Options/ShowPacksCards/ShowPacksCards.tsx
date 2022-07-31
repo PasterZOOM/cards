@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import ButtonGroup from '@mui/material/ButtonGroup/ButtonGroup';
 import Grid from '@mui/material/Grid/Grid';
@@ -9,7 +9,10 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getLocalStorage, setLocalStorage } from 'common/utils/localStorageUtil';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { changeFilterByOwn } from 'features/Cards/Packs/Options/paksOptionsReducer';
+import {
+  changeFilterByOwn,
+  changePacksPage,
+} from 'features/Cards/Packs/Options/paksOptionsReducer';
 import styles from 'features/Cards/Packs/Options/SearchCardPacks/SearchCardPacks.module.scss';
 import { FilterButton } from 'features/Cards/Packs/Options/ShowPacksCards/FilterButton';
 
@@ -20,10 +23,16 @@ export const ShowPacksCards = (): ReturnComponentType => {
 
   packsOwnLS = packsOwnLS === null ? packsOwn.ALL : packsOwnLS;
 
-  const onClickButton = (buttonName: packsOwn): void => {
-    dispatch(changeFilterByOwn({ userId: buttonName === packsOwn.MY ? userId : null }));
-    setLocalStorage('PacksOwn', buttonName);
-  };
+  const onClickButton = useCallback(
+    (buttonName: packsOwn): void => {
+      setLocalStorage('PacksOwn', buttonName);
+      dispatch(
+        changeFilterByOwn({ userId: buttonName === packsOwn.MY ? userId : undefined }),
+      );
+      dispatch(changePacksPage({ page: undefined }));
+    },
+    [dispatch, userId],
+  );
 
   const buttons = [
     <FilterButton

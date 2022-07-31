@@ -24,7 +24,7 @@ export const SearchCardPacks = (): ReturnComponentType => {
   }, []);
 
   useEffect(() => {
-    dispatch(changeSearchValue({ packName: !debouncedValue ? null : debouncedValue }));
+    dispatch(changeSearchValue({ packName: debouncedValue || undefined }));
   }, [debouncedValue, dispatch]);
 
   return (

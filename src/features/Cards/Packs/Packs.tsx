@@ -11,6 +11,7 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
+import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { Options } from 'features/Cards/Packs/Options/Options';
 import { getPacksOptionsParams } from 'features/Cards/Packs/Options/packsOptionsSelectors';
@@ -20,13 +21,14 @@ import { getPacks } from 'features/Cards/Packs/packsReducer';
 
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
   const userId = useAppSelector(getUserId);
   const params = useAppSelector(getPacksOptionsParams);
 
   useEffect(() => {
     dispatch(
       changeFilterByOwn({
-        userId: getLocalStorage('PacksOwn') === packsOwn.MY ? userId : null,
+        userId: getLocalStorage('PacksOwn') === packsOwn.MY ? userId : undefined,
       }),
     );
     dispatch(getPacks(params));
@@ -37,8 +39,6 @@ export const Packs = (): ReturnComponentType => {
       cardsPack: { name: 'create new cool pack', private: false, deckCover: '' },
     });
   };
-
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;

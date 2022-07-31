@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
@@ -19,30 +19,29 @@ export const NumberOfCards = (): ReturnComponentType => {
   const minValue = useAppSelector(getMinCardsCount);
   const maxValue = useAppSelector(getMaxCardsCount);
 
-  const [value, setValue] = React.useState<Array<number>>([minValue, maxValue]);
-
+  const [value, setValue] = useState<Array<number>>([minValue, maxValue]);
   const debouncedValue = useDebounce<Array<number>>(value);
+
+  const handleChange = useCallback((event: Event, newValue: number | number[]): void => {
+    setValue(newValue as [number, number]);
+  }, []);
 
   useEffect(() => {
     setValue([minValue, maxValue]);
-  }, [minValue, maxValue]);
+  }, [maxValue, minValue]);
 
-  const handleChange = useCallback(
-    (event: Event, newValue: number | number[]): void => {
-      setValue(newValue as [number, number]);
-      dispatch(
-        changeValueMinCardsCount({
-          min: debouncedValue[0] !== minValue ? debouncedValue[0] : null,
-        }),
-      );
-      dispatch(
-        changeValueMaxCardsCount({
-          max: debouncedValue[1] !== maxValue ? debouncedValue[1] : null,
-        }),
-      );
-    },
-    [debouncedValue, dispatch, maxValue, minValue],
-  );
+  useEffect(() => {
+    dispatch(
+      changeValueMinCardsCount({
+        min: debouncedValue[0] !== minValue ? debouncedValue[0] : undefined,
+      }),
+    );
+    dispatch(
+      changeValueMaxCardsCount({
+        max: debouncedValue[1] !== maxValue ? debouncedValue[1] : undefined,
+      }),
+    );
+  }, [dispatch, debouncedValue, minValue, maxValue]);
 
   return (
     <Grid item>
