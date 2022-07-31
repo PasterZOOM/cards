@@ -1,54 +1,51 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useCallback } from 'react';
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import TablePagination from '@mui/material/TablePagination';
 
-import style from './Paginator.module.css';
-
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getParamsPacksPageCount } from 'features/Cards/Packs/Options/packsOptionsSelectors';
+import {
+  changePacksPage,
+  changePacksPageCount,
+} from 'features/Cards/Packs/Options/paksOptionsReducer';
+import { getCardPacksTotalCount } from 'features/Cards/Packs/packsSelectors';
 
-type PaginatorPropsType = {
-  totalItemsCount: number;
-  pageSize: number;
-  portionSize: number;
-};
+export const Paginator: React.FC = (): ReturnComponentType => {
+  const pageCount = useAppSelector(getParamsPacksPageCount);
+  const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(pageCount as number);
+  const dispatch = useAppDispatch();
 
-export const Paginator: React.FC<PaginatorPropsType> = ({
-  totalItemsCount,
-  pageSize,
-  portionSize,
-}): ReturnComponentType => {
-  const pagesCount = Math.ceil(totalItemsCount / pageSize);
-  const pages = [];
+  const handleChangePage = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
+      dispatch(changePacksPage({ page: newPage + 1 }));
+      setPage(newPage);
+    },
+    [dispatch],
+  );
 
-  for (let i = 1; i <= pagesCount; i += 1) {
-    pages.push(i);
-  }
-
-  const portionCount = Math.ceil(pagesCount / portionSize);
-  const [portionNumber, setPortionNumber] = useState(1);
+  const handleChangeRowsPerPage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+      dispatch(changePacksPageCount({ pageCount: parseInt(event.target.value, 10) }));
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    },
+    [dispatch],
+  );
 
   return (
-    <div className={style.paginator}>
-      {portionNumber > 1 && (
-        <ArrowBackIcon
-          className={style.icon}
-          color="primary"
-          onClick={() => {
-            setPortionNumber(portionNumber - 1);
-          }}
-        />
-      )}
-
-      {portionCount > portionNumber && (
-        <ArrowForwardIcon
-          className={style.icon}
-          color="primary"
-          onClick={() => {
-            setPortionNumber(portionNumber + 1);
-          }}
-        />
-      )}
-    </div>
+    <TablePagination
+      showFirstButton
+      showLastButton
+      component="div"
+      count={cardPacksTotalCount}
+      page={page}
+      onPageChange={handleChangePage}
+      rowsPerPage={rowsPerPage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
+    />
   );
 };

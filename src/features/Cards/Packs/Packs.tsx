@@ -63,7 +63,7 @@ export const Packs = (): ReturnComponentType => {
       <Options />
       <div className={style.table}>table</div>
       <div className={style.pagination}>
-        <Paginator portionSize={5} pageSize={15} totalItemsCount={100} />
+        <Paginator />
       </div>
     </div>
   );

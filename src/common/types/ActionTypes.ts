@@ -12,6 +12,7 @@ import {
   changeValueSortPacks,
   changeFilterByOwn,
 } from 'features/Cards/Packs/Options/paksOptionsReducer';
+import { setPageNumber, setPageCount } from 'features/Cards/Packs/packsReducer';
 
 export type AppActionsType =
   | ReturnType<typeof changeThemeAC>
@@ -27,4 +28,6 @@ export type AppActionsType =
   | ReturnType<typeof changeValueSortPacks>
   | ReturnType<typeof changePacksPage>
   | ReturnType<typeof changePacksPageCount>
-  | ReturnType<typeof changeFilterByOwn>;
+  | ReturnType<typeof changeFilterByOwn>
+  | ReturnType<typeof setPageNumber>
+  | ReturnType<typeof setPageCount>;

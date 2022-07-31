@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'packsOptions',
-  initialState: {} as PacksOptionsStateType,
+  initialState: { pageCount: 10 } as PacksOptionsStateType,
   reducers: {
     changeSearchValue: (state, action: PayloadAction<{ packName: string | null }>) => {
       state.packName = action.payload.packName;
