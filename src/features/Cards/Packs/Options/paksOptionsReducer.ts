@@ -2,15 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'packsOptions',
-  initialState: {
-    packName: null,
-    min: null,
-    max: null,
-    sortPacks: null,
-    page: null,
-    pageCount: null,
-    user_id: null,
-  } as PacksOptionsStateType,
+  initialState: {} as PacksOptionsStateType,
   reducers: {
     changeSearchValue: (state, action: PayloadAction<{ packName: string | null }>) => {
       state.packName = action.payload.packName;

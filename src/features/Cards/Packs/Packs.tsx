@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button/Button';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate } from 'react-router-dom';
 
