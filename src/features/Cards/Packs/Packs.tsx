@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 
+import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button/Button';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate } from 'react-router-dom';
 
 import { packsAPI } from 'api/cardsAPI';
+import { DataTable } from 'common/components/DataTable/DataTable';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { packsOwn } from 'common/enums/packsOwn';
 import { path } from 'common/enums/path';
@@ -61,7 +63,9 @@ export const Packs = (): ReturnComponentType => {
         </Button>
       </div>
       <Options />
-      <div className={style.table}>table</div>
+      <Box>
+        <DataTable />
+      </Box>
       <div className={style.pagination}>
         <Paginator />
       </div>
