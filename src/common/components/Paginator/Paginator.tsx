@@ -38,6 +38,7 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
     dispatch(setPageCount({ pageCount: parseInt(event.target.value, 10) }));
+    dispatch(setPageNumber({ page: 1 }));
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
