@@ -26,7 +26,7 @@ export const getPacks = createAsyncThunk(
 
 const slice = createSlice({
   name: 'packs',
-  initialState: { pageCount: 10 } as CardPacksType,
+  initialState: {} as CardPacksType,
   reducers: {
     setPageNumber(state, action: PayloadAction<{ page: number }>) {
       state.page = action.payload.page;

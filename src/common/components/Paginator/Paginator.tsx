@@ -1,47 +1,41 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 import TablePagination from '@mui/material/TablePagination';
 
-import { useAppDispatch } from 'common/hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getPacks, setPageCount, setPageNumber } from 'features/Cards/Packs/packsReducer';
+import { getParamsPacksPageCount } from 'features/Cards/Packs/Options/packsOptionsSelectors';
+import {
+  changePacksPage,
+  changePacksPageCount,
+} from 'features/Cards/Packs/Options/paksOptionsReducer';
+import { getCardPacksTotalCount } from 'features/Cards/Packs/packsSelectors';
 
-type PaginatorPropsType = {
-  cardPacksTotalCount: number;
-  pageCount: number;
-  pageNumber: number;
-};
-
-export const Paginator: React.FC<PaginatorPropsType> = ({
-  cardPacksTotalCount,
-  pageCount,
-  pageNumber,
-}): ReturnComponentType => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(pageCount);
+export const Paginator: React.FC = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+  const pageCount = useAppSelector(getParamsPacksPageCount);
+  const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
 
-  useEffect(() => {
-    dispatch(getPacks({ page: pageNumber, pageCount }));
-  }, [pageNumber, pageCount]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(pageCount as number);
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number,
-  ): void => {
-    dispatch(setPageNumber({ page: newPage + 1 }));
-    setPage(newPage);
-  };
+  const handleChangePage = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
+      dispatch(changePacksPage({ page: newPage + 1 }));
+      setPage(newPage);
+    },
+    [dispatch],
+  );
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ): void => {
-    dispatch(setPageCount({ pageCount: parseInt(event.target.value, 10) }));
-    dispatch(setPageNumber({ page: 1 }));
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const handleChangeRowsPerPage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+      dispatch(changePacksPageCount({ pageCount: parseInt(event.target.value, 10) }));
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    },
+    [dispatch],
+  );
 
   return (
     <TablePagination
