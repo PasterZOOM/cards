@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
-import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button/Button';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate } from 'react-router-dom';
+
+import style from './CardPacks.module.scss';
 
 import { packsAPI } from 'api/cardsAPI';
 import { DataTable } from 'common/components/DataTable/DataTable';
@@ -12,10 +13,9 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import style from 'features/Cards/CardPacks/CardPacks.module.css';
 import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
 import { getCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
-import { getCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 
 export const CardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ export const CardPacks = (): ReturnComponentType => {
   const params = useAppSelector(getCardPacksParams);
 
   useEffect(() => {
-    dispatch(getCardPacks(params));
+    dispatch(loadCardPacks(params));
   }, [dispatch, params]);
 
   const addNewPackHandler = (): void => {
@@ -38,25 +38,27 @@ export const CardPacks = (): ReturnComponentType => {
 
   return (
     <div className={style.main}>
-      <div className={style.title}>
-        <Typography className={style.name}>Packs list</Typography>
-      </div>
-      <div className={style.button}>
-        <Button
-          className={style.btn}
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={addNewPackHandler}
-        >
-          Add new pack
-        </Button>
+      <div className={style.head}>
+        <div>
+          <Typography className={style.title}>Packs list</Typography>
+        </div>
+        <div>
+          <Button
+            className={style.button}
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={addNewPackHandler}
+          >
+            Add new pack
+          </Button>
+        </div>
       </div>
       <CardPacksParams />
-      <Box>
+      <div className={style.table}>
         <DataTable />
-      </Box>
-      <div className={style.pagination}>
+      </div>
+      <div className={style.paginator}>
         <Paginator />
       </div>
     </div>

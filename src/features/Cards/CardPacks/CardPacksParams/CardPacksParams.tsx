@@ -9,7 +9,7 @@ import { SearchCardPacks } from 'features/Cards/CardPacks/CardPacksParams/Search
 
 export const CardPacksParams = (): ReturnComponentType => {
   return (
-    <Grid container justifyContent="space-between">
+    <Grid item container justifyContent="space-between">
       <SearchCardPacks />
       <OwnCardPacks />
       <NumberOfCards />

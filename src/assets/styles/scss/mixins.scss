@@ -1,7 +1,7 @@
 @import './variables';
 
-@mixin text($fontFamily, $fountSize, $fontWeight, $lineHeight) {
-  font-family: $fontFamily !important;
+@mixin text($fountSize, $fontWeight, $lineHeight) {
+  font-family: $montserrat !important;
   font-size: $fountSize;
   font-weight: $fontWeight;
   font-style: normal !important;

@@ -1,9 +1,42 @@
 @import "src/assets/styles/scss/variables";
 @import "src/assets/styles/scss/mixins";
 
-.numberOfCardsContainer {
+.main {
   .title {
-    @include text($montserrat, 14px, 500, 17px);
+    @include text(14px, 500, 17px);
     margin: 0 0 8px;
+  }
+
+  .params {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+
+    .slider {
+      width: 154px;
+    }
+
+    .paper {
+      box-sizing: border-box;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #D9D9D9;
+      border-radius: 2px;
+      @include text(16px, 600, 20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      .input {
+        all: inherit;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+
+        }
+      }
+    }
   }
 }

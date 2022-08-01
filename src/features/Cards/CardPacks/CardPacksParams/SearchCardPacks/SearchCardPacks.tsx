@@ -11,12 +11,10 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { changeSearchValue } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import styles from 'features/Cards/CardPacks/CardPacksParams/SearchCardPacks/SearchCardPacks.module.scss';
 
-const searchDebounceTime = 700;
-
 export const SearchCardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState<string>('');
-  const debouncedValue = useDebounce<string>(value, searchDebounceTime);
+  const debouncedValue = useDebounce<string>(value);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);

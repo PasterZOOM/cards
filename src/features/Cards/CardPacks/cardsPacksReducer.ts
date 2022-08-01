@@ -5,8 +5,8 @@ import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
 
-export const getCardPacks = createAsyncThunk(
-  'cardPacks/getCardPacks',
+export const loadCardPacks = createAsyncThunk(
+  'cardPacks/loadCardPacks',
   async (param: CardPacksParamsType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
@@ -28,11 +28,11 @@ const slice = createSlice({
   name: 'cardPacks',
   initialState: {
     cardPacks: null as null | Array<CardPackType>,
-    page: null as null | number,
-    pageCount: 1,
-    cardPacksTotalCount: null as null | number,
-    minCardsCount: null as null | number,
-    maxCardsCount: null as null | number,
+    page: 1,
+    pageCount: 10,
+    cardPacksTotalCount: 0,
+    minCardsCount: 0,
+    maxCardsCount: 0,
     token: null as null | string,
     tokenDeathTime: null as null | number,
   } as CardPacksType,
@@ -45,7 +45,7 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getCardPacks.fulfilled, (state, action) => {
+    builder.addCase(loadCardPacks.fulfilled, (state, action) => {
       return action.payload;
     });
   },

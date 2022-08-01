@@ -21,7 +21,7 @@ export const RoutesPage = (): ReturnComponentType => {
     { path: path.FORGOT_PASSWORD, component: <ForgotPassword /> },
     { path: `${path.CREATE_NEW_PASSWORD}/:token`, component: <NewPassword /> },
     { path: path.CHECK_EMAIL, component: <CheckEmail /> },
-    { path: path.PACKS, component: <CardPacks /> },
+    { path: path.CARD_PACKS, component: <CardPacks /> },
     { path: '*', component: <Error404 /> },
   ];
 

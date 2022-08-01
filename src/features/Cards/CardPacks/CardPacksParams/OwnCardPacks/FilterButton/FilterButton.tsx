@@ -2,6 +2,8 @@ import React from 'react';
 
 import Button from '@mui/material/Button/Button';
 
+import styles from './FilterButton.module.scss';
+
 import { packsOwn } from 'common/enums/packsOwn';
 
 type PropsType = {
@@ -19,7 +21,7 @@ export const FilterButton: React.FC<PropsType> = ({
   const variant = packsOwnLS === title ? 'contained' : 'outlined';
 
   return (
-    <Button variant={variant} onClick={onClickButtonHandle}>
+    <Button variant={variant} onClick={onClickButtonHandle} className={styles.button}>
       {title}
     </Button>
   );

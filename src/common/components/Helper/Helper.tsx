@@ -14,7 +14,7 @@ export const Helper = (): ReturnComponentType => {
     { path: path.FORGOT_PASSWORD, title: 'ForgotPassword' },
     { path: `${path.CREATE_NEW_PASSWORD}/:token`, title: 'NewPassword' },
     { path: path.CHECK_EMAIL, title: 'CheckEmail' },
-    { path: path.PACKS, title: 'Packs' },
+    { path: path.CARD_PACKS, title: 'Packs' },
   ];
 
   return (
