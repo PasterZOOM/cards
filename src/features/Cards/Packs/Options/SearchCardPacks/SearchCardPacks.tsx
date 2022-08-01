@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
 import Grid from '@mui/material/Grid/Grid';
@@ -19,9 +19,9 @@ export const SearchCardPacks = (): ReturnComponentType => {
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string>(value, searchDebounceTime);
 
-  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);
-  }, []);
+  };
 
   useEffect(() => {
     dispatch(changeSearchValue({ packName: debouncedValue || undefined }));

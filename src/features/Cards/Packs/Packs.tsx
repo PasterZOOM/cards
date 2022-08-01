@@ -8,33 +8,23 @@ import { Navigate } from 'react-router-dom';
 import { packsAPI } from 'api/cardsAPI';
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { Paginator } from 'common/components/Paginator/Paginator';
-import { packsOwn } from 'common/enums/packsOwn';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { Options } from 'features/Cards/Packs/Options/Options';
 import { getPacksOptionsParams } from 'features/Cards/Packs/Options/packsOptionsSelectors';
-import { changeFilterByOwn } from 'features/Cards/Packs/Options/paksOptionsReducer';
 import style from 'features/Cards/Packs/Packs.module.css';
 import { getPacks } from 'features/Cards/Packs/packsReducer';
 
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const userId = useAppSelector(getUserId);
   const params = useAppSelector(getPacksOptionsParams);
 
   useEffect(() => {
-    dispatch(
-      changeFilterByOwn({
-        userId: getLocalStorage('PacksOwn') === packsOwn.MY ? userId : undefined,
-      }),
-    );
     dispatch(getPacks(params));
-  }, [dispatch, params, userId]);
+  }, [dispatch, params]);
 
   const addNewPackHandler = (): void => {
     packsAPI.createPack({

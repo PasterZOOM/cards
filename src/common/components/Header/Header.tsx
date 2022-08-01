@@ -18,7 +18,7 @@ export const Header = (): ReturnComponentType => {
       <Toolbar className={styles.toolbar}>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
-            <NavLink to={path.LOGIN}>
+            <NavLink to={path.PACKS}>
               <img src={logo} alt="logo" className={styles.logo} />
             </NavLink>
           </Grid>

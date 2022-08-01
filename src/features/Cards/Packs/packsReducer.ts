@@ -11,6 +11,7 @@ export const getPacks = createAsyncThunk(
   async (param: PacksOptionsStateType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
+
       const res = await packsAPI.getPacks(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
@@ -26,7 +27,7 @@ export const getPacks = createAsyncThunk(
 
 const slice = createSlice({
   name: 'packs',
-  initialState: {} as CardPacksType,
+  initialState: { cardPacksTotalCount: 1 } as CardPacksType,
   reducers: {
     setPageNumber(state, action: PayloadAction<{ page: number }>) {
       state.page = action.payload.page;
