@@ -12,11 +12,11 @@ import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import {
   changeFilterByOwn,
   changePacksPage,
-} from 'features/Cards/Packs/Options/paksOptionsReducer';
-import styles from 'features/Cards/Packs/Options/SearchCardPacks/SearchCardPacks.module.scss';
-import { FilterButton } from 'features/Cards/Packs/Options/ShowPacksCards/FilterButton';
+} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import { FilterButton } from 'features/Cards/CardPacks/CardPacksParams/OwnCardPacks/FilterButton';
+import styles from 'features/Cards/CardPacks/CardPacksParams/SearchCardPacks/SearchCardPacks.module.scss';
 
-export const ShowPacksCards = (): ReturnComponentType => {
+export const OwnCardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(getUserId);
   const packsOwnLS = (getLocalStorage('PacksOwn') as packsOwn) || packsOwn.ALL;

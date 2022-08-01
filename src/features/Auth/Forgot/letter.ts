@@ -1,4 +1,4 @@
-export const mail = `
+export const letter = `
 <!doctype html>
 <html lang="en-US">
 

@@ -12,8 +12,11 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import {
   changeValueMaxCardsCount,
   changeValueMinCardsCount,
-} from 'features/Cards/Packs/Options/paksOptionsReducer';
-import { getMaxCardsCount, getMinCardsCount } from 'features/Cards/Packs/packsSelectors';
+} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import {
+  getMaxCardsCount,
+  getMinCardsCount,
+} from 'features/Cards/CardPacks/cardPacksSelectors';
 
 export const NumberOfCards = (): ReturnComponentType => {
   const dispatch = useAppDispatch();

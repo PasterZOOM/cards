@@ -6,11 +6,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput';
 import Typography from '@mui/material/Typography/Typography';
 
-import { changeSearchValue } from '../paksOptionsReducer';
-
 import { useAppDispatch, useDebounce } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import styles from 'features/Cards/Packs/Options/SearchCardPacks/SearchCardPacks.module.scss';
+import { changeSearchValue } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import styles from 'features/Cards/CardPacks/CardPacksParams/SearchCardPacks/SearchCardPacks.module.scss';
 
 const searchDebounceTime = 700;
 

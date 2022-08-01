@@ -5,16 +5,16 @@ import TablePagination from '@mui/material/TablePagination';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getParamsPacksPageCount } from 'features/Cards/Packs/Options/packsOptionsSelectors';
 import {
   changePacksPage,
   changePacksPageCount,
-} from 'features/Cards/Packs/Options/paksOptionsReducer';
-import { getCardPacksTotalCount } from 'features/Cards/Packs/packsSelectors';
+} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import { getPageCountCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
+import { getCardPacksTotalCount } from 'features/Cards/CardPacks/cardPacksSelectors';
 
 export const Paginator: React.FC = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const pageCount = useAppSelector(getParamsPacksPageCount);
+  const pageCount = useAppSelector(getPageCountCardPacksParams);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
 
   const [page, setPage] = React.useState(0);

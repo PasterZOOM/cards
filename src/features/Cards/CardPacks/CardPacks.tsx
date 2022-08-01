@@ -12,18 +12,18 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import { Options } from 'features/Cards/Packs/Options/Options';
-import { getPacksOptionsParams } from 'features/Cards/Packs/Options/packsOptionsSelectors';
-import style from 'features/Cards/Packs/Packs.module.css';
-import { getPacks } from 'features/Cards/Packs/packsReducer';
+import style from 'features/Cards/CardPacks/CardPacks.module.css';
+import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
+import { getCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
+import { getCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 
-export const Packs = (): ReturnComponentType => {
+export const CardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const params = useAppSelector(getPacksOptionsParams);
+  const params = useAppSelector(getCardPacksParams);
 
   useEffect(() => {
-    dispatch(getPacks(params));
+    dispatch(getCardPacks(params));
   }, [dispatch, params]);
 
   const addNewPackHandler = (): void => {
@@ -52,7 +52,7 @@ export const Packs = (): ReturnComponentType => {
           Add new pack
         </Button>
       </div>
-      <Options />
+      <CardPacksParams />
       <Box>
         <DataTable />
       </Box>

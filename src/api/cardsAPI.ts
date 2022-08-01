@@ -1,13 +1,13 @@
 import { instance } from 'api/authAPI';
 import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
 import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
-import { PacksOptionsStateType } from 'features/Cards/Packs/Options/paksOptionsReducer';
+import { sortPacks } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 
 export const packsAPI = {
   createPack(data: CreatePackType) {
     return instance.post<CreatePackResponseType>(`cards/pack`, data);
   },
-  getPacks(params: PacksOptionsStateType) {
+  getPacks(params: CardPacksParamsType) {
     return instance.get<CardPacksType>(`cards/pack`, { params: { ...params } });
   },
 };
@@ -28,7 +28,6 @@ export type CardPacksType = {
   token: string;
   tokenDeathTime: number;
 };
-
 export type CardPackType = {
   _id: string;
   user_id: string;
@@ -46,4 +45,13 @@ export type CardPackType = {
   more_id: string;
   __v: number;
   deckCover: string | null;
+};
+export type CardPacksParamsType = {
+  packName?: string;
+  min?: number;
+  max?: number;
+  sortPacks?: sortPacks;
+  page?: number;
+  pageCount?: number;
+  user_id?: string;
 };

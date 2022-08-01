@@ -9,7 +9,7 @@ import { handleError } from 'common/utils/handleError';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
-import { changeFilterByOwn } from 'features/Cards/Packs/Options/paksOptionsReducer';
+import { changeFilterByOwn } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 
 export const initializeApp = createAsyncThunk(
   'app/initializeApp',
