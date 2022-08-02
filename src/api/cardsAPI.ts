@@ -3,23 +3,26 @@ import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
 import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
 import { sortPacks } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 
-export const packsAPI = {
+export const cardPacksAPI = {
   createPack(data: CreatePackType) {
     return instance.post<CreatePackResponseType>(`cards/pack`, data);
   },
   getPacks(params: CardPacksParamsType) {
-    return instance.get<CardPacksType>(`cards/pack`, { params: { ...params } });
+    return instance.get<CardPacksResponseType>(`cards/pack`, { params: { ...params } });
   },
 };
 
-export const cardsAPI = {
-  createCard(data: CreateCardType) {
+export const cardPackAPI = {
+  getCardPack(params: PackParamsType) {
+    return instance.get<PackResponseType>('cards/card', { params: { ...params } });
+  },
+  createCardPack(data: CreateCardType) {
     return instance.post<CreateCardResponseType>(`cards/card`, data);
   },
 };
 
-export type CardPacksType = {
-  cardPacks: Array<CardPackType>;
+export type CardPacksResponseType = {
+  cardPacks: Array<PackType>;
   page: number;
   pageCount: number;
   cardPacksTotalCount: number;
@@ -28,7 +31,18 @@ export type CardPacksType = {
   token: string;
   tokenDeathTime: number;
 };
-export type CardPackType = {
+export type PackResponseType = {
+  cards: Array<CardType>;
+  packUserId: string;
+  page: number;
+  pageCount: number;
+  cardsTotalCount: number;
+  minGrade: number;
+  maxGrade: number;
+  token: string;
+  tokenDeathTime: number;
+};
+export type PackType = {
   _id: string;
   user_id: string;
   user_name: string;
@@ -46,6 +60,26 @@ export type CardPackType = {
   __v: number;
   deckCover: string | null;
 };
+export type CardType = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  questionImg: string;
+  answerImg: string;
+  answerVideo: string;
+  questionVideo: string;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+};
 export type CardPacksParamsType = {
   packName?: string;
   min?: number;
@@ -54,4 +88,14 @@ export type CardPacksParamsType = {
   page?: number;
   pageCount?: number;
   user_id?: string;
+};
+export type PackParamsType = {
+  cardsPack_id: string;
+  cardQuestion?: string;
+  cardAnswer?: string;
+  min?: number;
+  max?: number;
+  sortCards?: string;
+  page?: number;
+  pageCount?: number;
 };

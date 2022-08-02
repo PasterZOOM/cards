@@ -13,6 +13,8 @@ import {
   changeValueSortPacks,
 } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import { setPageCount, setPageNumber } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { changeCardQuestionSearchValue } from 'features/Cards/Pack/packParams/packParamsReducer';
+import { changePackName } from 'features/Cards/Pack/packReducer';
 
 export type AppActionsType =
   | ReturnType<typeof changeThemeAC>
@@ -29,4 +31,6 @@ export type AppActionsType =
   | ReturnType<typeof changePacksPageCount>
   | ReturnType<typeof changeFilterByOwn>
   | ReturnType<typeof setPageNumber>
+  | ReturnType<typeof changeCardQuestionSearchValue>
+  | ReturnType<typeof changePackName>
   | ReturnType<typeof setPageCount>;

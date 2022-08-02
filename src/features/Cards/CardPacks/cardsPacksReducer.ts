@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CardPacksType, CardPackType, packsAPI, CardPacksParamsType } from 'api/cardsAPI';
+import {
+  CardPacksResponseType,
+  PackType,
+  cardPacksAPI,
+  CardPacksParamsType,
+} from 'api/cardsAPI';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
@@ -11,7 +16,7 @@ export const loadCardPacks = createAsyncThunk(
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packsAPI.getPacks(param);
+      const res = await cardPacksAPI.getPacks(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -27,7 +32,7 @@ export const loadCardPacks = createAsyncThunk(
 const slice = createSlice({
   name: 'cardPacks',
   initialState: {
-    cardPacks: null as null | Array<CardPackType>,
+    cardPacks: [] as Array<PackType>,
     page: 1,
     pageCount: 10,
     cardPacksTotalCount: 0,
@@ -35,7 +40,7 @@ const slice = createSlice({
     maxCardsCount: 0,
     token: null as null | string,
     tokenDeathTime: null as null | number,
-  } as CardPacksType,
+  } as CardPacksResponseType,
   reducers: {
     setPageNumber(state, action: PayloadAction<{ page: number }>) {
       state.page = action.payload.page;

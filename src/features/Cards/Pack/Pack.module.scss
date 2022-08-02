@@ -8,14 +8,34 @@
   flex-direction: column;
   margin: 0 auto;
 
+  .link {
+    margin: 24px 0 0 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .icon {
+      margin: 0 12px 0 0;
+    }
+
+    .title {
+      @include text(14px, 400, 24px);
+    }
+
+    text-decoration: none;
+    color: #000000;
+  }
+
   .head {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin: 36px 0 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 24px 0;
 
     .title {
       @include text(22px, 600, 27px);
+      flex-wrap: wrap;
     }
 
     .button {
@@ -24,12 +44,6 @@
       text-transform: none !important;
     }
   }
-
-  .table {
-    margin: 12px 0 11px;
-  }
-
-  .paginator {
-    margin: 4px 0 28px;
-  }
 }
+
+

@@ -1,18 +1,18 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
-import Grid from '@mui/material/Grid/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput';
 import Typography from '@mui/material/Typography/Typography';
 
-import { useAppDispatch, useDebounce } from 'common/hooks/hooks';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { changeSearchValue } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import styles from 'features/Cards/CardPacks/CardPacksParams/SearchCardPacks/SearchCardPacks.module.scss';
+import styles from 'common/components/Search/Search.module.scss';
+import { useDebounce } from 'common/hooks/hooks';
 
-export const SearchCardPacks = (): ReturnComponentType => {
-  const dispatch = useAppDispatch();
+type SearchPropsType = {
+  callBack: (value: string) => void;
+};
+
+export const Search: React.FC<SearchPropsType> = ({ callBack }) => {
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string>(value);
 
@@ -21,23 +21,23 @@ export const SearchCardPacks = (): ReturnComponentType => {
   };
 
   useEffect(() => {
-    dispatch(changeSearchValue({ packName: debouncedValue || undefined }));
-  }, [debouncedValue, dispatch]);
+    callBack(debouncedValue);
+  }, [callBack, debouncedValue]);
 
   return (
-    <Grid item className={styles.searchContainer}>
+    <div className={styles.main}>
       <Typography className={styles.title}>Search</Typography>
       <OutlinedInput
+        className={styles.input}
         value={value}
         onChange={handleChange}
         placeholder="Provide your text"
-        className={styles.input}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />
           </InputAdornment>
         }
       />
-    </Grid>
+    </div>
   );
 };

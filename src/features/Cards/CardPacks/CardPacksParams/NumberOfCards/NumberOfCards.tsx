@@ -65,16 +65,14 @@ export const NumberOfCards = (): ReturnComponentType => {
     <div className={styles.main}>
       <Typography className={styles.title}>Number of cards</Typography>
       <div className={styles.params}>
-        <div className={styles.paper}>
-          <input
-            type="number"
-            className={styles.input}
-            value={value[0].toFixed()}
-            min={minCardsCount}
-            max={value[1]}
-            onChange={changeMinValue}
-          />
-        </div>
+        <input
+          type="number"
+          className={styles.input}
+          value={value[0].toFixed()}
+          min={minCardsCount}
+          max={value[1]}
+          onChange={changeMinValue}
+        />
 
         <Slider
           className={styles.slider}
@@ -85,16 +83,14 @@ export const NumberOfCards = (): ReturnComponentType => {
           max={maxCardsCount}
         />
 
-        <div className={styles.paper}>
-          <input
-            type="number"
-            className={styles.input}
-            value={value[1].toFixed()}
-            min={value[0]}
-            max={maxCardsCount}
-            onChange={changeMaxValue}
-          />
-        </div>
+        <input
+          type="number"
+          className={styles.input}
+          value={value[1].toFixed()}
+          min={value[0]}
+          max={maxCardsCount}
+          onChange={changeMaxValue}
+        />
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ import { Navigate } from 'react-router-dom';
 
 import style from './CardPacks.module.scss';
 
-import { packsAPI } from 'api/cardsAPI';
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { path } from 'common/enums/path';
@@ -21,15 +20,15 @@ export const CardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const params = useAppSelector(getCardPacksParams);
+  const addNewPackButtonTitle = 'Add new pack';
+  const title = 'Packs list';
 
   useEffect(() => {
     dispatch(loadCardPacks(params));
   }, [dispatch, params]);
 
   const addNewPackHandler = (): void => {
-    packsAPI.createPack({
-      cardsPack: { name: 'create new cool pack', private: false, deckCover: '' },
-    });
+    alert('create new pack');
   };
 
   if (!isLoggedIn) {
@@ -39,27 +38,26 @@ export const CardPacks = (): ReturnComponentType => {
   return (
     <div className={style.main}>
       <div className={style.head}>
-        <div>
-          <Typography className={style.title}>Packs list</Typography>
-        </div>
-        <div>
-          <Button
-            className={style.button}
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={addNewPackHandler}
-          >
-            Add new pack
-          </Button>
-        </div>
+        <Typography className={style.title}>{title}</Typography>
+        <Button
+          className={style.button}
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={addNewPackHandler}
+        >
+          {addNewPackButtonTitle}
+        </Button>
       </div>
       <CardPacksParams />
-      <div className={style.table}>
-        <DataTable />
-      </div>
-      <div className={style.paginator}>
-        <Paginator />
+
+      <div>
+        <div className={style.table}>
+          <DataTable />
+        </div>
+        <div className={style.paginator}>
+          <Paginator />
+        </div>
       </div>
     </div>
   );
