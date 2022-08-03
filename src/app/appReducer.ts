@@ -2,11 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { userAPI } from 'api/authAPI';
 import { SnackbarType } from 'app/AppTypes';
+import { packsOwn } from 'common/enums/packsOwn';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
+import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
+import { changeFilterByOwn } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 
 export const initializeApp = createAsyncThunk(
   'app/initializeApp',
@@ -18,6 +21,9 @@ export const initializeApp = createAsyncThunk(
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(sendUserDate(res.data));
       dispatch(changeLoggedIn({ isLoggedIn: true }));
+
+      if (getLocalStorage('PacksOwn') === packsOwn.MY)
+        dispatch(changeFilterByOwn({ userId: res.data._id }));
 
       return res.data;
     } catch (e) {

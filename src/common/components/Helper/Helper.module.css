@@ -1,6 +1,6 @@
 .helper {
-    position: absolute;
-    bottom: 20px;
+    position: relative;
+    margin: 20px;
 }
 
 .helperItem {

@@ -18,8 +18,8 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import {
   changeValueSortPacks,
   sortPacks,
-} from 'features/Cards/Packs/Options/paksOptionsReducer';
-import { getCardPacks } from 'features/Cards/Packs/packsSelectors';
+} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import { getCardPacks } from 'features/Cards/CardPacks/cardPacksSelectors';
 
 export type PackDataType = {
   packTitle: string;

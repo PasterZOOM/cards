@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 
 import ButtonGroup from '@mui/material/ButtonGroup/ButtonGroup';
-import Grid from '@mui/material/Grid/Grid';
 import Typography from '@mui/material/Typography/Typography';
+
+import styles from './OwnCardPacks.module.scss';
 
 import { packsOwn } from 'common/enums/packsOwn';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
@@ -12,27 +13,29 @@ import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import {
   changeFilterByOwn,
   changePacksPage,
-} from 'features/Cards/Packs/Options/paksOptionsReducer';
-import styles from 'features/Cards/Packs/Options/SearchCardPacks/SearchCardPacks.module.scss';
-import { FilterButton } from 'features/Cards/Packs/Options/ShowPacksCards/FilterButton';
+} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import { FilterButton } from 'features/Cards/CardPacks/CardPacksParams/OwnCardPacks/FilterButton/FilterButton';
 
-export const ShowPacksCards = (): ReturnComponentType => {
+export const OwnCardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(getUserId);
-  let packsOwnLS = getLocalStorage('PacksOwn') as packsOwn;
+  const packsOwnLS = (getLocalStorage('PacksOwn') as packsOwn) || packsOwn.ALL;
 
-  packsOwnLS = packsOwnLS === null ? packsOwn.ALL : packsOwnLS;
+  const onClickButton = (buttonName: packsOwn): void => {
+    setLocalStorage('PacksOwn', buttonName);
+    dispatch(
+      changeFilterByOwn({ userId: buttonName === packsOwn.MY ? userId : undefined }),
+    );
+    dispatch(changePacksPage({ page: 1 }));
+  };
 
-  const onClickButton = useCallback(
-    (buttonName: packsOwn): void => {
-      setLocalStorage('PacksOwn', buttonName);
-      dispatch(
-        changeFilterByOwn({ userId: buttonName === packsOwn.MY ? userId : undefined }),
-      );
-      dispatch(changePacksPage({ page: undefined }));
-    },
-    [dispatch, userId],
-  );
+  useEffect(() => {
+    dispatch(
+      changeFilterByOwn({
+        userId: getLocalStorage('PacksOwn') === packsOwn.MY ? userId : undefined,
+      }),
+    );
+  }, [dispatch, userId]);
 
   const buttons = [
     <FilterButton
@@ -50,9 +53,9 @@ export const ShowPacksCards = (): ReturnComponentType => {
   ];
 
   return (
-    <Grid item className={styles.searchContainer}>
+    <div className={styles.main}>
       <Typography className={styles.title}>Show packs cards</Typography>
       <ButtonGroup>{buttons}</ButtonGroup>
-    </Grid>
+    </div>
   );
 };

@@ -5,7 +5,8 @@ import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
-import { mail } from 'features/Auth/Forgot/mail';
+import { NewPasswordRequestType } from 'features/Auth/Forgot/ForgotPassword/ForgotPasswordTypes';
+import { letter } from 'features/Auth/Forgot/letter';
 
 export const sendEmail = createAsyncThunk(
   'forgot/sendEmail',
@@ -15,7 +16,7 @@ export const sendEmail = createAsyncThunk(
       const res = await repairPasswordAPI.sendEmail({
         email,
         from: 'test-front-admin <pasterzoom@gmail.com',
-        message: mail,
+        message: letter,
       });
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
@@ -32,7 +33,7 @@ export const sendEmail = createAsyncThunk(
 );
 export const sendNewPassword = createAsyncThunk(
   'forgot/sendNewPassword',
-  async (param: { password: string; resetPasswordToken: string }, { dispatch }) => {
+  async (param: NewPasswordRequestType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
       const res = await repairPasswordAPI.sendNewPassword(param);
@@ -52,9 +53,6 @@ const slice = createSlice({
   name: 'forgot',
   initialState: { email: undefined as string | undefined, redirect: false },
   reducers: {
-    changeEmail: (state, action: PayloadAction<{ email: string | undefined }>) => {
-      state.email = action.payload.email;
-    },
     changeRedirect: (state, action: PayloadAction<{ redirect: boolean }>) => {
       state.redirect = action.payload.redirect;
     },
@@ -67,4 +65,4 @@ const slice = createSlice({
 });
 
 export const forgotReducer = slice.reducer;
-export const { changeEmail, changeRedirect } = slice.actions;
+export const { changeRedirect } = slice.actions;

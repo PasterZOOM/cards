@@ -10,7 +10,10 @@
 }
 
 .title {
-
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 26px !important;
+    font-style: normal !important;
 }
 
 .checkbox {
@@ -38,7 +41,7 @@
 }
 
 .text {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 25px;
 }
 
@@ -48,7 +51,7 @@
 }
 
 .linkToRegistration a {
- text-decoration: none;
+    text-decoration: none;
 }
 
 .linkToRegistration a:hover {
