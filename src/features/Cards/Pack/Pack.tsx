@@ -14,6 +14,7 @@ import { Search } from 'common/components/Search/Search';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
@@ -62,7 +63,9 @@ export const Pack = (): ReturnComponentType => {
   }, []);
 
   useEffect(() => {
-    dispatch(loadPack(params));
+    const cardsPackId = getLocalStorage('cardsPackId');
+
+    dispatch(loadPack({ ...params, cardsPack_id: cardsPackId as string }));
   }, [dispatch, params]);
 
   if (!isLoggedIn) {
@@ -92,7 +95,9 @@ export const Pack = (): ReturnComponentType => {
       {cards.length !== 0 ? (
         <div>
           <Search callBack={fetchNewSearch} />
-          table
+          {cards.map(card => {
+            return <div key={card._id}>{card.question}</div>;
+          })}
           <Paginator />
         </div>
       ) : (

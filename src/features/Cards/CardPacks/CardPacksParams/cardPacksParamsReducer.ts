@@ -5,7 +5,7 @@ import { CardPacksParamsType } from 'api/cardsAPI';
 const startPageCount = 10;
 
 const slice = createSlice({
-  name: 'packsParams',
+  name: 'cardPacksParams',
   initialState: {
     packName: undefined,
     min: undefined,

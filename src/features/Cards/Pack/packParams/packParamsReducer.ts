@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PackParamsType } from 'api/cardsAPI';
 
 const slice = createSlice({
-  name: 'cardPackParams',
+  name: 'packParams',
   initialState: {
-    cardsPack_id: '62e945a1e4941d0004b24393',
+    cardsPack_id: '',
     cardQuestion: undefined,
     cardAnswer: undefined,
     min: undefined,
@@ -21,8 +21,11 @@ const slice = createSlice({
     ) {
       state.cardQuestion = action.payload.cardQuestion;
     },
+    changeCardPackId(state, action: PayloadAction<{ cardsPackId: string }>) {
+      state.cardsPack_id = action.payload.cardsPackId;
+    },
   },
 });
 
 export const packParamsReducer = slice.reducer;
-export const { changeCardQuestionSearchValue } = slice.actions;
+export const { changeCardQuestionSearchValue, changeCardPackId } = slice.actions;
