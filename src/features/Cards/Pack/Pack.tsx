@@ -63,9 +63,9 @@ export const Pack = (): ReturnComponentType => {
   }, []);
 
   useEffect(() => {
-    const cardsPackId = getLocalStorage('cardsPackId');
-
-    dispatch(loadPack({ ...params, cardsPack_id: cardsPackId as string }));
+    dispatch(
+      loadPack({ ...params, cardsPack_id: getLocalStorage('cardsPackId') as string }),
+    );
   }, [dispatch, params]);
 
   if (!isLoggedIn) {
