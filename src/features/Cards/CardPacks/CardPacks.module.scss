@@ -17,12 +17,6 @@
     .title {
       @include text(22px, 600, 27px);
     }
-
-    .button {
-      @include text(16px, 500, 20px);
-      border-radius: 30px !important;
-      text-transform: none !important;
-    }
   }
 
   .table {

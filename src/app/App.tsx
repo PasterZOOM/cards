@@ -33,7 +33,7 @@ export const App = (): ReturnComponentType => {
   return (
     <div>
       {status === requestStatus.LOADING && (
-        <LinearProgress style={{ position: 'fixed', top: '60px', width: '100%' }} />
+        <LinearProgress style={{ position: 'absolute', top: '64px', width: '100%' }} />
       )}
       <InfoSnackbar />
       <Header />

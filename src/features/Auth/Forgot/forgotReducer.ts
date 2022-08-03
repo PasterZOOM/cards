@@ -51,7 +51,7 @@ export const sendNewPassword = createAsyncThunk(
 
 const slice = createSlice({
   name: 'forgot',
-  initialState: { email: undefined as string | undefined, redirect: false },
+  initialState: { email: 'your email' as string | undefined, redirect: false },
   reducers: {
     changeRedirect: (state, action: PayloadAction<{ redirect: boolean }>) => {
       state.redirect = action.payload.redirect;

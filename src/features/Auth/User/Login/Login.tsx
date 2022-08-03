@@ -39,7 +39,7 @@ export const Login = (): ReturnComponentType => {
         Sing In
       </Typography>
       <Formik
-        initialValues={{} as LoginFormType}
+        initialValues={{ email: '', password: '', rememberMe: false }}
         validationSchema={validateLogin}
         onSubmit={submitLoginForm}
         validateOnMount={false}

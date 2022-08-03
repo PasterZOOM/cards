@@ -1,30 +1,16 @@
 .main {
     background: #FCFCFC !important;
-    height: 60px !important;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     .toolbar {
         width: 90% ;
         max-width: 1200px;
         display: flex;
         justify-content: space-between;
-        .link {
-            text-decoration: none !important;
-            .button {
-                height: 36px !important;
-                width: 113px !important;
-                border-radius: 30px !important;
-                font-family: 'Montserrat', sans-serif !important;
-                font-style: normal !important;
-                font-weight: 500 !important;
-                font-size: 16px !important;
-                line-height: 20px !important;
-                letter-spacing: 0.01em !important;
-                text-transform: none !important;
-            }
+        .logo {
+            height: 48px;
         }
-
     }
 
 }

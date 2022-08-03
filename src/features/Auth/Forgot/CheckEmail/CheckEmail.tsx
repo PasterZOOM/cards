@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react';
 
-import Button from '@mui/material/Button/Button';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import checkEmail from 'assets/images/checkEmail.svg';
+import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import styles from 'features/Auth/Forgot/CheckEmail/CheckEmail.module.css';
+import styles from 'features/Auth/Forgot/CheckEmail/CheckEmail.module.scss';
 import { changeRedirect } from 'features/Auth/Forgot/forgotReducer';
 
 export const CheckEmail = (): ReturnComponentType => {
   const email = useAppSelector(state => state.forgot.email);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onClickButtonHandle = (): void => {
+    navigate(path.LOGIN);
+  };
 
   useEffect(() => {
     dispatch(changeRedirect({ redirect: false }));
@@ -27,17 +32,14 @@ export const CheckEmail = (): ReturnComponentType => {
       <Typography className={styles.span}>
         We’ve sent an Email with instructions to {email}
       </Typography>
-      <NavLink to={path.LOGIN} className={styles.link}>
-        <Button
-          type="submit"
+      <div className={styles.button}>
+        <GeneralButton
+          onClick={onClickButtonHandle}
+          label="Back to login"
           fullWidth
-          variant="contained"
-          color="primary"
-          className={styles.button}
-        >
-          Back to login
-        </Button>
-      </NavLink>
+          type="submit"
+        />
+      </div>
     </Paper>
   );
 };

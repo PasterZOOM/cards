@@ -2,19 +2,10 @@
 @import "src/assets/styles/scss/mixins";
 
 .main {
-  margin: 62px 0 0;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
   .title {
-    text-align: center;
     @include text(16px, 400, 20px);
+    margin: 86px auto 32px;
     opacity: 0.5;
-  }
-  .button {
-
-    @include text(16px, 500, 20px);
-    border-radius: 30px !important;
-    text-transform: none !important;
-    margin: 30px auto;
   }
 }

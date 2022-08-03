@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import Button from '@mui/material/Button/Button';
-import Typography from '@mui/material/Typography/Typography';
 import { Navigate } from 'react-router-dom';
 
-import style from './CardPacks.module.scss';
+import { TopPart } from '../common/components/TopPart';
+
+import styles from './CardPacks.module.scss';
 
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { Paginator } from 'common/components/Paginator/Paginator';
@@ -27,35 +27,30 @@ export const CardPacks = (): ReturnComponentType => {
     dispatch(loadCardPacks(params));
   }, [dispatch, params]);
 
-  const addNewPackHandler = (): void => {
+  const addNewPackHandler = useCallback((): void => {
     alert('create new pack');
-  };
+  }, []);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
   }
 
   return (
-    <div className={style.main}>
-      <div className={style.head}>
-        <Typography className={style.title}>{title}</Typography>
-        <Button
-          className={style.button}
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={addNewPackHandler}
-        >
-          {addNewPackButtonTitle}
-        </Button>
-      </div>
+    <div className={styles.main}>
+      <TopPart
+        headTitle={title}
+        buttonTitle={addNewPackButtonTitle}
+        items
+        onClickButton={addNewPackHandler}
+        ownPack
+      />
       <CardPacksParams />
 
       <div>
-        <div className={style.table}>
+        <div className={styles.table}>
           <DataTable />
         </div>
-        <div className={style.paginator}>
+        <div className={styles.paginator}>
           <Paginator />
         </div>
       </div>
