@@ -1,16 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { CardPacksParamsType } from 'api/cardsAPI';
+
+const startPageCount = 10;
+
 const slice = createSlice({
-  name: 'packsOptions',
+  name: 'packsParams',
   initialState: {
     packName: undefined,
     min: undefined,
     max: undefined,
     sortPacks: undefined,
     page: undefined,
-    pageCount: 10,
+    pageCount: startPageCount,
     user_id: undefined,
-  } as PacksOptionsStateType,
+  } as CardPacksParamsType,
   reducers: {
     changeSearchValue: (
       state,
@@ -51,7 +55,7 @@ const slice = createSlice({
   },
 });
 
-export const packsOptionsReducer = slice.reducer;
+export const cardPacksParamsReducer = slice.reducer;
 export const {
   changeSearchValue,
   changeValueMinCardsCount,
@@ -61,25 +65,13 @@ export const {
   changePacksPageCount,
   changeFilterByOwn,
 } = slice.actions;
-
-export type PacksOptionsStateType = {
-  packName: string | undefined;
-  min: number | undefined;
-  max: number | undefined;
-  sortPacks: sortPacks | undefined;
-  page: number | undefined;
-  pageCount: number | undefined;
-  user_id: string | undefined;
-};
 export enum sortPacks {
   ASC_USER_NAME = '1user_name',
-  DES_USER_NAME = '0user_name',
+  DESC_USER_NAME = '0user_name',
   ASC_NAME = '1name',
-  DES_NAME = '0name',
+  DESC_NAME = '0name',
   ASC_CARDS_COUNT = '1cardsCount',
-  DES_CARDS_COUNT = '0cardsCount',
-  ASC_CREATED = '1created',
-  DES_CREATED = '0created',
+  DESC_CARDS_COUNT = '0cardsCount',
   ASC_UPDATE = '1updated',
-  DES_UPDATE = '0updated',
+  DESC_UPDATE = '0updated',
 }

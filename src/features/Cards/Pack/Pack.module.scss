@@ -1,0 +1,49 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .link {
+    margin: 24px 0 0 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .icon {
+      margin: 0 12px 0 0;
+    }
+
+    .title {
+      @include text(14px, 400, 24px);
+    }
+
+    text-decoration: none;
+    color: #000000;
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 24px 0;
+
+    .title {
+      @include text(22px, 600, 27px);
+      flex-wrap: wrap;
+    }
+
+    .button {
+      @include text(16px, 500, 20px);
+      border-radius: 30px !important;
+      text-transform: none !important;
+    }
+  }
+}
+
+

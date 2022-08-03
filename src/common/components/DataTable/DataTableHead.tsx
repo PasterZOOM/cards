@@ -1,12 +1,12 @@
 import React, { MouseEvent } from 'react';
 
-import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
 import { Order, PackDataType } from 'common/components/DataTable/DataTable';
+import s from 'common/components/DataTable/DataTable.module.css';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type HeadCell = {
@@ -49,13 +49,13 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-interface EnhancedTableProps {
+type DataTableHeadProps = {
   onRequestSort: (event: MouseEvent<unknown>, property: keyof PackDataType) => void;
   order: Order;
   orderBy: string;
-}
+};
 
-export const DataTableHead: React.FC<EnhancedTableProps> = ({
+export const DataTableHead: React.FC<DataTableHeadProps> = ({
   order,
   orderBy,
   onRequestSort,
@@ -66,7 +66,7 @@ export const DataTableHead: React.FC<EnhancedTableProps> = ({
     };
 
   return (
-    <TableHead>
+    <TableHead className={s.tableHead}>
       <TableRow>
         {headCells.map(headCell => (
           <TableCell
@@ -75,18 +75,17 @@ export const DataTableHead: React.FC<EnhancedTableProps> = ({
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" style={{ display: 'none' }}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {headCell.id !== 'actions' ? (
+              <TableSortLabel
+                // active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+              </TableSortLabel>
+            ) : (
+              <span>{headCell.label}</span>
+            )}
           </TableCell>
         ))}
       </TableRow>

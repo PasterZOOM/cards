@@ -1,17 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CardPacksType, packsAPI } from 'api/cardsAPI';
+import {
+  CardPacksResponseType,
+  PackType,
+  cardPacksAPI,
+  CardPacksParamsType,
+} from 'api/cardsAPI';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
-import { PacksOptionsStateType } from 'features/Cards/Packs/Options/paksOptionsReducer';
 
-export const getPacks = createAsyncThunk(
-  'packs/getPacks',
-  async (param: PacksOptionsStateType, { dispatch, rejectWithValue }) => {
+export const loadCardPacks = createAsyncThunk(
+  'cardPacks/loadCardPacks',
+  async (param: CardPacksParamsType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await packsAPI.getPacks(param);
+
+      const res = await cardPacksAPI.getPacks(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -25,8 +30,17 @@ export const getPacks = createAsyncThunk(
 );
 
 const slice = createSlice({
-  name: 'packs',
-  initialState: {} as CardPacksType,
+  name: 'cardPacks',
+  initialState: {
+    cardPacks: [] as Array<PackType>,
+    page: 1,
+    pageCount: 10,
+    cardPacksTotalCount: 0,
+    minCardsCount: 0,
+    maxCardsCount: 0,
+    token: null as null | string,
+    tokenDeathTime: null as null | number,
+  } as CardPacksResponseType,
   reducers: {
     setPageNumber(state, action: PayloadAction<{ page: number }>) {
       state.page = action.payload.page;
@@ -36,7 +50,7 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getPacks.fulfilled, (state, action) => {
+    builder.addCase(loadCardPacks.fulfilled, (state, action) => {
       return action.payload;
     });
   },
@@ -44,4 +58,4 @@ const slice = createSlice({
 
 export const { setPageNumber, setPageCount } = slice.actions;
 
-export const packsReducer = slice.reducer;
+export const cardsPacksReducer = slice.reducer;

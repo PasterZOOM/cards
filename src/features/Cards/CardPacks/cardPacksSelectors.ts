@@ -1,12 +1,11 @@
+import { PackType } from 'api/cardsAPI';
 import { AppRootStateType } from 'app/AppRootStateTypes';
 
 export const getMaxCardsCount = (state: AppRootStateType): number =>
-  state.packs.maxCardsCount;
+  state.cardPacks.maxCardsCount;
 export const getMinCardsCount = (state: AppRootStateType): number =>
-  state.packs.minCardsCount;
+  state.cardPacks.minCardsCount;
 export const getCardPacksTotalCount = (state: AppRootStateType): number =>
-  state.packs.cardPacksTotalCount;
-
-export const getPageCount = (state: AppRootStateType): number => state.packs.pageCount;
-
-export const getPageNumber = (state: AppRootStateType): number => state.packs.page;
+  state.cardPacks.cardPacksTotalCount;
+export const getCardPacks = (state: AppRootStateType): Array<PackType> =>
+  state.cardPacks.cardPacks;
