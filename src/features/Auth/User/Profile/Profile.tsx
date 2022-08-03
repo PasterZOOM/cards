@@ -37,7 +37,11 @@ export const Profile = (): ReturnComponentType => {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             badgeContent={<Box component="img" src={camera} alt="camera" />}
           >
-            <Avatar className={s.avatar} sx={{ width: 96, height: 96 }} />
+            <Avatar
+              className={s.avatar}
+              sx={{ width: 96, height: 96 }}
+              src={user.avatar as string}
+            />
           </Badge>
         </Stack>
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Button from '@mui/material/Button/Button';
 import Typography from '@mui/material/Typography/Typography';
@@ -15,16 +15,14 @@ import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import style from 'features/Cards/Pack/Pack.module.scss';
 import { changeCardQuestionSearchValue } from 'features/Cards/Pack/packParams/packParamsReducer';
-import { getPackParams } from 'features/Cards/Pack/packParams/packParamsSelectors';
-import { loadPack } from 'features/Cards/Pack/packReducer';
-import { getPackName, getPackUserId, getCards } from 'features/Cards/Pack/packSelectors';
+import { getCards, getPackName, getPackUserId } from 'features/Cards/Pack/packSelectors';
 
 export const Pack = (): ReturnComponentType => {
   const addCardButtonTitle = 'Add new card';
 
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const params = useAppSelector(getPackParams);
+  // const params = useAppSelector(getPackParams);
   const packName = useAppSelector(getPackName);
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
@@ -37,9 +35,9 @@ export const Pack = (): ReturnComponentType => {
     alert('create new card');
   };
 
-  useEffect(() => {
-    dispatch(loadPack(params));
-  }, [dispatch, params]);
+  // useEffect(() => {
+  //   dispatch(loadPack(params));
+  // }, [dispatch, params]);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -69,7 +67,9 @@ export const Pack = (): ReturnComponentType => {
       {cards.length !== 0 ? (
         <div>
           <Search callBack={fetchNewSearch} />
-          table
+          {cards.map(card => {
+            return <div key={card._id}>{card.question}</div>;
+          })}
           <Paginator />
         </div>
       ) : (

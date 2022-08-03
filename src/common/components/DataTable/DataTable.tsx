@@ -7,12 +7,14 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
+import { NavLink } from 'react-router-dom';
 
 import deleteIco from 'assets/images/delete.svg';
 import editIco from 'assets/images/edit.svg';
 import teacherIco from 'assets/images/teacher.svg';
 import s from 'common/components/DataTable/DataTable.module.css';
 import { DataTableHead } from 'common/components/DataTable/DataTableHead';
+import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import {
@@ -20,6 +22,7 @@ import {
   sortPacks,
 } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import { getCardPacks } from 'features/Cards/CardPacks/cardPacksSelectors';
+import { changePackName, loadPack } from 'features/Cards/Pack/packReducer';
 
 export type PackDataType = {
   packTitle: string;
@@ -82,7 +85,7 @@ export const DataTable = (): ReturnComponentType => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper elevation={3} sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table sx={{ minWidth: 1080 }} aria-labelledby="tableTitle">
             <DataTableHead
@@ -95,10 +98,21 @@ export const DataTable = (): ReturnComponentType => {
                 cardPacks.map(row => {
                   const updateDate = new Date(row.updated).toLocaleDateString('ru');
 
+                  const showCards = (): void => {
+                    dispatch(loadPack({ cardsPack_id: row._id }));
+                    dispatch(changePackName({ cardPackName: row.name }));
+                  };
+
                   return (
                     <TableRow hover key={row._id + row.user_id}>
                       <TableCell component="th" scope="row" padding="none">
-                        {row.name}
+                        <NavLink
+                          to={path.CARD_PACK}
+                          className={s.nameLink}
+                          onClick={showCards}
+                        >
+                          {row.name}
+                        </NavLink>
                       </TableCell>
                       <TableCell align="right">{row.cardsCount}</TableCell>
                       <TableCell align="right">{updateDate}</TableCell>
