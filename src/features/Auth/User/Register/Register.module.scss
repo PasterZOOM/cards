@@ -1,0 +1,24 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+    box-sizing: border-box;
+    margin: 60px auto 0;
+    width: 414px;
+    height: 528px;
+    text-align: center;
+    padding: 35px 33px 42px;
+    .title {
+        @include text(26px, 600, 32px);
+        text-align: center !important;
+        margin: 0 0 41px !important;
+    }
+    .question {
+        @include text(14px, 600, 24px);
+        margin: 0 0 10px !important;
+        opacity: 0.5 !important;
+    }
+    .link {
+        @include text(16px, 600, 24px);
+    }
+}

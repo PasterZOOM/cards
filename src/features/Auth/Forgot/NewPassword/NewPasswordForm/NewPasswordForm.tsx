@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography/Typography';
 import { Form, FormikProps } from 'formik';
 
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
+import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import styles from 'features/Auth/Forgot/NewPassword/NewPasswordForm/NewPasswordForm.module.css';
+import styles from 'features/Auth/Forgot/NewPassword/NewPasswordForm/NewPasswordForm.module.scss';
 
 type PropsType = {
   formik: FormikProps<{ password: string }>;
@@ -22,7 +22,8 @@ export const NewPasswordForm: React.FC<PropsType> = ({ formik }): ReturnComponen
         <Typography className={styles.span}>
           Create new password and we will send you further instructions to email
         </Typography>
-        <SubmitButton
+        <GeneralButton
+          type="submit"
           label="Create new password"
           disabled={!isValid || !dirty || isSubmitting}
         />

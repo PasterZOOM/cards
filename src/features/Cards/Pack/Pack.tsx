@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 
-import Button from '@mui/material/Button/Button';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate, NavLink } from 'react-router-dom';
 
 import back from 'assets/images/Back.svg';
+import del from 'assets/images/delete.svg';
+import edit from 'assets/images/edit.svg';
+import ellipsis from 'assets/images/ellipsis.svg';
 import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
+import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
 import { path } from 'common/enums/path';
@@ -13,21 +16,39 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
+import { TopPart } from 'features/Cards/common/components/TopPart';
 import style from 'features/Cards/Pack/Pack.module.scss';
 import { changeCardQuestionSearchValue } from 'features/Cards/Pack/packParams/packParamsReducer';
 import { getPackParams } from 'features/Cards/Pack/packParams/packParamsSelectors';
 import { loadPack } from 'features/Cards/Pack/packReducer';
-import { getPackName, getPackUserId, getCards } from 'features/Cards/Pack/packSelectors';
+import { getCards, getPackName, getPackUserId } from 'features/Cards/Pack/packSelectors';
+
+const addCardButtonTitle = 'Add new card';
 
 export const Pack = (): ReturnComponentType => {
-  const addCardButtonTitle = 'Add new card';
-
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const params = useAppSelector(getPackParams);
   const packName = useAppSelector(getPackName);
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
+
+  const menuItems = [
+    {
+      title: 'Edit',
+      icon: edit,
+      action: (): void => {
+        alert('edit pack');
+      },
+    },
+    {
+      title: 'Delete',
+      icon: del,
+      action: (): void => {
+        alert('pack deleted');
+      },
+    },
+  ];
 
   const fetchNewSearch = (value: string): void => {
     dispatch(changeCardQuestionSearchValue({ cardQuestion: value || undefined }));
@@ -47,24 +68,23 @@ export const Pack = (): ReturnComponentType => {
 
   return (
     <div className={style.main}>
-      <NavLink to={path.CARD_PACKS} className={style.link}>
-        <img src={back} alt="back" className={style.icon} />
-        <Typography className={style.title}>Back to Packs List</Typography>
-      </NavLink>
-      <div className={style.head}>
-        <Typography className={style.title}>{packName}</Typography>
-        {ownPack && cards.length !== 0 && (
-          <Button
-            className={style.button}
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={addNewCardHandler}
-          >
-            {addCardButtonTitle}
-          </Button>
-        )}
-      </div>
+      <TopPart
+        buttonTitle={addCardButtonTitle}
+        headTitle={packName}
+        items={cards.length !== 0}
+        onClickButton={addNewCardHandler}
+        ownPack={ownPack}
+      >
+        {[
+          <NavLink to={path.CARD_PACKS} className={style.link} key={0}>
+            <img src={back} alt="back" className={style.icon} />
+            <Typography className={style.title}>Back to Packs List</Typography>
+          </NavLink>,
+          <OptionMenu menuItems={menuItems} key={1}>
+            <img src={ellipsis} alt="avatar" />
+          </OptionMenu>,
+        ]}
+      </TopPart>
       <div />
       {cards.length !== 0 ? (
         <div>

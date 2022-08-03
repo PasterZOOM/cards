@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { SubmitButton } from 'common/components/Forms/SubmitButton/SubmitButton';
+import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { path } from 'common/enums/path';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import style from 'features/Auth/User/Login/Login.module.css';
@@ -39,7 +39,11 @@ export const LoginForm: React.FC<PropsType> = ({ formik }): ReturnComponentType 
         <div className={style.linkToPassword}>
           <NavLink to={path.FORGOT_PASSWORD}>Forgot password?</NavLink>
         </div>
-        <SubmitButton label="Sing Up" disabled={!isValid || !dirty || isSubmitting} />
+        <GeneralButton
+          label="Sing Up"
+          disabled={!isValid || !dirty || isSubmitting}
+          type="submit"
+        />
 
         <div className={style.text}>Dont have an account?</div>
 
