@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { useCallback, useEffect } from 'react';
+import { ChangeEvent, useCallback, useEffect } from 'react';
 
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 
-import { changePacksPage } from '../../../features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import {
+  changePacksPage,
+  changePacksPageCount,
+} from '../../../features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import {
   getPageCountPacksParams,
   getUserIdPacksParams,
@@ -12,15 +14,19 @@ import {
 import { getCardPacksTotalCount } from '../../../features/Cards/CardPacks/cardPacksSelectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { ReturnComponentType } from '../../types/ReturnComponentType';
+import { getLocalStorage, setLocalStorage } from '../../utils/localStorageUtil';
+
+import style from './Paginator.module.css';
 
 export const Paginator = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
-  const pageCount = useAppSelector(getPageCountPacksParams);
   const userId = useAppSelector(getUserIdPacksParams);
+  let pageCount = useAppSelector(getPageCountPacksParams);
 
-  // @ts-ignore
-  const pagesCount = Math.ceil(cardPacksTotalCount / pageCount);
+  pageCount = parseInt(getLocalStorage('pageCount') as string, 10) || pageCount;
+
+  const pagesCount = Math.ceil(cardPacksTotalCount / (pageCount || 1));
 
   const [page, setPage] = React.useState(1);
 
@@ -30,7 +36,7 @@ export const Paginator = (): ReturnComponentType => {
     return () => {
       dispatch(changePacksPage({ page: 1 }));
     };
-  }, [userId]);
+  }, [userId, pageCount]);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<unknown>, value: number): void => {
@@ -40,10 +46,27 @@ export const Paginator = (): ReturnComponentType => {
     [dispatch],
   );
 
+  const onSelectClickHandler = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>): void => {
+      setLocalStorage('pageCount', e.currentTarget.value);
+      dispatch(changePacksPage({ page: 1 }));
+      dispatch(changePacksPageCount({ pageCount: parseInt(e.currentTarget.value, 10) }));
+    },
+    [dispatch],
+  );
+
   return (
-    <Stack spacing={2}>
+    <div className={style.container}>
       <Pagination count={pagesCount} page={page} onChange={handleChange} />
-    </Stack>
+      <p className={style.text}>Show</p>
+      <select value={pageCount} onChange={onSelectClickHandler} className={style.select}>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+      <p className={style.text}>Cards per Page</p>
+    </div>
   );
 };
 
