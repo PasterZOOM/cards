@@ -24,8 +24,19 @@ const slice = createSlice({
     changeCardPackId(state, action: PayloadAction<{ cardsPackId: string }>) {
       state.cardsPack_id = action.payload.cardsPackId;
     },
+    changeValueSortCards: (
+      state,
+      action: PayloadAction<{ sortCards: sortCards | undefined }>,
+    ) => {
+      state.sortCards = action.payload.sortCards;
+    },
   },
 });
 
 export const packParamsReducer = slice.reducer;
-export const { changeCardQuestionSearchValue, changeCardPackId } = slice.actions;
+export const { changeCardQuestionSearchValue, changeCardPackId, changeValueSortCards } =
+  slice.actions;
+export enum sortCards {
+  ASC_UPDATE = '1updated',
+  DESC_UPDATE = '0updated',
+}

@@ -48,7 +48,7 @@ export const CardPacks = (): ReturnComponentType => {
 
       <div>
         <div className={styles.table}>
-          <DataTable />
+          <DataTable tableType="packs" />
         </div>
         <div className={styles.paginator}>
           <Paginator />

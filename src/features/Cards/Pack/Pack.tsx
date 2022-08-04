@@ -7,6 +7,7 @@ import back from 'assets/images/Back.svg';
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
 import ellipsis from 'assets/images/ellipsis.svg';
+import { DataTable } from 'common/components/DataTable/DataTable';
 import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
@@ -21,7 +22,7 @@ import { TopPart } from 'features/Cards/common/components/TopPart';
 import style from 'features/Cards/Pack/Pack.module.scss';
 import { changeCardQuestionSearchValue } from 'features/Cards/Pack/packParams/packParamsReducer';
 import { getPackParams } from 'features/Cards/Pack/packParams/packParamsSelectors';
-import { loadPack } from 'features/Cards/Pack/packReducer';
+import { changePackName, loadPack } from 'features/Cards/Pack/packReducer';
 import { getCards, getPackName, getPackUserId } from 'features/Cards/Pack/packSelectors';
 
 const addCardButtonTitle = 'Add new card';
@@ -66,6 +67,9 @@ export const Pack = (): ReturnComponentType => {
     dispatch(
       loadPack({ ...params, cardsPack_id: getLocalStorage('cardsPackId') as string }),
     );
+    dispatch(
+      changePackName({ cardPackName: getLocalStorage('cardsPackName') as string }),
+    );
   }, [dispatch, params]);
 
   if (!isLoggedIn) {
@@ -95,9 +99,7 @@ export const Pack = (): ReturnComponentType => {
       {cards.length !== 0 ? (
         <div>
           <Search callBack={fetchNewSearch} />
-          {cards.map(card => {
-            return <div key={card._id}>{card.question}</div>;
-          })}
+          <DataTable tableType="cards" />
           <Paginator />
         </div>
       ) : (
