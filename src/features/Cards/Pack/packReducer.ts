@@ -10,6 +10,7 @@ export const loadPack = createAsyncThunk(
   async (param: PackParamsType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
+
       const res = await cardPackAPI.getCardPack(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));

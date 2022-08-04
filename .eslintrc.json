@@ -43,6 +43,7 @@
   ],
   "rules": {
     "default-param-last": "off",
+
     "import/order": [
       "error",
       {
@@ -135,6 +136,7 @@
       }
     ],
     "react/display-name": "off",
+    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react-hooks/rules-of-hooks": "error",

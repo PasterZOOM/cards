@@ -38,8 +38,8 @@ const slice = createSlice({
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
-    token: null as null | string,
-    tokenDeathTime: null as null | number,
+    token: '',
+    tokenDeathTime: 0,
   } as CardPacksResponseType,
   reducers: {
     setPageNumber(state, action: PayloadAction<{ page: number }>) {

@@ -9,7 +9,7 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import styles from 'features/Auth/User/Register/Register.module.css';
+import styles from 'features/Auth/User/Register/Register.module.scss';
 import { RegisterForm } from 'features/Auth/User/Register/RegisterForm/RegisterForm';
 import { validateRegisterForm } from 'features/Auth/User/Register/RegisterForm/validateRegisterForm';
 import { createUser } from 'features/Auth/User/Register/registerReducer';
@@ -33,7 +33,7 @@ export const Register = (): ReturnComponentType => {
     <Paper elevation={3} className={styles.main}>
       <Typography className={styles.title}>Sing Up</Typography>
       <Formik
-        initialValues={{} as RegisterFormType}
+        initialValues={{ email: '', password: '', confirmPassword: '' }}
         validationSchema={validateRegisterForm}
         onSubmit={submitRegisterForm}
         validateOnMount={false}

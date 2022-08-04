@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { ForgotForm } from 'features/Auth/Forgot/ForgotPassword/ForgotForm/ForgotForm';
 import { validateForgotForm } from 'features/Auth/Forgot/ForgotPassword/ForgotForm/validateForgotForm';
-import styles from 'features/Auth/Forgot/ForgotPassword/ForgotPassword.module.css';
+import styles from 'features/Auth/Forgot/ForgotPassword/ForgotPassword.module.scss';
 import { ForgotPasswordFormType } from 'features/Auth/Forgot/ForgotPassword/ForgotPasswordTypes';
 import { sendEmail } from 'features/Auth/Forgot/forgotReducer';
 

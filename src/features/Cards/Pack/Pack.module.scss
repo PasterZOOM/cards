@@ -9,7 +9,7 @@
   margin: 0 auto;
 
   .link {
-    margin: 24px 0 0 0;
+    margin: 0 0 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -24,25 +24,6 @@
 
     text-decoration: none;
     color: #000000;
-  }
-
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 24px 0;
-
-    .title {
-      @include text(22px, 600, 27px);
-      flex-wrap: wrap;
-    }
-
-    .button {
-      @include text(16px, 500, 20px);
-      border-radius: 30px !important;
-      text-transform: none !important;
-    }
   }
 }
 
