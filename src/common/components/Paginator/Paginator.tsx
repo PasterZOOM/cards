@@ -36,7 +36,7 @@ export const Paginator = (): ReturnComponentType => {
     return () => {
       dispatch(changePacksPage({ page: 1 }));
     };
-  }, [userId, pageCount]);
+  }, [userId, pageCount, dispatch]);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<unknown>, value: number): void => {
