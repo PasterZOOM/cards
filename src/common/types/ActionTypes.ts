@@ -16,6 +16,7 @@ import { setPageCount, setPageNumber } from 'features/Cards/CardPacks/cardsPacks
 import {
   changeCardPackId,
   changeCardQuestionSearchValue,
+  changeValueSortCards,
 } from 'features/Cards/Pack/packParams/packParamsReducer';
 import { changePackName } from 'features/Cards/Pack/packReducer';
 
@@ -37,4 +38,5 @@ export type AppActionsType =
   | ReturnType<typeof changeCardQuestionSearchValue>
   | ReturnType<typeof changePackName>
   | ReturnType<typeof changeCardPackId>
-  | ReturnType<typeof setPageCount>;
+  | ReturnType<typeof setPageCount>
+  | ReturnType<typeof changeValueSortCards>;
