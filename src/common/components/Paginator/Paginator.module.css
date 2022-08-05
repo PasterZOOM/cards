@@ -1,22 +1,21 @@
-.paginator {
-    margin: 5px
+.container {
+    display: flex;
+    align-items: center;
 }
 
-.paginator span {
-    padding: 10px;
+.text {
+    font-family: 'Montserrat', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
 }
 
-.selectedPage {
-    font-weight: bold;
-
-}
-
-.pageNumber {
-
-}
-
-.icon {
-    position: relative;
-    top: 5px;
+.select {
+    margin-left: 12px;
+    margin-right: 5px;
+    width: 39px;
+    height: 24px;
 }
 
