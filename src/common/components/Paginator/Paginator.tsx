@@ -1,32 +1,35 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
+import { Select, SelectChangeEvent } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem/MenuItem';
 import Pagination from '@mui/material/Pagination';
 
-import {
-  changePacksPage,
-  changePacksPageCount,
-} from '../../../features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import {
-  getPageCountPacksParams,
-  getUserIdPacksParams,
-} from '../../../features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
-import { getCardPacksTotalCount } from '../../../features/Cards/CardPacks/cardPacksSelectors';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { ReturnComponentType } from '../../types/ReturnComponentType';
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorageUtil';
 
-import style from './Paginator.module.css';
+import style from './Paginator.module.scss';
 
-export const Paginator = (): ReturnComponentType => {
-  const dispatch = useAppDispatch();
-  const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
-  const userId = useAppSelector(getUserIdPacksParams);
-  let pageCount = useAppSelector(getPageCountPacksParams);
+type PaginatorPropsType = {
+  cardPacksTotalCount: number;
+  pageCount: number | undefined;
+  userId?: string;
+  changePage: (page: number) => void;
+  changePageCount: (pageCount: number) => void;
+};
 
-  pageCount = parseInt(getLocalStorage('pageCount') as string, 10) || pageCount;
+export const Paginator: React.FC<PaginatorPropsType> = ({
+  cardPacksTotalCount,
+  pageCount,
+  userId,
+  changePage,
+  changePageCount,
+}): ReturnComponentType => {
+  let pageCountPag = null;
 
-  const pagesCount = Math.ceil(cardPacksTotalCount / (pageCount || 1));
+  pageCountPag = parseInt(getLocalStorage('pageCount') as string, 10) || pageCount;
+
+  const pagesCount = Math.ceil(cardPacksTotalCount / (pageCountPag || 1));
 
   const [page, setPage] = React.useState(1);
 
@@ -34,96 +37,43 @@ export const Paginator = (): ReturnComponentType => {
     setPage(1);
 
     return () => {
-      dispatch(changePacksPage({ page: 1 }));
+      changePage(1);
     };
-  }, [userId, pageCount, dispatch]);
+  }, [userId, pageCountPag]);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<unknown>, value: number): void => {
-      dispatch(changePacksPage({ page: value }));
+      changePage(value);
+
       setPage(value);
     },
-    [dispatch],
+    [],
   );
 
-  const onSelectClickHandler = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>): void => {
-      setLocalStorage('pageCount', e.currentTarget.value);
-      dispatch(changePacksPage({ page: 1 }));
-      dispatch(changePacksPageCount({ pageCount: parseInt(e.currentTarget.value, 10) }));
-    },
-    [dispatch],
-  );
+  const onSelectClickHandler = useCallback((event: SelectChangeEvent<number>): void => {
+    setLocalStorage('pageCount', event.target.value.toString());
+    changePage(1);
+    changePageCount(+event.target.value);
+  }, []);
 
   return (
     <div className={style.container}>
       <Pagination count={pagesCount} page={page} onChange={handleChange} />
       <p className={style.text}>Show</p>
-      <select value={pageCount} onChange={onSelectClickHandler} className={style.select}>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-      </select>
+
+      <Select
+        className={style.select}
+        size="small"
+        value={pageCountPag}
+        onChange={onSelectClickHandler}
+      >
+        <MenuItem value={5}>5</MenuItem>
+        <MenuItem value={10}>10</MenuItem>
+        <MenuItem value={25}>25</MenuItem>
+        <MenuItem value={50}>50</MenuItem>
+        <MenuItem value={100}>100</MenuItem>
+      </Select>
       <p className={style.text}>Cards per Page</p>
     </div>
   );
 };
-
-/*
-import * as React from 'react';
-import { useCallback } from 'react';
-
-import TablePagination from '@mui/material/TablePagination';
-
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import {
-    changePacksPage,
-    changePacksPageCount,
-} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import {
-    getPageCountCardPacksParams,
-    getPagePacksParams
-} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
-import { getCardPacksTotalCount } from 'features/Cards/CardPacks/cardPacksSelectors';
-
-export const Paginator: React.FC = (): ReturnComponentType => {
-    const dispatch = useAppDispatch();
-    const pageCount = useAppSelector(getPageCountCardPacksParams);
-    const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState<number>(pageCount as number);
-
-    const handleChangePage = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void => {
-            dispatch(changePacksPage({ page: newPage + 1 }));
-            setPage(newPage);
-        },
-        [dispatch],
-    );
-
-    const handleChangeRowsPerPage = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-            dispatch(changePacksPageCount({ pageCount: parseInt(event.target.value, 10) }));
-            setRowsPerPage(parseInt(event.target.value, 10));
-            setPage(0);
-        },
-        [dispatch],
-    );
-
-    return (
-        <TablePagination
-            showFirstButton
-            showLastButton
-            component="div"
-            count={cardPacksTotalCount}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-    );
-}; 
-*/
