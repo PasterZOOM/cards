@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Slider from '@mui/material/Slider/Slider';
 import Typography from '@mui/material/Typography/Typography';
@@ -11,6 +11,7 @@ import {
   changeValueMaxCardsCount,
   changeValueMinCardsCount,
 } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import { NumberOfCardsInput } from 'features/Cards/CardPacks/CardPacksParams/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
 import {
   getMaxCardsCount,
   getMinCardsCount,
@@ -26,22 +27,6 @@ export const NumberOfCards = (): ReturnComponentType => {
 
   const handleChange = (event: Event, newValue: number | number[]): void => {
     if (Array.isArray(newValue)) setValue(newValue);
-  };
-  const changeMinValue = (event: ChangeEvent<HTMLInputElement>): void => {
-    let value0 = event.currentTarget.valueAsNumber;
-
-    if (value0 < minCardsCount) value0 = minCardsCount;
-    if (value0 > maxCardsCount) value0 = maxCardsCount;
-
-    setValue([!value0 ? 0 : Math.trunc(value0), value[1]]);
-  };
-  const changeMaxValue = (event: ChangeEvent<HTMLInputElement>): void => {
-    let value1 = event.currentTarget.valueAsNumber;
-
-    if (value1 < minCardsCount) value1 = minCardsCount;
-    if (value1 > maxCardsCount) value1 = maxCardsCount;
-
-    setValue([value[0], !value1 ? 0 : Math.trunc(value1)]);
   };
 
   useEffect(() => {
@@ -65,14 +50,7 @@ export const NumberOfCards = (): ReturnComponentType => {
     <div className={styles.main}>
       <Typography className={styles.title}>Number of cards</Typography>
       <div className={styles.params}>
-        <input
-          type="number"
-          className={styles.input}
-          value={value[0].toFixed()}
-          min={minCardsCount}
-          max={value[1]}
-          onChange={changeMinValue}
-        />
+        <NumberOfCardsInput activeThumb={0} value={value} setValue={setValue} />
 
         <Slider
           className={styles.slider}
@@ -83,14 +61,7 @@ export const NumberOfCards = (): ReturnComponentType => {
           max={maxCardsCount}
         />
 
-        <input
-          type="number"
-          className={styles.input}
-          value={value[1].toFixed()}
-          min={value[0]}
-          max={maxCardsCount}
-          onChange={changeMaxValue}
-        />
+        <NumberOfCardsInput activeThumb={1} value={value} setValue={setValue} />
       </div>
     </div>
   );

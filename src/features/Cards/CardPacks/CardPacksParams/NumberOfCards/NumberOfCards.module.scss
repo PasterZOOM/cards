@@ -16,25 +16,5 @@
     .slider {
       width: 154px;
     }
-
-    .input {
-      box-sizing: border-box;
-      width: 36px;
-      height: 36px;
-      border: 1px solid #D9D9D9;
-      border-radius: 2px;
-      @include text(16px, 600, 20px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      outline: none;
-
-      &::-webkit-outer-spin-button,
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-
-      }
-    }
   }
 }

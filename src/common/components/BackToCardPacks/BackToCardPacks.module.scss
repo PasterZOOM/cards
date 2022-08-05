@@ -1,0 +1,19 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .icon {
+    margin: 0 12px 0 0;
+  }
+
+  .title {
+    @include text(14px, 400, 24px);
+  }
+
+  text-decoration: none;
+  color: #000000;
+}
