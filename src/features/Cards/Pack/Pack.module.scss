@@ -8,21 +8,8 @@
   flex-direction: column;
   margin: 0 auto;
 
-  .link {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-    .icon {
-      margin: 0 12px 0 0;
-    }
-
-    .title {
-      @include text(14px, 400, 24px);
-    }
-
-    text-decoration: none;
-    color: #000000;
+  .search {
+    margin: 0 0 24px;
   }
 }
 

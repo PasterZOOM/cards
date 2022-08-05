@@ -2,7 +2,7 @@
 @import "src/assets/styles/scss/mixins";
 
 .mainCardPacks {
-  @include cardPacks(40px 0);
+  @include cardPacks(12px 0);
 }
 .mainPack {
   @include cardPacks(24px 0 0);

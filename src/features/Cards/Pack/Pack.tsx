@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 
-import Typography from '@mui/material/Typography/Typography';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import back from 'assets/images/Back.svg';
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
 import ellipsis from 'assets/images/ellipsis.svg';
+import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
@@ -19,7 +18,7 @@ import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
-import style from 'features/Cards/Pack/Pack.module.scss';
+import styles from 'features/Cards/Pack/Pack.module.scss';
 import { changeCardQuestionSearchValue } from 'features/Cards/Pack/packParams/packParamsReducer';
 import { getPackParams } from 'features/Cards/Pack/packParams/packParamsSelectors';
 import { changePackName, loadPack } from 'features/Cards/Pack/packReducer';
@@ -77,7 +76,7 @@ export const Pack = (): ReturnComponentType => {
   }
 
   return (
-    <div className={style.main}>
+    <div className={styles.main}>
       <TopPart
         buttonTitle={addCardButtonTitle}
         headTitle={packName}
@@ -86,10 +85,7 @@ export const Pack = (): ReturnComponentType => {
         ownPack={ownPack}
       >
         {[
-          <NavLink to={path.CARD_PACKS} className={style.link} key={0}>
-            <img src={back} alt="back" className={style.icon} />
-            <Typography className={style.title}>Back to Packs List</Typography>
-          </NavLink>,
+          <BackToCardPacks key={0} />,
           <OptionMenu menuItems={menuItems} key={1}>
             <img src={ellipsis} alt="avatar" />
           </OptionMenu>,
@@ -98,7 +94,9 @@ export const Pack = (): ReturnComponentType => {
       <div />
       {cards.length !== 0 ? (
         <div>
-          <Search callBack={fetchNewSearch} />
+          <div className={styles.search}>
+            <Search callBack={fetchNewSearch} />
+          </div>
           <DataTable tableType="cards" />
           <Paginator />
         </div>

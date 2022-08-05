@@ -1,26 +1,31 @@
 .container {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
-}
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  flex-direction: column;
+  margin: 0 auto;
 
-.card {
+  .back {
+    margin: 24px 0 12px ;
+  }
+
+  .card {
     width: 413px;
     height: 360px;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+    margin: 0 auto;
+  }
 
-.title {
+  .title {
     font-family: 'Montserrat', serif !important;
     font-weight: 700 !important;
     font-size: 22px !important;
     margin: 27px !important;
-}
+  }
 
-.icoContainer span {
+  .icoContainer span {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -29,13 +34,13 @@
     margin-right: 5px;
     margin-bottom: 5px;
     border: 1px solid #FFFFFF;
-}
 
-.avatar {
-    margin: 3px;
-}
+    .avatar {
+      margin: 3px;
+    }
+  }
 
-.email {
+  .email {
     font-family: 'Montserrat', serif;
     font-style: normal;
     font-weight: 500;
@@ -44,9 +49,9 @@
     opacity: 0.5;
     color: #000;
     margin-bottom: 20px;
-}
+  }
 
-.button {
+  .button {
     box-shadow: 0 5px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
     border-radius: 30px !important;
     background: #FCFCFC !important;
@@ -58,8 +63,15 @@
     font-weight: 500 !important;
     font-size: 16px !important;
     margin-bottom: 50px !important;
+
+    .logout {
+      padding: 5px;
+    }
+  }
+
+
 }
 
-.logout {
-    padding: 5px;
-}
+
+
+
