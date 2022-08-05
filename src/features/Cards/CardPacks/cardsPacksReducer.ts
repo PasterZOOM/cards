@@ -34,7 +34,7 @@ const slice = createSlice({
   initialState: {
     cardPacks: [] as Array<PackType>,
     page: 1,
-    pageCount: 10,
+    pageCount: 5,
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,

@@ -5,3 +5,6 @@ export const getPackParams = (state: AppRootStateType): PackParamsType =>
   state.packParams;
 export const getCardsPackId = (state: AppRootStateType): string =>
   state.packParams.cardsPack_id;
+
+export const getPageCount = (state: AppRootStateType): number | undefined =>
+  state.packParams.pageCount;

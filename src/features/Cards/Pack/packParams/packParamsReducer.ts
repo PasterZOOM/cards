@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { PackParamsType } from 'api/cardsAPI';
 
+const startPageCount = 5;
+
 const slice = createSlice({
   name: 'packParams',
   initialState: {
@@ -12,7 +14,7 @@ const slice = createSlice({
     max: undefined,
     sortCards: undefined,
     page: undefined,
-    pageCount: undefined,
+    pageCount: startPageCount,
   } as PackParamsType,
   reducers: {
     changeCardQuestionSearchValue(
@@ -30,12 +32,23 @@ const slice = createSlice({
     ) => {
       state.sortCards = action.payload.sortCards;
     },
+    changePageCards(state, action: PayloadAction<{ page: number }>) {
+      state.page = action.payload.page;
+    },
+    changePageCountCards(state, action: PayloadAction<{ pageCount: number }>) {
+      state.pageCount = action.payload.pageCount;
+    },
   },
 });
 
 export const packParamsReducer = slice.reducer;
-export const { changeCardQuestionSearchValue, changeCardPackId, changeValueSortCards } =
-  slice.actions;
+export const {
+  changeCardQuestionSearchValue,
+  changeCardPackId,
+  changeValueSortCards,
+  changePageCards,
+  changePageCountCards,
+} = slice.actions;
 export enum sortCards {
   ASC_UPDATE = '1updated',
   DESC_UPDATE = '0updated',
