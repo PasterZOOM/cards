@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { CardPacksParamsType } from 'api/cardsAPI';
 
-const startPageCount = 10;
+const startPageCount = 5;
 
 const slice = createSlice({
   name: 'cardPacksParams',

@@ -6,3 +6,6 @@ export const getPackUserId = (state: AppRootStateType): string =>
   state.pack.cards.packUserId;
 export const getCards = (state: AppRootStateType): Array<CardType> =>
   state.pack.cards.cards;
+
+export const getCardsTotalCount = (state: AppRootStateType): number =>
+  state.pack.cards.cardsTotalCount;

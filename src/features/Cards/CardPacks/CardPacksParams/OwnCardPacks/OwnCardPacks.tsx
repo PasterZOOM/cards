@@ -26,7 +26,7 @@ export const OwnCardPacks = (): ReturnComponentType => {
     dispatch(
       changeFilterByOwn({ userId: buttonName === packsOwn.MY ? userId : undefined }),
     );
-    dispatch(changePacksPage({ page: 1 }));
+    dispatch(changePacksPage({ page: undefined }));
   };
 
   useEffect(() => {

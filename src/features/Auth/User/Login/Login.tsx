@@ -31,7 +31,7 @@ export const Login = (): ReturnComponentType => {
     dispatch(changeRedirect({ redirect: false }));
   }, [dispatch]);
 
-  if (isLoggedIn) return <Navigate to={path.PROFILE} />;
+  if (isLoggedIn) return <Navigate to={path.CARD_PACKS} />;
 
   return (
     <Paper elevation={3} className={style.main}>
