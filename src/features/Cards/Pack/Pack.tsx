@@ -19,10 +19,23 @@ import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 import styles from 'features/Cards/Pack/Pack.module.scss';
-import { changeCardQuestionSearchValue } from 'features/Cards/Pack/packParams/packParamsReducer';
-import { getPackParams } from 'features/Cards/Pack/packParams/packParamsSelectors';
+import {
+  changeCardQuestionSearchValue,
+  changePageCards,
+  changePageCountCards,
+} from 'features/Cards/Pack/packParams/packParamsReducer';
+import {
+  getPackParams,
+  getPageCount,
+  getPagePackParams,
+} from 'features/Cards/Pack/packParams/packParamsSelectors';
 import { changePackName, loadPack } from 'features/Cards/Pack/packReducer';
-import { getCards, getPackName, getPackUserId } from 'features/Cards/Pack/packSelectors';
+import {
+  getCards,
+  getCardsTotalCount,
+  getPackName,
+  getPackUserId,
+} from 'features/Cards/Pack/packSelectors';
 
 const addCardButtonTitle = 'Add new card';
 
@@ -33,6 +46,12 @@ export const Pack = (): ReturnComponentType => {
   const packName = useAppSelector(getPackName);
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
+  const page = useAppSelector(getPagePackParams);
+  const cardsTotalCount = useAppSelector(getCardsTotalCount);
+  const pageCount = useAppSelector(getPageCount);
+  const pageCountNumber = getLocalStorage('pageCount')
+    ? parseInt(getLocalStorage('pageCount') as string, 10)
+    : pageCount;
 
   const menuItems = [
     {
@@ -64,12 +83,24 @@ export const Pack = (): ReturnComponentType => {
 
   useEffect(() => {
     dispatch(
-      loadPack({ ...params, cardsPack_id: getLocalStorage('cardsPackId') as string }),
+      loadPack({
+        ...params,
+        cardsPack_id: getLocalStorage('cardsPackId') as string,
+        pageCount: pageCountNumber,
+      }),
     );
     dispatch(
       changePackName({ cardPackName: getLocalStorage('cardsPackName') as string }),
     );
-  }, [dispatch, params]);
+  }, [dispatch, pageCountNumber, params]);
+
+  const changePageHandler = (page: number): void => {
+    dispatch(changePageCards({ page }));
+  };
+
+  const changePageCountHandler = (pageCount: number): void => {
+    dispatch(changePageCountCards({ pageCount }));
+  };
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -98,7 +129,13 @@ export const Pack = (): ReturnComponentType => {
             <Search callBack={fetchNewSearch} />
           </div>
           <DataTable tableType="cards" />
-          <Paginator />
+          <Paginator
+            paramsPage={page}
+            cardPacksTotalCount={cardsTotalCount}
+            pageCount={pageCount}
+            changePage={changePageHandler}
+            changePageCount={changePageCountHandler}
+          />
         </div>
       ) : (
         <div>
