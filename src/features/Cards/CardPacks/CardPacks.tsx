@@ -1,6 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Navigate } from 'react-router-dom';
+
+import { CardPacksParamsType } from '../../../api/cardsAPI';
+import { CreatePackType } from '../../../api/cardsRequestTypes';
+import { AddNewPackModal } from '../../../common/components/Modal/AddNewPackModal/AddNewPackModal';
 
 import styles from './CardPacks.module.scss';
 import {
@@ -19,10 +23,10 @@ import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
 import {
   getCardPacksParams,
-  getPageCountPacksParams,
   getPageCardPacksParams,
+  getPageCountPacksParams,
 } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
-import { loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { createPack, loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 
 export const CardPacks = (): ReturnComponentType => {
@@ -38,13 +42,21 @@ export const CardPacks = (): ReturnComponentType => {
     ? parseInt(getLocalStorage('pageCount') as string, 10)
     : pageCount;
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
+
   useEffect(() => {
     dispatch(loadCardPacks({ ...params, pageCount: pageCountNumber }));
   }, [dispatch, params]);
 
   const addNewPackHandler = useCallback((): void => {
-    alert('create new pack');
+    handleOpen();
   }, []);
+
+  const createNewPack = (create: CreatePackType, load: CardPacksParamsType): void => {
+    dispatch(createPack({ create, load }));
+  };
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -83,6 +95,13 @@ export const CardPacks = (): ReturnComponentType => {
           />
         </div>
       </div>
+      <AddNewPackModal
+        param={params}
+        callBack={createNewPack}
+        handleClose={handleClose}
+        open={open}
+        title="Add new pack"
+      />
     </div>
   );
 };
