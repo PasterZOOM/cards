@@ -2,8 +2,8 @@
 
 @mixin text($fountSize, $fontWeight, $lineHeight) {
   font-family: $montserrat !important;
-  font-size: $fountSize;
-  font-weight: $fontWeight;
+  font-size: $fountSize !important;
+  font-weight: $fontWeight !important;
   font-style: normal !important;
   line-height: $lineHeight !important;
 }

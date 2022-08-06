@@ -26,7 +26,7 @@ export const HeaderAvatar = (): ReturnComponentType => {
       title: 'Profile',
       icon: profile,
       action: (): void => {
-        navigate(path.LOGIN);
+        navigate(path.PROFILE);
       },
     },
     {

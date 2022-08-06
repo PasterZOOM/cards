@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
@@ -11,25 +11,16 @@ import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
+import { startPageCount } from 'common/constants/projectConstants';
 import { path } from 'common/enums/path';
+import { sortCards } from 'common/enums/sortCards';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 import styles from 'features/Cards/Pack/Pack.module.scss';
-import {
-  changeCardQuestionSearchValue,
-  changePageCards,
-  changePageCountCards,
-} from 'features/Cards/Pack/packParams/packParamsReducer';
-import {
-  getPackParams,
-  getPageCount,
-  getPagePackParams,
-} from 'features/Cards/Pack/packParams/packParamsSelectors';
-import { changePackName, loadPack } from 'features/Cards/Pack/packReducer';
+import { loadPack } from 'features/Cards/Pack/packReducer';
 import {
   getCards,
   getCardsTotalCount,
@@ -42,16 +33,13 @@ const addCardButtonTitle = 'Add new card';
 export const Pack = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const params = useAppSelector(getPackParams);
   const packName = useAppSelector(getPackName);
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
-  const page = useAppSelector(getPagePackParams);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
-  const pageCount = useAppSelector(getPageCount);
-  const pageCountNumber = getLocalStorage('pageCount')
-    ? parseInt(getLocalStorage('pageCount') as string, 10)
-    : pageCount;
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -70,37 +58,25 @@ export const Pack = (): ReturnComponentType => {
     },
   ];
 
-  const fetchNewSearch = useCallback(
-    (value: string): void => {
-      dispatch(changeCardQuestionSearchValue({ cardQuestion: value || undefined }));
-    },
-    [dispatch],
-  );
-
   const addNewCardHandler = useCallback((): void => {
     alert('create new card');
   }, []);
 
   useEffect(() => {
-    dispatch(
-      loadPack({
-        ...params,
-        cardsPack_id: getLocalStorage('cardsPackId') as string,
-        pageCount: pageCountNumber,
-      }),
-    );
-    dispatch(
-      changePackName({ cardPackName: getLocalStorage('cardsPackName') as string }),
-    );
-  }, [dispatch, pageCountNumber, params]);
-
-  const changePageHandler = (page: number): void => {
-    dispatch(changePageCards({ page }));
-  };
-
-  const changePageCountHandler = (pageCount: number): void => {
-    dispatch(changePageCountCards({ pageCount }));
-  };
+    if (searchParams.get('cardsPack_id')) {
+      dispatch(
+        loadPack({
+          cardsPack_id: String(searchParams.get('cardsPack_id')) || undefined,
+          page: Number(searchParams.get('page')) || undefined,
+          sortCards: (searchParams.get('sortCards') as sortCards) || undefined,
+          min: Number(searchParams.get('min')) || undefined,
+          max: Number(searchParams.get('max')) || undefined,
+          pageCount: Number(searchParams.get('pageCount')) || startPageCount,
+          cardAnswer: searchParams.get('cardAnswer') || undefined,
+        }),
+      );
+    } else navigate(path.CARD_PACKS);
+  }, [dispatch, navigate, searchParams]);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -126,16 +102,10 @@ export const Pack = (): ReturnComponentType => {
       {cards.length !== 0 ? (
         <div>
           <div className={styles.search}>
-            <Search callBack={fetchNewSearch} />
+            <Search search="cardAnswer" />
           </div>
           <DataTable tableType="cards" />
-          <Paginator
-            paramsPage={page}
-            cardPacksTotalCount={cardsTotalCount}
-            pageCount={pageCount}
-            changePage={changePageHandler}
-            changePageCount={changePageCountHandler}
-          />
+          <Paginator cardPacksTotalCount={cardsTotalCount} />
         </div>
       ) : (
         <div>

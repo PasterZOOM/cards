@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 
+import Backdrop from '@mui/material/Backdrop/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
-import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
+
+import styles from './App.module.scss';
 
 import { initializeApp } from 'app/appReducer';
 import { getAppStatus, getInitialized } from 'app/appSelectors';
@@ -17,14 +19,20 @@ export const App = (): ReturnComponentType => {
   const isInitialized = useAppSelector(getInitialized);
   const status = useAppSelector(getAppStatus);
   const dispatch = useAppDispatch();
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     dispatch(initializeApp());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (status === requestStatus.LOADING) setOpen(true);
+    else setOpen(false);
+  }, [status]);
+
   if (!isInitialized) {
     return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+      <div className={styles.initialized}>
         <CircularProgress />
       </div>
     );
@@ -32,9 +40,10 @@ export const App = (): ReturnComponentType => {
 
   return (
     <div>
-      {status === requestStatus.LOADING && (
-        <LinearProgress style={{ position: 'absolute', top: '64px', width: '100%' }} />
-      )}
+      <Backdrop open={open} className={styles.backdrop}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <InfoSnackbar />
       <Header />
       <RoutesPage />
