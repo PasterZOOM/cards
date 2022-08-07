@@ -1,6 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Navigate } from 'react-router-dom';
+
+import { AddAndEditCardModal } from '../../../common/components/Modal/AddAndEditCardModal/AddAndEditCardModal';
+import { ModalCardFormTypes } from '../../../common/components/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
 
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
@@ -29,7 +32,7 @@ import {
   getPageCount,
   getPagePackParams,
 } from 'features/Cards/Pack/packParams/packParamsSelectors';
-import { changePackName, loadPack } from 'features/Cards/Pack/packReducer';
+import { changePackName, createCard, loadPack } from 'features/Cards/Pack/packReducer';
 import {
   getCards,
   getCardsTotalCount,
@@ -52,6 +55,33 @@ export const Pack = (): ReturnComponentType => {
   const pageCountNumber = getLocalStorage('pageCount')
     ? parseInt(getLocalStorage('pageCount') as string, 10)
     : pageCount;
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
+  const addNewCardHandler = useCallback((): void => {
+    handleOpen();
+  }, []);
+  const createNewCard = (values: ModalCardFormTypes): void => {
+    const create = {
+      card: {
+        cardsPack_id: getLocalStorage('cardsPackId') as string,
+        question: values.question,
+        answer: values.answer,
+      },
+    };
+
+    dispatch(
+      createCard({
+        create,
+        load: {
+          ...params,
+          cardsPack_id: getLocalStorage('cardsPackId') as string,
+          pageCount: pageCountNumber,
+        },
+      }),
+    );
+  };
 
   const menuItems = [
     {
@@ -76,10 +106,6 @@ export const Pack = (): ReturnComponentType => {
     },
     [dispatch],
   );
-
-  const addNewCardHandler = useCallback((): void => {
-    alert('create new card');
-  }, []);
 
   useEffect(() => {
     dispatch(
@@ -143,6 +169,12 @@ export const Pack = (): ReturnComponentType => {
             buttonTitle={addCardButtonTitle}
             callBack={addNewCardHandler}
             text="This pack is empty. Click add new card to fill this pack"
+          />
+          <AddAndEditCardModal
+            callBack={createNewCard}
+            handleClose={handleClose}
+            open={open}
+            title="Add new card"
           />
         </div>
       )}

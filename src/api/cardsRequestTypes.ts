@@ -1,4 +1,4 @@
-import { CardPacksParamsType } from './cardsAPI';
+import { CardPacksParamsType, PackParamsType } from './cardsAPI';
 
 export type CreatePackType = {
   cardsPack: CardsPackType;
@@ -18,9 +18,20 @@ type CardType = {
   cardsPack_id: string;
   question: string;
   answer: string;
+  grade?: number;
+  shots?: number;
+  answerImg?: string;
+  questionImg?: string;
+  questionVideo?: string;
+  answerVideo?: string;
 };
 
 export type RequestCreatePackType = {
   create: CreatePackType;
   load: CardPacksParamsType;
+};
+
+export type RequestCreateCardType = {
+  create: CreateCardType;
+  load: PackParamsType;
 };

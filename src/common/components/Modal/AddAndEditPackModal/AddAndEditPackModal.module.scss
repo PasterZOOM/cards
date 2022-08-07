@@ -22,34 +22,25 @@
     height: 1px;
     background: #d9d9d9
   }
-  .input {
-    width: 80%;
-    @include text(16px, 500, 24px);
-    margin: 36px 24px 30px;
-  }
-  .checkBoxContainer{
-    display: flex;
-    align-items: center;
-    margin-bottom: 35px;
-    .checkBox {
-      margin-left: 10px;
-    }
-    .span {
-      @include text(18px, 500, 20px);
-    }
-  }
-  .buttonContainer {
+  .form {
+    @include text(18px, 500, 20px);
+    margin-top: 36px;
     margin-left: 24px;
     margin-right: 24px;
-    margin-bottom: 48px;
-    display: flex;
-    justify-content: space-between;
-    .btn {
-      width: 120px;
-      border-radius: 50px;
+    .input {
+      @include text(16px, 500, 24px);
+    }
+    .buttonContainer {
+      margin-top: 34px;
+      margin-bottom: 48px;
+      display: flex;
+      justify-content: space-between;
+      .btn {
+        width: 120px;
+        border-radius: 50px;
+      }
     }
   }
-
 
 
 }

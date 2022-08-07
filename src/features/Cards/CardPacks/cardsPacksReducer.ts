@@ -20,8 +20,9 @@ export const createPack = createAsyncThunk(
 
       await cardPacksAPI.createPack(data.create);
 
-      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(loadCardPacks(data.load));
+
+      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     } catch (e) {
       handleError(e, dispatch);
 

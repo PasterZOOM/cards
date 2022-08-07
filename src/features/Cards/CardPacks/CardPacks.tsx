@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
-import { CardPacksParamsType } from '../../../api/cardsAPI';
-import { CreatePackType } from '../../../api/cardsRequestTypes';
-import { AddNewPackModal } from '../../../common/components/Modal/AddNewPackModal/AddNewPackModal';
+import { AddAndEditPackModal } from '../../../common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
+import { ModalPackFormTypes } from '../../../common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
 
 import styles from './CardPacks.module.scss';
 import {
@@ -54,8 +53,16 @@ export const CardPacks = (): ReturnComponentType => {
     handleOpen();
   }, []);
 
-  const createNewPack = (create: CreatePackType, load: CardPacksParamsType): void => {
-    dispatch(createPack({ create, load }));
+  const createNewPack = (values: ModalPackFormTypes): void => {
+    const create = {
+      cardsPack: {
+        name: values.namePack,
+        deckCover: '',
+        private: values.privatePack,
+      },
+    };
+
+    dispatch(createPack({ create, load: params }));
   };
 
   if (!isLoggedIn) {
@@ -95,8 +102,7 @@ export const CardPacks = (): ReturnComponentType => {
           />
         </div>
       </div>
-      <AddNewPackModal
-        param={params}
+      <AddAndEditPackModal
         callBack={createNewPack}
         handleClose={handleClose}
         open={open}
