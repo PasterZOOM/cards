@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 import del from 'assets/images/delete.svg';
@@ -8,6 +9,8 @@ import ellipsis from 'assets/images/ellipsis.svg';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
+import { AddAndEditCardModal } from 'common/components/Modal/AddAndEditCardModal/AddAndEditCardModal';
+import { ModalCardFormTypes } from 'common/components/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
@@ -20,7 +23,9 @@ import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 import styles from 'features/Cards/Pack/Pack.module.scss';
-import { loadPack } from 'features/Cards/Pack/packReducer';
+import { setPacksParams } from 'features/Cards/Pack/PackParams/packParamsReducer';
+import { getPackParams } from 'features/Cards/Pack/PackParams/packParamsSelectors';
+import { createCard, loadPack } from 'features/Cards/Pack/packReducer';
 import {
   getCards,
   getCardsTotalCount,
@@ -36,9 +41,34 @@ export const Pack = (): ReturnComponentType => {
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
+  const params = useAppSelector(getPackParams);
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
+  const addNewCardHandler = useCallback((): void => {
+    handleOpen();
+  }, []);
+
+  const createNewCard = (values: ModalCardFormTypes): void => {
+    const create = {
+      card: {
+        cardsPack_id: params.cardsPack_id,
+        question: values.question,
+        answer: values.answer,
+      },
+    };
+
+    dispatch(
+      createCard({
+        create,
+        load: params,
+      }),
+    );
+  };
 
   const menuItems = [
     {
@@ -57,10 +87,16 @@ export const Pack = (): ReturnComponentType => {
     },
   ];
 
-  const addNewCardHandler = useCallback((): void => {
-    alert('create new card');
-  }, []);
+  // читает URL и сохраняет params в стейт
+  useEffect(() => {
+    dispatch(
+      setPacksParams({
+        params: getActualPackParams(searchParams),
+      }),
+    );
+  }, [dispatch, searchParams]);
 
+  // читает URL и делает запрос за картами
   useEffect(() => {
     if (searchParams.get('cardsPack_id')) {
       dispatch(loadPack(getActualPackParams(searchParams)));
@@ -76,7 +112,7 @@ export const Pack = (): ReturnComponentType => {
       <TopPart
         buttonTitle={addCardButtonTitle}
         headTitle={packName}
-        items={cards.length !== 0}
+        items={cards.length !== 0 || (cards.length === 0 && !!params.cardQuestion)}
         onClickButton={addNewCardHandler}
         ownPack={ownPack}
       >
@@ -88,15 +124,7 @@ export const Pack = (): ReturnComponentType => {
         ]}
       </TopPart>
       <div />
-      {cards.length !== 0 ? (
-        <div>
-          <div className={styles.search}>
-            <Search search="cardQuestion" />
-          </div>
-          <DataTable tableType="cards" />
-          <Paginator cardPacksTotalCount={cardsTotalCount} />
-        </div>
-      ) : (
+      {cards.length === 0 && !params.cardQuestion ? (
         <div>
           <EmptyTable
             buttonTitle={addCardButtonTitle}
@@ -104,7 +132,29 @@ export const Pack = (): ReturnComponentType => {
             text="This pack is empty. Click add new card to fill this pack"
           />
         </div>
+      ) : (
+        <div>
+          <div className={styles.search}>
+            <Search search="cardQuestion" />
+          </div>
+          {cards.length !== 0 ? (
+            <div>
+              <DataTable tableType="cards" />
+              <Paginator cardPacksTotalCount={cardsTotalCount} />
+            </div>
+          ) : (
+            <Typography className={styles.title}>
+              Nothing found for your request
+            </Typography>
+          )}
+        </div>
       )}
+      <AddAndEditCardModal
+        callBack={createNewCard}
+        handleClose={handleClose}
+        open={open}
+        title="Add new card"
+      />
     </div>
   );
 };

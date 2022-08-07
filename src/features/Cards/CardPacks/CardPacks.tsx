@@ -1,11 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
 import styles from './CardPacks.module.scss';
-import { getCardPacksTotalCount } from './cardPacksSelectors';
+import { getCardPacks, getCardPacksTotalCount } from './cardPacksSelectors';
 
 import { DataTable } from 'common/components/DataTable/DataTable';
+import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
+import { ModalPackFormTypes } from 'common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
@@ -14,7 +17,7 @@ import { getActualCardParamsParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
 import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import { loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { createPack, loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 
 const addNewPackButtonTitle = 'Add new pack';
@@ -25,8 +28,13 @@ export const CardPacks = (): ReturnComponentType => {
 
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
+  const packs = useAppSelector(getCardPacks);
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
 
   // читает URL и сохраняет params в стейт
   useEffect(() => {
@@ -48,8 +56,20 @@ export const CardPacks = (): ReturnComponentType => {
   }, [dispatch, searchParams, setSearchParams]);
 
   const addNewPackHandler = useCallback((): void => {
-    alert('create new pack');
+    handleOpen();
   }, []);
+
+  const createNewPack = (values: ModalPackFormTypes): void => {
+    const create = {
+      cardsPack: {
+        name: values.namePack,
+        deckCover: '',
+        private: values.privatePack,
+      },
+    };
+
+    dispatch(createPack({ create, load: getActualCardParamsParams(searchParams) }));
+  };
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -65,15 +85,25 @@ export const CardPacks = (): ReturnComponentType => {
         ownPack
       />
       <CardPacksParams />
+      {packs.length !== 0 ? (
+        <div>
+          <div className={styles.table}>
+            <DataTable tableType="packs" />
+          </div>
+          <div className={styles.paginator}>
+            <Paginator cardPacksTotalCount={cardPacksTotalCount} />
+          </div>
+        </div>
+      ) : (
+        <Typography className={styles.title}>Nothing found for your request</Typography>
+      )}
 
-      <div>
-        <div className={styles.table}>
-          <DataTable tableType="packs" />
-        </div>
-        <div className={styles.paginator}>
-          <Paginator cardPacksTotalCount={cardPacksTotalCount} />
-        </div>
-      </div>
+      <AddAndEditPackModal
+        callBack={createNewPack}
+        handleClose={handleClose}
+        open={open}
+        title="Add new pack"
+      />
     </div>
   );
 };
