@@ -5,7 +5,6 @@ import { RequestCreateCardType } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
-import { loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 
 export const createCard = createAsyncThunk(
   '',
@@ -15,7 +14,7 @@ export const createCard = createAsyncThunk(
 
       await cardPackAPI.createCardPack(data.create);
 
-      dispatch(loadCardPacks(data.load));
+      dispatch(loadPack(data.load));
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     } catch (e) {

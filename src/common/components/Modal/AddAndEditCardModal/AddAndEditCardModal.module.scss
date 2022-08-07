@@ -2,9 +2,6 @@
 @import "src/assets/styles/scss/mixins";
 
 .main {
-  text-align: center;
-  margin-left: 24px;
-  margin-right: 24px;
   .header {
     display: flex;
     width: 395px;
@@ -25,8 +22,28 @@
     height: 1px;
     background: #d9d9d9
   }
-  .form {
 
+  .form {
+    margin-left: 24px;
+    margin-right: 24px;
+    @include text(18px, 500, 20px);
+    .select {
+
+      margin-top: 22px;
+    }
+    .input {
+      margin-top: 24px;
+
+    }
+    .buttonContainer {
+      margin: 34px 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      .btn {
+        width: 120px;
+        border-radius: 50px;
+      }
+    }
   }
 
 

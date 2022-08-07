@@ -16,6 +16,8 @@ type PropsType = {
   open: boolean;
   handleClose: () => void;
   title: string;
+  answer?: string;
+  question?: string;
   callBack: (values: ModalCardFormTypes) => void;
 };
 
@@ -24,6 +26,8 @@ export const AddAndEditCardModal: React.FC<PropsType> = ({
   handleClose,
   title,
   callBack,
+  answer,
+  question,
 }): ReturnComponentType => {
   const submitLoginForm = (values: ModalCardFormTypes): void => {
     callBack(values);
@@ -40,7 +44,7 @@ export const AddAndEditCardModal: React.FC<PropsType> = ({
         <div className={style.line} />
         <div className={style.form}>
           <Formik
-            initialValues={{ answer: '', question: '' }}
+            initialValues={{ answer: answer || '', question: question || '' }}
             validationSchema={validateCreateAndEditCard}
             onSubmit={submitLoginForm}
           >
