@@ -1,22 +1,19 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { PackType } from 'api/cardsAPI';
 import deleteIco from 'assets/images/delete.svg';
 import editIco from 'assets/images/edit.svg';
 import teacherIco from 'assets/images/teacher.svg';
 import s from 'common/components/DataTable/DataTable.module.css';
-import { startPageCount } from 'common/constants/projectConstants';
 import { path } from 'common/enums/path';
-import { sortPacks } from 'common/enums/sortPacks';
-import { useAppDispatch } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { setLocalStorage } from 'common/utils/localStorageUtil';
-import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 
 type PacksTableBodyProps = {
   pack: PackType;
@@ -25,25 +22,15 @@ type PacksTableBodyProps = {
 export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   pack,
 }): ReturnComponentType => {
-  const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
   const updateDate = new Date(pack.updated).toLocaleDateString('ru');
+  const navigate = useNavigate();
 
   const showCards = (): void => {
-    dispatch(
-      setCardPacksParams({
-        params: {
-          user_id: searchParams.get('user_id') || undefined,
-          packName: searchParams.get('packName') || undefined,
-          min: searchParams.get('min') || undefined,
-          max: searchParams.get('max') || undefined,
-          sortPacks: (searchParams.get('sortPacks') as sortPacks) || undefined,
-          page: searchParams.get('page') || undefined,
-          pageCount: searchParams.get('pageCount') || String(startPageCount),
-        },
-      }),
-    );
     setLocalStorage('packName', pack.name);
+  };
+
+  const onClickLearnHandle = (): void => {
+    navigate(`${path.LEARN}?cardsPack_id=${pack._id}`);
   };
 
   return (
@@ -63,7 +50,9 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
       <TableCell align="right">
         <Box component="img" src={deleteIco} alt="deleteIco" className={s.ico} />
         <Box component="img" src={editIco} alt="editIco" className={s.ico} />
-        <Box component="img" src={teacherIco} alt="teacherIco" className={s.ico} />
+        <IconButton className={s.ico} onClick={onClickLearnHandle}>
+          <img src={teacherIco} alt="learn" />
+        </IconButton>
       </TableCell>
     </TableRow>
   );

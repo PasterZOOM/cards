@@ -8,10 +8,9 @@ import { useSearchParams } from 'react-router-dom';
 
 import styles from 'common/components/Search/Search.module.scss';
 import { useDebounce } from 'common/hooks/hooks';
-import { URLParamsType } from 'common/types/URLParamsType';
 
 type PropsType = {
-  search: 'packName' | 'cardAnswer';
+  search: 'packName' | 'cardQuestion';
 };
 
 export const Search: React.FC<PropsType> = ({ search }) => {
@@ -24,7 +23,7 @@ export const Search: React.FC<PropsType> = ({ search }) => {
   };
 
   useEffect(() => {
-    const queryParams: URLParamsType = {};
+    const queryParams: { packName?: string; cardQuestion?: string } = {};
 
     if (debouncedValue) queryParams[search] = debouncedValue;
     else searchParams.delete(search);

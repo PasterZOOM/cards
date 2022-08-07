@@ -7,13 +7,13 @@ import { getCardPacksTotalCount } from './cardPacksSelectors';
 
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { Paginator } from 'common/components/Paginator/Paginator';
-import { startPageCount } from 'common/constants/projectConstants';
 import { path } from 'common/enums/path';
-import { sortPacks } from 'common/enums/sortPacks';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getActualCardParamsParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
+import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import { loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 
@@ -28,22 +28,22 @@ export const CardPacks = (): ReturnComponentType => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // читает URL и сохраняет params в стейт
+  useEffect(() => {
+    dispatch(
+      setCardPacksParams({
+        params: getActualCardParamsParams(searchParams),
+      }),
+    );
+  }, [dispatch, searchParams]);
+
+  // читает URL и делает запрос за паками
   useEffect(() => {
     if (searchParams.get('cardsPack_id')) {
       searchParams.delete('cardsPack_id');
       setSearchParams(searchParams);
     } else {
-      dispatch(
-        loadCardPacks({
-          user_id: searchParams.get('user_id') || undefined,
-          packName: searchParams.get('packName') || undefined,
-          min: Number(searchParams.get('min')) || undefined,
-          max: Number(searchParams.get('max')) || undefined,
-          sortPacks: (searchParams.get('sortPacks') as sortPacks) || undefined,
-          page: Number(searchParams.get('page')) || undefined,
-          pageCount: Number(searchParams.get('pageCount')) || startPageCount,
-        }),
-      );
+      dispatch(loadCardPacks(getActualCardParamsParams(searchParams)));
     }
   }, [dispatch, searchParams, setSearchParams]);
 

@@ -3,7 +3,6 @@ import { URLSearchParamsInit } from 'react-router-dom';
 import { CardData, Order, PackData } from 'common/components/DataTable/DataTableTypes';
 import { sortCards } from 'common/enums/sortCards';
 import { sortPacks } from 'common/enums/sortPacks';
-import { URLParamsType } from 'common/types/URLParamsType';
 
 export const sortPacksHelper = (
   property: keyof PackData,
@@ -14,7 +13,7 @@ export const sortPacksHelper = (
   ) => void,
   searchParams: URLSearchParams,
 ): void => {
-  const queryParams: URLParamsType = {};
+  const queryParams: { sortPacks?: string } = {};
 
   if (property === 'packTitle') {
     if (order === 'asc') {
@@ -65,7 +64,7 @@ export const sortCardsHelper = (
   ) => void,
   searchParams: URLSearchParams,
 ): void => {
-  const queryParams: URLParamsType = {};
+  const queryParams: { sortCards?: string } = {};
 
   if (property === 'updateCardDate') {
     if (order === 'asc') {

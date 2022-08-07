@@ -9,7 +9,6 @@ import styles from './OwnCardPacks.module.scss';
 import { packsOwn } from 'common/enums/packsOwn';
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { URLParamsType } from 'common/types/URLParamsType';
 import { clearURLParams } from 'common/utils/clearURLParams';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { FilterButton } from 'features/Cards/CardPacks/CardPacksParams/OwnCardPacks/FilterButton/FilterButton';
@@ -21,7 +20,7 @@ export const OwnCardPacks = (): ReturnComponentType => {
   const packsOwnLS = searchParams.get('user_id') ? packsOwn.MY : packsOwn.ALL;
 
   const onClickButton = (buttonName: packsOwn): void => {
-    const queryParams: URLParamsType = {};
+    const queryParams: { user_id?: string } = {};
 
     if (buttonName === packsOwn.MY) queryParams.user_id = userId;
     else searchParams.delete('user_id');

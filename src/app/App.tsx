@@ -8,7 +8,6 @@ import styles from './App.module.scss';
 import { initializeApp } from 'app/appReducer';
 import { getAppStatus, getInitialized } from 'app/appSelectors';
 import { Header } from 'common/components/Header/Header';
-import { Helper } from 'common/components/Helper/Helper';
 import { InfoSnackbar } from 'common/components/InfoSnackbar/InfoSnackbar';
 import { RoutesPage } from 'common/components/RoutesPage/RoutesPage';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -47,7 +46,6 @@ export const App = (): ReturnComponentType => {
       <InfoSnackbar />
       <Header />
       <RoutesPage />
-      <Helper />
     </div>
   );
 };

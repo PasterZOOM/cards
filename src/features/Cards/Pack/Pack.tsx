@@ -11,11 +11,10 @@ import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
-import { startPageCount } from 'common/constants/projectConstants';
 import { path } from 'common/enums/path';
-import { sortCards } from 'common/enums/sortCards';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getActualPackParams } from 'common/utils/getActualParams';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
@@ -64,17 +63,7 @@ export const Pack = (): ReturnComponentType => {
 
   useEffect(() => {
     if (searchParams.get('cardsPack_id')) {
-      dispatch(
-        loadPack({
-          cardsPack_id: String(searchParams.get('cardsPack_id')) || undefined,
-          page: Number(searchParams.get('page')) || undefined,
-          sortCards: (searchParams.get('sortCards') as sortCards) || undefined,
-          min: Number(searchParams.get('min')) || undefined,
-          max: Number(searchParams.get('max')) || undefined,
-          pageCount: Number(searchParams.get('pageCount')) || startPageCount,
-          cardAnswer: searchParams.get('cardAnswer') || undefined,
-        }),
-      );
+      dispatch(loadPack(getActualPackParams(searchParams)));
     } else navigate(path.CARD_PACKS);
   }, [dispatch, navigate, searchParams]);
 
@@ -94,7 +83,7 @@ export const Pack = (): ReturnComponentType => {
         {[
           <BackToCardPacks key={0} />,
           <OptionMenu menuItems={menuItems} key={1}>
-            <img src={ellipsis} alt="avatar" />
+            <img src={ellipsis} alt="menu" />
           </OptionMenu>,
         ]}
       </TopPart>
@@ -102,7 +91,7 @@ export const Pack = (): ReturnComponentType => {
       {cards.length !== 0 ? (
         <div>
           <div className={styles.search}>
-            <Search search="cardAnswer" />
+            <Search search="cardQuestion" />
           </div>
           <DataTable tableType="cards" />
           <Paginator cardPacksTotalCount={cardsTotalCount} />

@@ -1,25 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { URLParamsType } from 'common/types/URLParamsType';
+import { CardPacksParamsType } from 'api/cardsAPI';
 
 const startPageCount = 5;
 
 const slice = createSlice({
   name: 'cardPacksParams',
   initialState: {
-    cardsPack_id: undefined,
-    page: undefined,
-    sortCards: undefined,
+    packName: undefined,
     min: undefined,
     max: undefined,
-    cardAnswer: undefined,
-    packName: undefined,
     sortPacks: undefined,
+    page: undefined,
+    pageCount: startPageCount,
     user_id: undefined,
-    pageCount: String(startPageCount),
-  } as URLParamsType,
+  } as CardPacksParamsType,
   reducers: {
-    setCardPacksParams: (state, action: PayloadAction<{ params: URLParamsType }>) => {
+    setCardPacksParams: (
+      state,
+      action: PayloadAction<{ params: CardPacksParamsType }>,
+    ) => {
       return action.payload.params;
     },
   },

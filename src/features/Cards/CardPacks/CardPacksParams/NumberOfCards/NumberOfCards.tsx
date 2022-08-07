@@ -8,7 +8,6 @@ import styles from './NumberOfCards.module.scss';
 
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { URLParamsType } from 'common/types/URLParamsType';
 import { NumberOfCardsInput } from 'features/Cards/CardPacks/CardPacksParams/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
 import {
   getMaxCardsCount,
@@ -30,7 +29,7 @@ export const NumberOfCards = (): ReturnComponentType => {
   };
 
   const onChangeCommittedHandle = useCallback((): void => {
-    const queryParams: URLParamsType = {};
+    const queryParams: { min?: string; max?: string } = {};
 
     if (value[0] !== minCardsCount) queryParams.min = String(value[0]);
     else searchParams.delete('min');

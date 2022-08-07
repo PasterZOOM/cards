@@ -90,11 +90,9 @@ export type CardPacksParamsType = {
   user_id?: string;
 };
 export type PackParamsType = {
-  cardsPack_id?: string;
+  cardsPack_id: string;
   cardQuestion?: string;
   cardAnswer?: string;
-  min?: number;
-  max?: number;
   sortCards?: string;
   page?: number;
   pageCount?: number;

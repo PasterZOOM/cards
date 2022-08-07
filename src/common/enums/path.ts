@@ -7,4 +7,5 @@ export enum path {
   CREATE_NEW_PASSWORD = '/createNewPassword',
   CARD_PACKS = '/cardPacks',
   PACK = '/pack',
+  LEARN = '/learn',
 }

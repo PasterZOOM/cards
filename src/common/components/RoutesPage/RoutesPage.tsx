@@ -13,6 +13,7 @@ import { Profile } from 'features/Auth/User/Profile/Profile';
 import { Register } from 'features/Auth/User/Register/Register';
 import { CardPacks } from 'features/Cards/CardPacks/CardPacks';
 import { Pack } from 'features/Cards/Pack/Pack';
+import { Learn } from 'features/Learn/Learn';
 
 export const RoutesPage = (): ReturnComponentType => {
   const routes = [
@@ -24,6 +25,7 @@ export const RoutesPage = (): ReturnComponentType => {
     { path: path.CHECK_EMAIL, component: <CheckEmail /> },
     { path: path.CARD_PACKS, component: <CardPacks /> },
     { path: path.PACK, component: <Pack /> },
+    { path: path.LEARN, component: <Learn /> },
     { path: '*', component: <Error404 /> },
   ];
 

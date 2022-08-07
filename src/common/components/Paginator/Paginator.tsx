@@ -11,7 +11,6 @@ import { ReturnComponentType } from '../../types/ReturnComponentType';
 import styles from './Paginator.module.scss';
 
 import { startPageCount } from 'common/constants/projectConstants';
-import { URLParamsType } from 'common/types/URLParamsType';
 
 type PaginatorPropsType = {
   cardPacksTotalCount: number;
@@ -30,7 +29,7 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<unknown>, value: number): void => {
-      const queryParams: URLParamsType = {};
+      const queryParams: { page?: string } = {};
 
       queryParams.page = String(value);
       setPage(value);
@@ -45,7 +44,7 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
 
   const onSelectClickHandler = useCallback(
     (event: SelectChangeEvent<number>): void => {
-      const queryParams: URLParamsType = {};
+      const queryParams: { pageCount?: string } = {};
 
       queryParams.pageCount = String(event.target.value);
       setPageCount(+event.target.value);
