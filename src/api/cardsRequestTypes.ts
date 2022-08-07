@@ -14,6 +14,14 @@ export type CreateCardType = {
   card: CardType;
 };
 
+export type UpdatePackType = {
+  cardsPack: {
+    _id: string;
+    name: string;
+    private: boolean;
+  };
+};
+
 type CardType = {
   cardsPack_id: string;
   question: string;
@@ -28,6 +36,11 @@ type CardType = {
 
 export type RequestCreatePackType = {
   create: CreatePackType;
+  load: CardPacksParamsType;
+};
+
+export type RequestUpdatePackType = {
+  update: UpdatePackType;
   load: CardPacksParamsType;
 };
 

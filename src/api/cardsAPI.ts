@@ -1,6 +1,10 @@
 import { instance } from 'api/authAPI';
-import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
-import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
+import { CreateCardType, CreatePackType, UpdatePackType } from 'api/cardsRequestTypes';
+import {
+  CreateCardResponseType,
+  CreatePackResponseType,
+  UpdatePackResponseType,
+} from 'api/ResponseTypes';
 import { sortPacks } from 'common/enums/sortPacks';
 
 export const cardPacksAPI = {
@@ -9,6 +13,9 @@ export const cardPacksAPI = {
   },
   getPacks(params: CardPacksParamsType) {
     return instance.get<CardPacksResponseType>(`cards/pack`, { params });
+  },
+  updatePack(data: UpdatePackType) {
+    return instance.put<UpdatePackResponseType>(`cards/pack`, data);
   },
 };
 

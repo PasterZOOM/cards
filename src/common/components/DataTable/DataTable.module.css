@@ -4,6 +4,10 @@
     cursor: pointer;
 }
 
+.ico:disabled {
+    opacity: 0.5;
+}
+
 .tableHead {
     background: #EFEFEF;
 }

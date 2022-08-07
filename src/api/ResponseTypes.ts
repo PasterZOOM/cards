@@ -1,3 +1,4 @@
+import { PackType } from 'api/cardsAPI';
 import { UserType } from 'features/Auth/User/Profile/ProfileTypes';
 import { NewUserType } from 'features/Auth/User/Register/RegisterTypes';
 
@@ -52,6 +53,12 @@ export type CreateCardResponseType = {
     question: string;
     comments: string;
   };
+  token: string;
+  tokenDeathTime: number;
+};
+
+export type UpdatePackResponseType = {
+  updatedCardsPack: PackType;
   token: string;
   tokenDeathTime: number;
 };
