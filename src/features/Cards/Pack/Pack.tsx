@@ -16,6 +16,7 @@ import { path } from 'common/enums/path';
 import { sortCards } from 'common/enums/sortCards';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
@@ -24,7 +25,6 @@ import { loadPack } from 'features/Cards/Pack/packReducer';
 import {
   getCards,
   getCardsTotalCount,
-  getPackName,
   getPackUserId,
 } from 'features/Cards/Pack/packSelectors';
 
@@ -33,7 +33,7 @@ const addCardButtonTitle = 'Add new card';
 export const Pack = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const packName = useAppSelector(getPackName);
+  const packName = getLocalStorage('packName') as string;
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { cardPackAPI, PackParamsType, PackResponseType } from 'api/cardsAPI';
 import { setAppStatus } from 'app/appReducer';
@@ -27,30 +27,23 @@ export const loadPack = createAsyncThunk(
 const slice = createSlice({
   name: 'pack',
   initialState: {
-    cards: {
-      cards: [],
-      packUserId: '',
-      page: 0,
-      pageCount: 0,
-      cardsTotalCount: 0,
-      minGrade: 0,
-      maxGrade: 0,
-      token: '',
-      tokenDeathTime: 0,
-    } as PackResponseType,
-    cardPackName: 'He',
-  },
-  reducers: {
-    changePackName(state, action: PayloadAction<{ cardPackName: string }>) {
-      state.cardPackName = action.payload.cardPackName;
-    },
-  },
+    cards: [],
+    packUserId: '',
+    page: 0,
+    pageCount: 0,
+    cardsTotalCount: 0,
+    minGrade: 0,
+    maxGrade: 0,
+    token: '',
+    tokenDeathTime: 0,
+  } as PackResponseType,
+
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(loadPack.fulfilled, (state, action) => {
-      state.cards = action.payload;
+      return action.payload;
     });
   },
 });
 
 export const packReducer = slice.reducer;
-export const { changePackName } = slice.actions;

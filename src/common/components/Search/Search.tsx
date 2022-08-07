@@ -16,8 +16,8 @@ type PropsType = {
 
 export const Search: React.FC<PropsType> = ({ search }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [value, setValue] = useState<string | null>(searchParams.get('packName'));
-  const debouncedValue = useDebounce<string | null>(value);
+  const [value, setValue] = useState<string>(searchParams.get('packName') || '');
+  const debouncedValue = useDebounce<string>(value);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);

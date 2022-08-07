@@ -26,21 +26,26 @@ export const CardPacks = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(
-      loadCardPacks({
-        user_id: searchParams.get('user_id') || undefined,
-        packName: searchParams.get('packName') || undefined,
-        min: Number(searchParams.get('min')) || undefined,
-        max: Number(searchParams.get('max')) || undefined,
-        sortPacks: (searchParams.get('sortPacks') as sortPacks) || undefined,
-        page: Number(searchParams.get('page')) || undefined,
-        pageCount: Number(searchParams.get('pageCount')) || startPageCount,
-      }),
-    );
-  }, [dispatch, searchParams]);
+    if (searchParams.get('cardsPack_id')) {
+      searchParams.delete('cardsPack_id');
+      setSearchParams(searchParams);
+    } else {
+      dispatch(
+        loadCardPacks({
+          user_id: searchParams.get('user_id') || undefined,
+          packName: searchParams.get('packName') || undefined,
+          min: Number(searchParams.get('min')) || undefined,
+          max: Number(searchParams.get('max')) || undefined,
+          sortPacks: (searchParams.get('sortPacks') as sortPacks) || undefined,
+          page: Number(searchParams.get('page')) || undefined,
+          pageCount: Number(searchParams.get('pageCount')) || startPageCount,
+        }),
+      );
+    }
+  }, [dispatch, searchParams, setSearchParams]);
 
   const addNewPackHandler = useCallback((): void => {
     alert('create new pack');
