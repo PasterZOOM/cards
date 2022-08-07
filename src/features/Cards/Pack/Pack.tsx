@@ -33,6 +33,22 @@ import {
 } from 'features/Cards/Pack/packSelectors';
 
 const addCardButtonTitle = 'Add new card';
+const menuItems = [
+  {
+    title: 'Edit',
+    icon: edit,
+    action: (): void => {
+      alert('edit pack');
+    },
+  },
+  {
+    title: 'Delete',
+    icon: del,
+    action: (): void => {
+      alert('pack deleted');
+    },
+  },
+];
 
 export const Pack = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -43,7 +59,7 @@ export const Pack = (): ReturnComponentType => {
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
   const params = useAppSelector(getPackParams);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -70,23 +86,6 @@ export const Pack = (): ReturnComponentType => {
     );
   };
 
-  const menuItems = [
-    {
-      title: 'Edit',
-      icon: edit,
-      action: (): void => {
-        alert('edit pack');
-      },
-    },
-    {
-      title: 'Delete',
-      icon: del,
-      action: (): void => {
-        alert('pack deleted');
-      },
-    },
-  ];
-
   // читает URL и сохраняет params в стейт
   useEffect(() => {
     dispatch(
@@ -94,7 +93,7 @@ export const Pack = (): ReturnComponentType => {
         params: getActualPackParams(searchParams),
       }),
     );
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, setSearchParams]);
 
   // читает URL и делает запрос за картами
   useEffect(() => {

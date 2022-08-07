@@ -43,7 +43,7 @@ export const CardPacks = (): ReturnComponentType => {
         params: getActualCardParamsParams(searchParams),
       }),
     );
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, setSearchParams]);
 
   // читает URL и делает запрос за паками
   useEffect(() => {

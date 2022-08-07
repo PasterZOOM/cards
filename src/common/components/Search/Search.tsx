@@ -29,14 +29,18 @@ export const Search: React.FC<PropsType> = ({ search }) => {
   useEffect(() => {
     const queryParams: { packName?: string; cardQuestion?: string } = {};
 
-    if (debouncedValue) queryParams[search] = debouncedValue;
-    else searchParams.delete(search);
+    if (debouncedValue) {
+      queryParams[search] = debouncedValue;
+    } else searchParams.delete(search);
+
+    searchParams.delete('page');
+    setSearchParams(searchParams);
 
     setSearchParams({
       ...Object.fromEntries(searchParams),
       ...queryParams,
     });
-  }, [debouncedValue, search, searchParams, setSearchParams]);
+  }, [debouncedValue]);
 
   return (
     <div className={styles.main}>

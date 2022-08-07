@@ -25,12 +25,17 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   const updateDate = new Date(pack.updated).toLocaleDateString('ru');
   const navigate = useNavigate();
 
-  const showCards = (): void => {
+  const saveTitle = (): void => {
     setLocalStorage('packName', pack.name);
   };
 
+  const showCards = (): void => {
+    saveTitle();
+  };
+
   const onClickLearnHandle = (): void => {
-    navigate(`${path.LEARN}?cardsPack_id=${pack._id}`);
+    saveTitle();
+    navigate(`${path.LEARN}?cardsPack_id=${pack._id}&pageCount=${pack.cardsCount}`);
   };
 
   return (

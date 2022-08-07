@@ -17,14 +17,9 @@
     text-align: center !important;
     margin: 0 0 18px !important;
   }
-
-  .question {
-    @include text(14px, 600, 24px);
-    margin: 0 0 10px !important;
-    opacity: 0.5 !important;
+  .answer {
+    @include text(16px, 400, 24px);
+    margin: 6px 0 24px !important;
   }
 
-  .link {
-    @include text(16px, 600, 24px);
-  }
 }

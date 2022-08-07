@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  cardPacksAPI,
-  CardPacksParamsType,
-  CardPacksResponseType,
-  PackType,
-} from 'api/cardsAPI';
+import { cardPacksAPI, CardPacksParamsType, CardPacksResponseType } from 'api/cardsAPI';
 import { RequestCreatePackType } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -52,7 +47,7 @@ export const loadCardPacks = createAsyncThunk(
 const slice = createSlice({
   name: 'cardPacks',
   initialState: {
-    cardPacks: [] as Array<PackType>,
+    cardPacks: [],
     page: 1,
     pageCount: 5,
     cardPacksTotalCount: 0,
