@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Navigate } from 'react-router-dom';
-
-import { AddAndEditCardModal } from '../../../common/components/Modal/AddAndEditCardModal/AddAndEditCardModal';
-import { ModalCardFormTypes } from '../../../common/components/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
+import Typography from '@mui/material/Typography/Typography';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
@@ -11,32 +9,26 @@ import ellipsis from 'assets/images/ellipsis.svg';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { EmptyTable } from 'common/components/EmptyTable/EmptyTable';
+import { AddAndEditCardModal } from 'common/components/Modal/AddAndEditCardModal/AddAndEditCardModal';
+import { ModalCardFormTypes } from 'common/components/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getActualPackParams } from 'common/utils/getActualParams';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 import styles from 'features/Cards/Pack/Pack.module.scss';
-import {
-  changeCardQuestionSearchValue,
-  changePageCards,
-  changePageCountCards,
-} from 'features/Cards/Pack/packParams/packParamsReducer';
-import {
-  getPackParams,
-  getPageCount,
-  getPagePackParams,
-} from 'features/Cards/Pack/packParams/packParamsSelectors';
-import { changePackName, createCard, loadPack } from 'features/Cards/Pack/packReducer';
+import { setPacksParams } from 'features/Cards/Pack/packParams/packParamsReducer';
+import { getPackParams } from 'features/Cards/Pack/packParams/packParamsSelectors';
+import { createCard, loadPack } from 'features/Cards/Pack/packReducer';
 import {
   getCards,
   getCardsTotalCount,
-  getPackName,
   getPackUserId,
 } from 'features/Cards/Pack/packSelectors';
 
@@ -45,16 +37,14 @@ const addCardButtonTitle = 'Add new card';
 export const Pack = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const params = useAppSelector(getPackParams);
-  const packName = useAppSelector(getPackName);
+  const packName = getLocalStorage('packName') as string;
   const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
   const cards = useAppSelector(getCards);
-  const page = useAppSelector(getPagePackParams);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
-  const pageCount = useAppSelector(getPageCount);
-  const pageCountNumber = getLocalStorage('pageCount')
-    ? parseInt(getLocalStorage('pageCount') as string, 10)
-    : pageCount;
+  const params = useAppSelector(getPackParams);
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const handleOpen = (): void => setOpen(true);
@@ -62,10 +52,11 @@ export const Pack = (): ReturnComponentType => {
   const addNewCardHandler = useCallback((): void => {
     handleOpen();
   }, []);
+
   const createNewCard = (values: ModalCardFormTypes): void => {
     const create = {
       card: {
-        cardsPack_id: getLocalStorage('cardsPackId') as string,
+        cardsPack_id: params.cardsPack_id,
         question: values.question,
         answer: values.answer,
       },
@@ -74,11 +65,7 @@ export const Pack = (): ReturnComponentType => {
     dispatch(
       createCard({
         create,
-        load: {
-          ...params,
-          cardsPack_id: getLocalStorage('cardsPackId') as string,
-          pageCount: pageCountNumber,
-        },
+        load: params,
       }),
     );
   };
@@ -100,33 +87,21 @@ export const Pack = (): ReturnComponentType => {
     },
   ];
 
-  const fetchNewSearch = useCallback(
-    (value: string): void => {
-      dispatch(changeCardQuestionSearchValue({ cardQuestion: value || undefined }));
-    },
-    [dispatch],
-  );
-
+  // читает URL и сохраняет params в стейт
   useEffect(() => {
     dispatch(
-      loadPack({
-        ...params,
-        cardsPack_id: getLocalStorage('cardsPackId') as string,
-        pageCount: pageCountNumber,
+      setPacksParams({
+        params: getActualPackParams(searchParams),
       }),
     );
-    dispatch(
-      changePackName({ cardPackName: getLocalStorage('cardsPackName') as string }),
-    );
-  }, [dispatch, pageCountNumber, params]);
+  }, [dispatch, searchParams]);
 
-  const changePageHandler = (page: number): void => {
-    dispatch(changePageCards({ page }));
-  };
-
-  const changePageCountHandler = (pageCount: number): void => {
-    dispatch(changePageCountCards({ pageCount }));
-  };
+  // читает URL и делает запрос за картами
+  useEffect(() => {
+    if (searchParams.get('cardsPack_id')) {
+      dispatch(loadPack(getActualPackParams(searchParams)));
+    } else navigate(path.CARD_PACKS);
+  }, [dispatch, navigate, searchParams]);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
@@ -137,47 +112,49 @@ export const Pack = (): ReturnComponentType => {
       <TopPart
         buttonTitle={addCardButtonTitle}
         headTitle={packName}
-        items={cards.length !== 0}
+        items={cards.length !== 0 || (cards.length === 0 && !!params.cardQuestion)}
         onClickButton={addNewCardHandler}
         ownPack={ownPack}
       >
         {[
           <BackToCardPacks key={0} />,
           <OptionMenu menuItems={menuItems} key={1}>
-            <img src={ellipsis} alt="avatar" />
+            <img src={ellipsis} alt="menu" />
           </OptionMenu>,
         ]}
       </TopPart>
       <div />
-      {cards.length !== 0 ? (
-        <div>
-          <div className={styles.search}>
-            <Search callBack={fetchNewSearch} />
-          </div>
-          <DataTable tableType="cards" />
-          <Paginator
-            paramsPage={page}
-            cardPacksTotalCount={cardsTotalCount}
-            pageCount={pageCount}
-            changePage={changePageHandler}
-            changePageCount={changePageCountHandler}
-          />
-        </div>
-      ) : (
+      {cards.length === 0 && !params.cardQuestion ? (
         <div>
           <EmptyTable
             buttonTitle={addCardButtonTitle}
             callBack={addNewCardHandler}
             text="This pack is empty. Click add new card to fill this pack"
           />
-          <AddAndEditCardModal
-            callBack={createNewCard}
-            handleClose={handleClose}
-            open={open}
-            title="Add new card"
-          />
+        </div>
+      ) : (
+        <div>
+          <div className={styles.search}>
+            <Search search="cardQuestion" />
+          </div>
+          {cards.length !== 0 ? (
+            <div>
+              <DataTable tableType="cards" />
+              <Paginator cardPacksTotalCount={cardsTotalCount} />
+            </div>
+          ) : (
+            <Typography className={styles.title}>
+              Nothing found for your request
+            </Typography>
+          )}
         </div>
       )}
+      <AddAndEditCardModal
+        callBack={createNewCard}
+        handleClose={handleClose}
+        open={open}
+        title="Add new card"
+      />
     </div>
   );
 };

@@ -24,7 +24,23 @@ export const updateUser = createAsyncThunk(
 
 const slice = createSlice({
   name: 'profile',
-  initialState: { user: {} as UserType },
+  initialState: {
+    user: {
+      _id: '',
+      email: '',
+      rememberMe: false,
+      isAdmin: false,
+      name: '',
+      verified: false,
+      publicCardPacksCount: 0,
+      created: '',
+      updated: '',
+      __v: 0,
+      token: '',
+      tokenDeathTime: 0,
+      avatar: '',
+    } as UserType,
+  },
   reducers: {
     sendUserDate: (state, action: PayloadAction<UserType>) => {
       state.user = action.payload;

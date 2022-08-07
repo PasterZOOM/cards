@@ -5,11 +5,12 @@ import Button from '@mui/material/Button/Button';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
 
-import { ReturnComponentType } from '../../../../types/ReturnComponentType';
 import { EmailField } from '../../../Forms/EmailField/EmailField';
 import style from '../AddAndEditPackModal.module.scss';
 
 import { ModalPackFormTypes } from './modalPackFormType';
+
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
   formik: FormikProps<ModalPackFormTypes>;
@@ -25,7 +26,7 @@ export const ModalPackForm: React.FC<PropsType> = ({
     <Form>
       <FormGroup>
         <div className={style.input}>
-          <EmailField name="namePack" label="name Pack" />
+          <EmailField name="namePack" label="Name Pack" />
         </div>
 
         <div className={style.checkbox}>

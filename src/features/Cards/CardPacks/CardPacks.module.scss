@@ -26,4 +26,10 @@
   .paginator {
     margin: 4px 0 28px;
   }
+
+  .title {
+    @include text(16px, 400, 20px);
+    margin: 86px auto 32px;
+    opacity: 0.5;
+  }
 }

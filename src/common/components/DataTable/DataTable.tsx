@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
+import { useSearchParams } from 'react-router-dom';
 
 import { DataTableBody } from 'common/components/DataTable/DataTableBody/DataTableBody';
 import { DataTableHead } from 'common/components/DataTable/DataTableHead/DataTableHead';
@@ -13,7 +14,6 @@ import {
   Order,
   PackData,
 } from 'common/components/DataTable/DataTableTypes';
-import { useAppDispatch } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { sortCardsHelper, sortPacksHelper } from 'common/utils/dataTableSortHelper';
 
@@ -24,16 +24,17 @@ type DataTableProps = {
 export const DataTable: React.FC<DataTableProps> = ({
   tableType,
 }): ReturnComponentType => {
-  const dispatch = useAppDispatch();
-
   const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<DataKeys>('actions');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleRequestSort = (event: MouseEvent<unknown>, property: DataKeys): void => {
     const isAsc = orderBy === property && order === 'asc';
 
-    sortPacksHelper(property as keyof PackData, order, dispatch);
-    sortCardsHelper(property as keyof CardData, order, dispatch);
+    if (tableType === 'packs')
+      sortPacksHelper(property as keyof PackData, order, setSearchParams, searchParams);
+    if (tableType === 'cards')
+      sortCardsHelper(property as keyof CardData, order, setSearchParams, searchParams);
 
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);

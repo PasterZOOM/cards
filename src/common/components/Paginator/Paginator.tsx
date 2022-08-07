@@ -1,57 +1,76 @@
-import * as React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Select, SelectChangeEvent } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem/MenuItem';
 import Pagination from '@mui/material/Pagination';
+import { useSearchParams } from 'react-router-dom';
 
 import { ReturnComponentType } from '../../types/ReturnComponentType';
-import { getLocalStorage, setLocalStorage } from '../../utils/localStorageUtil';
 
 import styles from './Paginator.module.scss';
 
+import { startPageCount } from 'common/constants/projectConstants';
+
 type PaginatorPropsType = {
-  paramsPage: number | undefined;
   cardPacksTotalCount: number;
-  pageCount: number | undefined;
-  changePage: (page: number) => void;
-  changePageCount: (pageCount: number) => void;
 };
 
 export const Paginator: React.FC<PaginatorPropsType> = ({
   cardPacksTotalCount,
-  pageCount,
-  changePage,
-  changePageCount,
-  paramsPage,
 }): ReturnComponentType => {
-  const pageCountPag = parseInt(getLocalStorage('pageCount') as string, 10) || pageCount;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState<number>(Number(searchParams.get('page')) || 1);
+  const [pageCount, setPageCount] = useState<number>(
+    Number(searchParams.get('pageCount')) || startPageCount,
+  );
 
-  const pagesCount = Math.ceil(cardPacksTotalCount / (pageCountPag || 1));
+  const pagesCount = Math.ceil(cardPacksTotalCount / pageCount);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<unknown>, value: number): void => {
-      changePage(value);
+      const queryParams: { page?: string } = {};
+
+      queryParams.page = String(value);
+      setPage(value);
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
+        ...queryParams,
+      });
     },
-    [],
+    [searchParams, setSearchParams],
   );
 
-  const onSelectClickHandler = useCallback((event: SelectChangeEvent<number>): void => {
-    setLocalStorage('pageCount', event.target.value.toString());
-    changePage(1);
-    changePageCount(+event.target.value);
-  }, []);
+  const onSelectClickHandler = useCallback(
+    (event: SelectChangeEvent<number>): void => {
+      const queryParams: { pageCount?: string } = {};
+
+      queryParams.pageCount = String(event.target.value);
+      setPageCount(+event.target.value);
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
+        ...queryParams,
+      });
+    },
+    [searchParams, setSearchParams],
+  );
+
+  useEffect(() => {
+    setPage(Number(searchParams.get('page')) || 1);
+  }, [searchParams]);
 
   return (
     <div className={styles.container}>
-      <Pagination count={pagesCount} page={paramsPage || 1} onChange={handleChange} />
+      <Pagination count={pagesCount} page={page} onChange={handleChange} />
       <p className={styles.text}>Show</p>
 
       <Select
         className={styles.select}
         size="small"
-        value={pageCountPag}
+        value={pageCount}
         onChange={onSelectClickHandler}
+        IconComponent={KeyboardArrowDownIcon}
       >
         <MenuItem value={5}>5</MenuItem>
         <MenuItem value={10}>10</MenuItem>

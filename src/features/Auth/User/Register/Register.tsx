@@ -27,7 +27,7 @@ export const Register = (): ReturnComponentType => {
     setSubmitting(false);
   };
 
-  if (isLoggedIn) return <Navigate to={path.PROFILE} />;
+  if (isLoggedIn) return <Navigate to={path.CARD_PACKS} />;
 
   return (
     <Paper elevation={3} className={styles.main}>

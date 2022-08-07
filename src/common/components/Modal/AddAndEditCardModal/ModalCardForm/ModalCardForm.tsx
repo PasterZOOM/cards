@@ -4,11 +4,12 @@ import Button from '@mui/material/Button/Button';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
 
-import { ReturnComponentType } from '../../../../types/ReturnComponentType';
-import { EmailField } from '../../../Forms/EmailField/EmailField';
 import style from '../AddAndEditCardModal.module.scss';
 
 import { ModalCardFormTypes } from './modalCardFormType';
+
+import { EmailField } from 'common/components/Forms/EmailField/EmailField';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
   formik: FormikProps<ModalCardFormTypes>;

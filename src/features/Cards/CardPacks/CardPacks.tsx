@@ -1,53 +1,59 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Navigate } from 'react-router-dom';
-
-import { AddAndEditPackModal } from '../../../common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
-import { ModalPackFormTypes } from '../../../common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
+import Typography from '@mui/material/Typography/Typography';
+import { Navigate, useSearchParams } from 'react-router-dom';
 
 import styles from './CardPacks.module.scss';
-import {
-  changePacksPage,
-  changePacksPageCount,
-} from './CardPacksParams/cardPacksParamsReducer';
-import { getCardPacksTotalCount } from './cardPacksSelectors';
+import { getCardPacks, getCardPacksTotalCount } from './cardPacksSelectors';
 
 import { DataTable } from 'common/components/DataTable/DataTable';
+import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
+import { ModalPackFormTypes } from 'common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getLocalStorage } from 'common/utils/localStorageUtil';
+import { getActualCardParamsParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
-import {
-  getCardPacksParams,
-  getPageCardPacksParams,
-  getPageCountPacksParams,
-} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
+import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import { createPack, loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
 import { TopPart } from 'features/Cards/common/components/TopPart';
 
+const addNewPackButtonTitle = 'Add new pack';
+const title = 'Packs list';
+
 export const CardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-  const params = useAppSelector(getCardPacksParams);
-  const addNewPackButtonTitle = 'Add new pack';
-  const title = 'Packs list';
-  const pageCount = useAppSelector(getPageCountPacksParams);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
-  const page = useAppSelector(getPageCardPacksParams);
-  const pageCountNumber = getLocalStorage('pageCount')
-    ? parseInt(getLocalStorage('pageCount') as string, 10)
-    : pageCount;
+  const packs = useAppSelector(getCardPacks);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [open, setOpen] = useState(false);
   const handleOpen = (): void => setOpen(true);
   const handleClose = (): void => setOpen(false);
 
+  // читает URL и сохраняет params в стейт
   useEffect(() => {
-    dispatch(loadCardPacks({ ...params, pageCount: pageCountNumber }));
-  }, [dispatch, params]);
+    dispatch(
+      setCardPacksParams({
+        params: getActualCardParamsParams(searchParams),
+      }),
+    );
+  }, [dispatch, searchParams]);
+
+  // читает URL и делает запрос за паками
+  useEffect(() => {
+    if (searchParams.get('cardsPack_id')) {
+      searchParams.delete('cardsPack_id');
+      setSearchParams(searchParams);
+    } else {
+      dispatch(loadCardPacks(getActualCardParamsParams(searchParams)));
+    }
+  }, [dispatch, searchParams, setSearchParams]);
 
   const addNewPackHandler = useCallback((): void => {
     handleOpen();
@@ -62,20 +68,12 @@ export const CardPacks = (): ReturnComponentType => {
       },
     };
 
-    dispatch(createPack({ create, load: params }));
+    dispatch(createPack({ create, load: getActualCardParamsParams(searchParams) }));
   };
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
   }
-
-  const changePageHandler = (page: number): void => {
-    dispatch(changePacksPage({ page }));
-  };
-
-  const changePageCountHandler = (pageCount: number): void => {
-    dispatch(changePacksPageCount({ pageCount }));
-  };
 
   return (
     <div className={styles.main}>
@@ -87,21 +85,19 @@ export const CardPacks = (): ReturnComponentType => {
         ownPack
       />
       <CardPacksParams />
+      {packs.length !== 0 ? (
+        <div>
+          <div className={styles.table}>
+            <DataTable tableType="packs" />
+          </div>
+          <div className={styles.paginator}>
+            <Paginator cardPacksTotalCount={cardPacksTotalCount} />
+          </div>
+        </div>
+      ) : (
+        <Typography className={styles.title}>Nothing found for your request</Typography>
+      )}
 
-      <div>
-        <div className={styles.table}>
-          <DataTable tableType="packs" />
-        </div>
-        <div className={styles.paginator}>
-          <Paginator
-            paramsPage={page}
-            cardPacksTotalCount={cardPacksTotalCount}
-            pageCount={pageCount}
-            changePage={changePageHandler}
-            changePageCount={changePageCountHandler}
-          />
-        </div>
-      </div>
       <AddAndEditPackModal
         callBack={createNewPack}
         handleClose={handleClose}

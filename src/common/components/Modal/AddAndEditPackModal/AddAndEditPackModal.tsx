@@ -3,13 +3,14 @@ import React from 'react';
 import { Formik } from 'formik';
 
 import closeIcon from '../../../../assets/images/closeIcon.svg';
-import { ReturnComponentType } from '../../../types/ReturnComponentType';
 import { BasicModal } from '../BasicModal/BasicModal';
 
 import style from './AddAndEditPackModal.module.scss';
 import { ModalPackForm } from './ModalPackForm/ModalPackForm';
 import { ModalPackFormTypes } from './ModalPackForm/modalPackFormType';
 import { validateCreateAndEditPack } from './ModalPackForm/modalValidatePack';
+
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
   open: boolean;

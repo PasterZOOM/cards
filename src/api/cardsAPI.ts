@@ -1,14 +1,14 @@
 import { instance } from 'api/authAPI';
 import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
 import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
-import { sortPacks } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
+import { sortPacks } from 'common/enums/sortPacks';
 
 export const cardPacksAPI = {
   createPack(data: CreatePackType) {
     return instance.post<CreatePackResponseType>(`cards/pack`, data);
   },
   getPacks(params: CardPacksParamsType) {
-    return instance.get<CardPacksResponseType>(`cards/pack`, { params: { ...params } });
+    return instance.get<CardPacksResponseType>(`cards/pack`, { params });
   },
 };
 
@@ -93,8 +93,6 @@ export type PackParamsType = {
   cardsPack_id: string;
   cardQuestion?: string;
   cardAnswer?: string;
-  min?: number;
-  max?: number;
   sortCards?: string;
   page?: number;
   pageCount?: number;

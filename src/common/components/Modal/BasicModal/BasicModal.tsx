@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 import Modal from '@mui/material/Modal';
 
-import { ReturnComponentType } from '../../../types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 const style = {
   position: 'absolute' as 'absolute',

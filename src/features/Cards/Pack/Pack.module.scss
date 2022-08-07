@@ -11,6 +11,12 @@
   .search {
     margin: 0 0 24px;
   }
+  .title {
+    @include text(16px, 400, 20px);
+    margin: 86px auto 32px;
+    opacity: 0.5;
+    text-align: center;
+  }
 }
 
 

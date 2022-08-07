@@ -1,41 +1,37 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ButtonGroup from '@mui/material/ButtonGroup/ButtonGroup';
 import Typography from '@mui/material/Typography/Typography';
+import { useSearchParams } from 'react-router-dom';
 
 import styles from './OwnCardPacks.module.scss';
 
 import { packsOwn } from 'common/enums/packsOwn';
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getLocalStorage, setLocalStorage } from 'common/utils/localStorageUtil';
+import { clearURLParams } from 'common/utils/clearURLParams';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import {
-  changeFilterByOwn,
-  changePacksPage,
-} from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import { FilterButton } from 'features/Cards/CardPacks/CardPacksParams/OwnCardPacks/FilterButton/FilterButton';
 
 export const OwnCardPacks = (): ReturnComponentType => {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const userId = useAppSelector(getUserId);
-  const packsOwnLS = (getLocalStorage('PacksOwn') as packsOwn) || packsOwn.ALL;
+  const packsOwnLS = searchParams.get('user_id') ? packsOwn.MY : packsOwn.ALL;
 
   const onClickButton = (buttonName: packsOwn): void => {
-    setLocalStorage('PacksOwn', buttonName);
-    dispatch(
-      changeFilterByOwn({ userId: buttonName === packsOwn.MY ? userId : undefined }),
-    );
-    dispatch(changePacksPage({ page: undefined }));
-  };
+    const queryParams: { user_id?: string } = {};
 
-  useEffect(() => {
-    dispatch(
-      changeFilterByOwn({
-        userId: getLocalStorage('PacksOwn') === packsOwn.MY ? userId : undefined,
-      }),
-    );
-  }, [dispatch, userId]);
+    if (buttonName === packsOwn.MY) queryParams.user_id = userId;
+    else searchParams.delete('user_id');
+
+    clearURLParams(['page', 'min', 'max'], searchParams);
+
+    setSearchParams({
+      ...Object.fromEntries(searchParams),
+      ...queryParams,
+    });
+  };
 
   const buttons = [
     <FilterButton

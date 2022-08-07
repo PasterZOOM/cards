@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RequestCreatePackType } from '../../../api/cardsRequestTypes';
-
 import {
   cardPacksAPI,
   CardPacksParamsType,
   CardPacksResponseType,
   PackType,
 } from 'api/cardsAPI';
+import { RequestCreatePackType } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';

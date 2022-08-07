@@ -5,22 +5,13 @@
     display: flex;
     align-items: center;
     .text {
-        font-family: 'Montserrat', serif;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 15px;
-        color: #000000;
+        @include text(12px, 400, 15px);
     }
     .select {
+        @include text(12px, 400, 15px);
         height: 24px;
-        box-sizing: border-box;
-        border: 1px solid #D9D9D9;
-        border-radius: 2px;
         outline: none;
-        @include text(16px, 600, 20px);
-        margin-left: 5px;
-        margin-right: 5px;
+        margin: 0 5px;
     }
 }
 
