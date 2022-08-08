@@ -5,6 +5,7 @@ import {
   CardPacksParamsType,
   CardPacksResponseType,
   RequestCreatePackType,
+  RequestUpdatePackType,
 } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -40,6 +41,24 @@ export const loadCardPacks = createAsyncThunk(
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
       return res.data;
+    } catch (e) {
+      handleError(e, dispatch);
+
+      return rejectWithValue({});
+    }
+  },
+);
+export const updatePack = createAsyncThunk(
+  'cardPacks/updatePack',
+  async (data: RequestUpdatePackType, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAppStatus({ status: requestStatus.LOADING }));
+
+      await cardPacksAPI.updatePack(data.update);
+
+      dispatch(loadCardPacks(data.load));
+
+      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
     } catch (e) {
       handleError(e, dispatch);
 

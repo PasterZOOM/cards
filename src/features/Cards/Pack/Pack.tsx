@@ -137,33 +137,26 @@ export const Pack = (): ReturnComponentType => {
           <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
         )}
       </div>
-      {cards.length === 0 && !params.cardQuestion && ownPack && (
+      {(cards.length !== 0 || (cards.length === 0 && params.cardQuestion)) && (
+        <div className={styles.search}>
+          <Search search="cardQuestion" />
+        </div>
+      )}
+      {cards.length !== 0 && (
+        <div>
+          <DataTable tableType="cards" />
+          <Paginator cardPacksTotalCount={cardsTotalCount} />
+        </div>
+      )}
+      {cards.length === 0 && ownPack ? (
         <div>
           <Typography>
             This pack is empty. Click add new card to fill this pack
           </Typography>
           <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
         </div>
-      )}
-      {cards.length === 0 && !params.cardQuestion && (
+      ) : (
         <Typography>This pack is empty.</Typography>
-      )}
-      {cards.length !== 0 && params.cardQuestion && (
-        <div>
-          <div className={styles.search}>
-            <Search search="cardQuestion" />
-          </div>
-          <Typography className={styles.title}>Nothing found for your request</Typography>
-        </div>
-      )}
-      {cards.length !== 0 && !params.cardQuestion && (
-        <div>
-          <div className={styles.search}>
-            <Search search="cardQuestion" />
-          </div>
-          <DataTable tableType="cards" />
-          <Paginator cardPacksTotalCount={cardsTotalCount} />
-        </div>
       )}
       <AddAndEditCardModal
         callBack={createNewCard}
