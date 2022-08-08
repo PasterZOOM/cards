@@ -5,7 +5,7 @@ import {
   CardType,
   PackParamsType,
   PackResponseType,
-  RequestCreateCardType,
+  CreateCardDataType,
   UpdatedGradeDataType,
 } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
@@ -14,11 +14,11 @@ import { handleError } from 'common/utils/handleError';
 
 export const createCard = createAsyncThunk(
   'pack/createCard',
-  async (data: RequestCreateCardType, { dispatch, rejectWithValue }) => {
+  async (data: CreateCardDataType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.createCard(data.create);
+      const res = await packAPI.createCard(data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -98,7 +98,7 @@ const slice = createSlice({
     builder.addCase(createCard.fulfilled, (state, action) => {
       const { rating, __v, grade, shots, created, more_id, type, updated, user_id, _id } =
         action.payload.res.newCard;
-      const { cardsPack_id, answer, question } = action.payload.data.create;
+      const { cardsPack_id, answer, question } = action.payload.data;
 
       state.cards.unshift({
         _id,

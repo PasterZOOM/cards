@@ -8,7 +8,7 @@ import {
   PackResponseType,
   UpdatedGradeDataType,
   UpdatedGradeResponseType,
-  UpdatePackType,
+  UpdatePackDataType,
   UpdatePackResponseType,
   DeletePackResponseType,
 } from 'api/cardsRequestTypes';
@@ -21,8 +21,8 @@ export const cardPacksAPI = {
   createPack(data: CreatePackType) {
     return instance.post<CreatePackResponseType>(`cards/pack`, data);
   },
-  updatePack(data: UpdatePackType) {
-    return instance.put<UpdatePackResponseType>(`cards/pack`, data);
+  updatePack(data: UpdatePackDataType) {
+    return instance.put<UpdatePackResponseType>(`cards/pack`, { cardsPack: data });
   },
   deletePack(packId: string) {
     return instance.delete<DeletePackResponseType>(`cards/pack?id=${packId}`);

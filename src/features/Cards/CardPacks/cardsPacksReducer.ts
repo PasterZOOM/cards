@@ -4,8 +4,8 @@ import { cardPacksAPI } from 'api/cardsAPI';
 import {
   CardPacksParamsType,
   CardPacksResponseType,
-  RequestCreatePackType,
-  UpdatePackType,
+  CreatePackDataType,
+  UpdatePackDataType,
 } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -13,15 +13,15 @@ import { handleError } from 'common/utils/handleError';
 
 export const createPack = createAsyncThunk(
   'cardPacks/createPack',
-  async (data: RequestCreatePackType, { dispatch, rejectWithValue }) => {
+  async (data: CreatePackDataType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      await cardPacksAPI.createPack(data.create);
-
-      dispatch(loadCardPacks(data.load));
+      const res = await cardPacksAPI.createPack(data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+
+      return res.data;
     } catch (e) {
       handleError(e, dispatch);
 
@@ -51,7 +51,7 @@ export const loadCardPacks = createAsyncThunk(
 
 export const updatePack = createAsyncThunk(
   'cardPacks/updatePack',
-  async (data: UpdatePackType, { dispatch, rejectWithValue }) => {
+  async (data: UpdatePackDataType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 

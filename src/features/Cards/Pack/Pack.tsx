@@ -14,6 +14,9 @@ import { DataTable } from 'common/components/DataTable/DataTable';
 import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { AddAndEditCardModal } from 'common/components/Modal/AddAndEditCardModal/AddAndEditCardModal';
 import { ModalCardFormTypes } from 'common/components/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
+import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
+import { ModalPackFormTypes } from 'common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
+import { DeletePackModal } from 'common/components/Modal/DeletePackModal/DeletePackModal';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
@@ -25,6 +28,7 @@ import { getLocalStorage, saveTitle } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { getCardPacks } from 'features/Cards/CardPacks/cardPacksSelectors';
+import { updatePack } from 'features/Cards/CardPacks/cardsPacksReducer';
 import styles from 'features/Cards/Pack/Pack.module.scss';
 import { setPacksParams } from 'features/Cards/Pack/PackParams/packParamsReducer';
 import { getPackParams } from 'features/Cards/Pack/PackParams/packParamsSelectors';
@@ -50,53 +54,56 @@ export const Pack = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = (): void => setOpen(true);
-  const handleClose = (): void => setOpen(false);
+  const [open, setOpen] = useState<null | 'addCard' | 'editPack' | 'deletePack'>(null);
 
   const menuItems = [
     {
       title: 'Edit',
       icon: edit,
       action: (): void => {
-        alert('edit pack');
+        setOpen('editPack');
       },
     },
     {
       title: 'Delete',
       icon: del,
       action: (): void => {
-        alert('pack deleted');
+        setOpen('deletePack');
       },
     },
   ];
+  const addNewCardHandler = useCallback((): void => {
+    setOpen('addCard');
+  }, []);
+  const handleClose = (): void => setOpen(null);
 
   const pack = packs.find(
     pack => pack._id === searchParams.get('cardsPack_id'),
   ) as PackType;
 
-  const addNewCardHandler = useCallback((): void => {
-    handleOpen();
-  }, []);
+  const createNewCard = (values: ModalCardFormTypes): void => {
+    dispatch(
+      createCard({
+        cardsPack_id: params.cardsPack_id,
+        question: values.question,
+        answer: values.answer,
+      }),
+    );
+  };
+  const updatePackHandler = (values: ModalPackFormTypes): void => {
+    saveTitle(values.namePack);
+    dispatch(
+      updatePack({
+        _id: pack._id,
+        name: values.namePack,
+        private: values.privatePack,
+      }),
+    );
+  };
 
   const onClickLearnHandle = (): void => {
     saveTitle(pack.name);
     navigate(`${path.LEARN}?cardsPack_id=${pack._id}&pageCount=${pack.cardsCount}`);
-  };
-
-  const createNewCard = (values: ModalCardFormTypes): void => {
-    const create = {
-      cardsPack_id: params.cardsPack_id,
-      question: values.question,
-      answer: values.answer,
-    };
-
-    dispatch(
-      createCard({
-        create,
-        load: params,
-      }),
-    );
   };
 
   // читает URL и сохраняет params в стейт
@@ -168,9 +175,7 @@ export const Pack = (): ReturnComponentType => {
           <Typography className={styles.text}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
-          <div className={styles.addButton}>
-            <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
-          </div>
+          <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
         </div>
       )}
       {cards.length === 0 && !ownPack && !params.cardQuestion && (
@@ -181,8 +186,23 @@ export const Pack = (): ReturnComponentType => {
       <AddAndEditCardModal
         callBack={createNewCard}
         handleClose={handleClose}
-        open={open}
+        open={open === 'addCard'}
         title="Add new card"
+      />
+      <AddAndEditPackModal
+        callBack={updatePackHandler}
+        handleClose={handleClose}
+        open={open === 'editPack'}
+        title="Edit pack"
+        editableName={pack.name}
+        editablePrivateStatus={pack.private}
+      />
+      <DeletePackModal
+        packId={pack._id}
+        handleClose={handleClose}
+        open={open === 'deletePack'}
+        title="Delete pack"
+        packName={pack.name}
       />
     </div>
   );

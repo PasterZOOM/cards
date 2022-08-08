@@ -57,15 +57,13 @@ export const CardPacks = (): ReturnComponentType => {
   }, []);
 
   const createNewPack = (values: ModalPackFormTypes): void => {
-    const create = {
-      cardsPack: {
+    dispatch(
+      createPack({
         name: values.namePack,
         deckCover: '',
         private: values.privatePack,
-      },
-    };
-
-    dispatch(createPack({ create, load: getActualCardParamsParams(searchParams) }));
+      }),
+    );
   };
 
   if (!isLoggedIn) {

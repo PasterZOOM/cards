@@ -47,15 +47,13 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     navigate(`${path.LEARN}?cardsPack_id=${pack._id}&pageCount=${pack.cardsCount}`);
   };
   const updatePackHandler = (values: ModalPackFormTypes): void => {
-    const update = {
-      cardsPack: {
+    dispatch(
+      updatePack({
         _id: pack._id,
         name: values.namePack,
         private: values.privatePack,
-      },
-    };
-
-    dispatch(updatePack(update));
+      }),
+    );
   };
 
   return (

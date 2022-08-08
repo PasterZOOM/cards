@@ -19,14 +19,7 @@ export type CardPacksResponseType = {
   token: string;
   tokenDeathTime: number;
 };
-export type RequestCreatePackType = {
-  create: CreatePackType;
-  load: CardPacksParamsType;
-};
-export type CreatePackType = {
-  cardsPack: CardsPackType;
-};
-export type CardsPackType = {
+export type CreatePackDataType = {
   name: string;
   deckCover: string;
   private: boolean;
@@ -49,12 +42,10 @@ export type PackType = {
   __v: number;
   deckCover: string | null;
 };
-export type UpdatePackType = {
-  cardsPack: {
-    _id: string;
-    name: string;
-    private: boolean;
-  };
+export type UpdatePackDataType = {
+  _id: string;
+  name: string;
+  private: boolean;
 };
 export type UpdatePackResponseType = {
   updatedCardsPack: PackType;
@@ -66,11 +57,6 @@ export type DeletePackResponseType = {
   deletedCardsPack: PackType;
   token: string;
   tokenDeathTime: number;
-};
-
-export type RequestUpdatePackType = {
-  update: UpdatePackType;
-  load: CardPacksParamsType;
 };
 
 export type PackParamsType = {
@@ -91,10 +77,6 @@ export type PackResponseType = {
   maxGrade: number;
   token: string;
   tokenDeathTime: number;
-};
-export type RequestCreateCardType = {
-  create: CreateCardDataType;
-  load: PackParamsType;
 };
 export type CreateCardDataType = {
   cardsPack_id: string;
