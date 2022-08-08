@@ -49,6 +49,22 @@ export type PackType = {
   __v: number;
   deckCover: string | null;
 };
+export type UpdatePackType = {
+  cardsPack: {
+    _id: string;
+    name: string;
+    private: boolean;
+  };
+};
+export type UpdatePackResponseType = {
+  updatedCardsPack: PackType;
+  token: string;
+  tokenDeathTime: number;
+};
+export type RequestUpdatePackType = {
+  update: UpdatePackType;
+  load: CardPacksParamsType;
+};
 
 export type PackParamsType = {
   cardsPack_id: string;

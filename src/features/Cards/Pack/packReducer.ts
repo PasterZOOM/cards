@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { loadCardPacks } from '../CardPacks/cardsPacksReducer';
-
 import { packAPI } from 'api/cardsAPI';
 import {
   CardType,
@@ -20,11 +18,11 @@ export const createCard = createAsyncThunk(
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      await packAPI.createCard(data.create);
-
-      dispatch(loadCardPacks(data.load));
+      const res = await packAPI.createCard(data.create);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+
+      return { res: res.data, data };
     } catch (e) {
       handleError(e, dispatch);
 
@@ -96,6 +94,32 @@ const slice = createSlice({
           ? { ...card, grade: action.payload.grade, shots: action.payload.shots }
           : card,
       );
+    });
+    builder.addCase(createCard.fulfilled, (state, action) => {
+      const { rating, __v, grade, shots, created, more_id, type, updated, user_id, _id } =
+        action.payload.res.newCard;
+      const { cardsPack_id, answer, question } = action.payload.data.create;
+
+      state.cards.unshift({
+        _id,
+        cardsPack_id,
+        user_id,
+        answer,
+        question,
+        grade,
+        shots,
+        questionImg: '',
+        answerImg: '',
+        answerVideo: '',
+        questionVideo: '',
+        comments: '',
+        type,
+        rating,
+        more_id,
+        created,
+        updated,
+        __v,
+      });
     });
   },
 });

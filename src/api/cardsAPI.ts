@@ -8,6 +8,8 @@ import {
   PackResponseType,
   UpdatedGradeDataType,
   UpdatedGradeResponseType,
+  UpdatePackType,
+  UpdatePackResponseType,
 } from 'api/cardsRequestTypes';
 import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
 
@@ -17,6 +19,9 @@ export const cardPacksAPI = {
   },
   createPack(data: CreatePackType) {
     return instance.post<CreatePackResponseType>(`cards/pack`, data);
+  },
+  updatePack(data: UpdatePackType) {
+    return instance.put<UpdatePackResponseType>(`cards/pack`, data);
   },
 };
 

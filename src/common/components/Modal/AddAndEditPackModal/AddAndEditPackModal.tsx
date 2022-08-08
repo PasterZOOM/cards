@@ -17,6 +17,7 @@ type PropsType = {
   handleClose: () => void;
   title: string;
   callBack: (values: ModalPackFormTypes) => void;
+  editableName?: string;
 };
 
 export const AddAndEditPackModal: React.FC<PropsType> = ({
@@ -24,11 +25,13 @@ export const AddAndEditPackModal: React.FC<PropsType> = ({
   handleClose,
   title,
   callBack,
+  editableName,
 }): ReturnComponentType => {
   const submitLoginForm = (values: ModalPackFormTypes): void => {
     callBack(values);
     handleClose();
   };
+  const initialName = title === 'Edit pack' ? editableName : '';
 
   return (
     <BasicModal handleClose={handleClose} open={open}>
@@ -40,7 +43,7 @@ export const AddAndEditPackModal: React.FC<PropsType> = ({
         <div className={style.line} />
         <div className={style.form}>
           <Formik
-            initialValues={{ namePack: '', privatePack: false }}
+            initialValues={{ namePack: initialName as string, privatePack: false }}
             validationSchema={validateCreateAndEditPack}
             onSubmit={submitLoginForm}
           >
