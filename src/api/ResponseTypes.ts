@@ -1,4 +1,4 @@
-import { PackType } from 'api/cardsAPI';
+import { PackType } from 'api/cardsRequestTypes';
 import { UserType } from 'features/Auth/User/Profile/ProfileTypes';
 import { NewUserType } from 'features/Auth/User/Register/RegisterTypes';
 

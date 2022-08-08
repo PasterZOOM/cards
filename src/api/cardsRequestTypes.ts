@@ -61,6 +61,13 @@ export type UpdatePackResponseType = {
   token: string;
   tokenDeathTime: number;
 };
+
+export type DeletePackResponseType = {
+  deletedCardsPack: PackType;
+  token: string;
+  tokenDeathTime: number;
+};
+
 export type RequestUpdatePackType = {
   update: UpdatePackType;
   load: CardPacksParamsType;

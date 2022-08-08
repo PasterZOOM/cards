@@ -5,7 +5,7 @@ import {
   CardPacksParamsType,
   CardPacksResponseType,
   RequestCreatePackType,
-  RequestUpdatePackType,
+  UpdatePackType,
 } from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -48,17 +48,37 @@ export const loadCardPacks = createAsyncThunk(
     }
   },
 );
+
 export const updatePack = createAsyncThunk(
   'cardPacks/updatePack',
-  async (data: RequestUpdatePackType, { dispatch, rejectWithValue }) => {
+  async (data: UpdatePackType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      await cardPacksAPI.updatePack(data.update);
-
-      dispatch(loadCardPacks(data.load));
+      const res = await cardPacksAPI.updatePack(data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+
+      return res.data.updatedCardsPack;
+    } catch (e) {
+      handleError(e, dispatch);
+
+      return rejectWithValue({});
+    }
+  },
+);
+
+export const deletePack = createAsyncThunk(
+  'cardPacks/deletePack',
+  async (packId: string, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAppStatus({ status: requestStatus.LOADING }));
+
+      const res = await cardPacksAPI.deletePack(packId);
+
+      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+
+      return res.data.deletedCardsPack._id;
     } catch (e) {
       handleError(e, dispatch);
 
@@ -90,6 +110,16 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(loadCardPacks.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(updatePack.fulfilled, (state, action) => {
+      state.cardPacks = state.cardPacks.map(pack =>
+        pack._id === action.payload._id
+          ? { ...pack, name: action.payload.name, private: action.payload.private }
+          : pack,
+      );
+    });
+    builder.addCase(deletePack.fulfilled, (state, action) => {
+      state.cardPacks = state.cardPacks.filter(pack => pack._id !== action.payload);
     });
   },
 });
