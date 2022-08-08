@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Grades } from './Grades/Grades';
 
-import { CardType } from 'api/cardsAPI';
+import { CardType } from 'api/cardsRequestTypes';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
@@ -13,7 +13,7 @@ import { getActualPackParams } from 'common/utils/getActualParams';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
 import styles from 'features/Cards/Learn/Learn.module.scss';
 import { LearnPaper } from 'features/Cards/Learn/LearnPaper/LearnPaper';
-import { loadPack } from 'features/Cards/Pack/packReducer';
+import { loadPack, updatedGrade } from 'features/Cards/Pack/packReducer';
 import { getCards } from 'features/Cards/Pack/packSelectors';
 
 const maxGradeValue = 6;
@@ -43,6 +43,7 @@ export const Learn = (): ReturnComponentType => {
   const cards = useAppSelector(getCards);
   const [searchParams, setSearchParams] = useSearchParams();
   const packName = getLocalStorage('packName') as string;
+  const [grade, setGrade] = useState(1);
 
   const [card, setCard] = useState<CardType>({
     _id: '',
@@ -80,11 +81,13 @@ export const Learn = (): ReturnComponentType => {
     };
   }, [dispatch, cards, first, searchParams, setSearchParams]);
 
+  const onShowAnswer = (): void => setIsChecked(true);
+
   const onNext = (): void => {
+    dispatch(updatedGrade({ grade, card_id: card._id }));
     setIsChecked(false);
 
     if (cards.length > 0) {
-      // dispatch
       setCard(getCard(cards));
     }
   };
@@ -96,18 +99,14 @@ export const Learn = (): ReturnComponentType => {
       </div>
       <Typography className={styles.title}>Learn {`"${packName}"`}</Typography>
       {!isChecked ? (
-        <LearnPaper
-          card={card}
-          onClick={() => setIsChecked(true)}
-          buttonLabel="Show answer"
-        />
+        <LearnPaper card={card} onClick={onShowAnswer} buttonLabel="Show answer" />
       ) : (
         <LearnPaper card={card} onClick={onNext} buttonLabel="Next">
           <div>
             <Typography className={styles.answer}>
               <b>Answer:</b> {card.answer}
             </Typography>
-            <Grades />
+            <Grades setGrade={setGrade} />
           </div>
         </LearnPaper>
       )}

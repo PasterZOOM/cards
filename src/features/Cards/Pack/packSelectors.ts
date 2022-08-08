@@ -1,4 +1,4 @@
-import { CardType } from 'api/cardsAPI';
+import { CardType } from 'api/cardsRequestTypes';
 import { AppRootStateType } from 'app/AppRootStateTypes';
 
 export const getPackUserId = (state: AppRootStateType): string => state.pack.packUserId;

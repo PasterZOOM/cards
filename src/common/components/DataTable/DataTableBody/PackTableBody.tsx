@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { PackType } from 'api/cardsAPI';
+import { PackType } from 'api/cardsRequestTypes';
 import deleteIco from 'assets/images/delete.svg';
 import editIco from 'assets/images/edit.svg';
 import teacherIco from 'assets/images/teacher.svg';

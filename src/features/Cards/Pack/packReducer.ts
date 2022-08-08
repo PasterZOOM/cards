@@ -2,19 +2,25 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { loadCardPacks } from '../CardPacks/cardsPacksReducer';
 
-import { cardPackAPI, PackParamsType, PackResponseType } from 'api/cardsAPI';
-import { RequestCreateCardType } from 'api/cardsRequestTypes';
+import { packAPI } from 'api/cardsAPI';
+import {
+  CardType,
+  PackParamsType,
+  PackResponseType,
+  RequestCreateCardType,
+  UpdatedGradeDataType,
+} from 'api/cardsRequestTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
 
 export const createCard = createAsyncThunk(
-  '',
+  'pack/createCard',
   async (data: RequestCreateCardType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      await cardPackAPI.createCardPack(data.create);
+      await packAPI.createCard(data.create);
 
       dispatch(loadCardPacks(data.load));
 
@@ -33,7 +39,7 @@ export const loadPack = createAsyncThunk(
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardPackAPI.getCardPack(param);
+      const res = await packAPI.getPack(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -46,10 +52,29 @@ export const loadPack = createAsyncThunk(
   },
 );
 
+export const updatedGrade = createAsyncThunk(
+  'pack/updatedGrade',
+  async (param: UpdatedGradeDataType, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAppStatus({ status: requestStatus.LOADING }));
+
+      const res = await packAPI.updatedGrade(param);
+
+      dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+
+      return res.data.updatedGrade;
+    } catch (e) {
+      handleError(e, dispatch);
+
+      return rejectWithValue({});
+    }
+  },
+);
+
 const slice = createSlice({
   name: 'pack',
   initialState: {
-    cards: [],
+    cards: [] as Array<CardType>,
     packUserId: '',
     page: 0,
     pageCount: 0,
@@ -64,6 +89,13 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(loadPack.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(updatedGrade.fulfilled, (state, action) => {
+      state.cards = state.cards.map(card =>
+        card._id === action.payload.card_id
+          ? { ...card, grade: action.payload.grade, shots: action.payload.shots }
+          : card,
+      );
     });
   },
 });

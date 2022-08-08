@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 import FormControl from '@mui/material/FormControl/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
@@ -19,11 +19,19 @@ const grades = [
   { id: v1(), value: 5, label: 'Knew the answer' },
 ];
 
-export const Grades = (): ReturnComponentType => {
+type PropsType = {
+  setGrade: (grade: number) => void;
+};
+
+export const Grades: React.FC<PropsType> = ({ setGrade }): ReturnComponentType => {
+  const onChangeRadioHandle = (event: ChangeEvent<HTMLInputElement>): void => {
+    setGrade(+event.target.value);
+  };
+
   return (
     <FormControl className={styles.main}>
       <FormLabel className={styles.rate}>Rate yourself:</FormLabel>
-      <RadioGroup defaultValue={3}>
+      <RadioGroup onChange={onChangeRadioHandle}>
         {grades.map(grade => (
           <FormControlLabel
             key={grade.id}

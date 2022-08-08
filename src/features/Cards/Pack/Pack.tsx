@@ -71,11 +71,9 @@ export const Pack = (): ReturnComponentType => {
 
   const createNewCard = (values: ModalCardFormTypes): void => {
     const create = {
-      card: {
-        cardsPack_id: params.cardsPack_id,
-        question: values.question,
-        answer: values.answer,
-      },
+      cardsPack_id: params.cardsPack_id,
+      question: values.question,
+      answer: values.answer,
     };
 
     dispatch(

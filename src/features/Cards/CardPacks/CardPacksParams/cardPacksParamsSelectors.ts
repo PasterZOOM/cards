@@ -1,4 +1,4 @@
-import { CardPacksParamsType } from 'api/cardsAPI';
+import { CardPacksParamsType } from 'api/cardsRequestTypes';
 import { AppRootStateType } from 'app/AppRootStateTypes';
 
 export const getCardPacksParams = (state: AppRootStateType): CardPacksParamsType =>
