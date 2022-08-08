@@ -82,12 +82,8 @@ export const CardPacks = (): ReturnComponentType => {
       <div className={styles.body}>
         {packs.length !== 0 ? (
           <div>
-            <div className={styles.table}>
-              <DataTable tableType="packs" />
-            </div>
-            <div className={styles.paginator}>
-              <Paginator cardPacksTotalCount={cardPacksTotalCount} />
-            </div>
+            <DataTable tableType="packs" />
+            <Paginator cardPacksTotalCount={cardPacksTotalCount} />
           </div>
         ) : (
           <Typography className={styles.title}>Nothing found for your request</Typography>

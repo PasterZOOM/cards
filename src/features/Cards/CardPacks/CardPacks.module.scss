@@ -20,16 +20,9 @@
   }
 
   .body {
-    .table {
-      margin: 0 0 12px;
-    }
-
-    .paginator {
-      margin: 4px 0 28px;
-    }
-
     .title {
       @include text(16px, 400, 20px);
+      text-align: center;
       margin: 86px auto 32px;
       opacity: 0.5;
     }

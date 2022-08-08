@@ -4,6 +4,7 @@
 .container {
     display: flex;
     align-items: center;
+    margin: 20px 0;
     .text {
         @include text(12px, 400, 15px);
     }

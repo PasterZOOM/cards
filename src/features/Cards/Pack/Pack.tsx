@@ -127,22 +127,21 @@ export const Pack = (): ReturnComponentType => {
       <div className={styles.head}>
         <div className={styles.title}>
           <Typography className={styles.packName}>{packName}</Typography>
-          {ownPack && (
-            <div className={styles.optionMenu}>
-              <OptionMenu menuItems={menuItems}>
-                <img src={ellipsis} alt="menu" />
-              </OptionMenu>
-            </div>
-          )}
-          {cards.length !== 0 && (
+          {(cards.length !== 0 || (cards.length === 0 && params.cardQuestion)) && (
             <IconButton onClick={onClickLearnHandle} className={styles.learnIcon}>
               <img src={teach} alt="learn" />
             </IconButton>
           )}
+          {ownPack && (
+            <OptionMenu menuItems={menuItems}>
+              <img src={ellipsis} alt="menu" />
+            </OptionMenu>
+          )}
         </div>
 
-        {cards.length !== 0 && ownPack && (
-          <div className={styles.addButton}>
+        {((cards.length !== 0 && ownPack) ||
+          (cards.length === 0 && params.cardQuestion && ownPack)) && (
+          <div>
             <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
           </div>
         )}
@@ -153,22 +152,30 @@ export const Pack = (): ReturnComponentType => {
           <Search search="cardQuestion" />
         </div>
       )}
+      {cards.length === 0 && params.cardQuestion && (
+        <div className={styles.body}>
+          <Typography className={styles.text}>Nothing found for your request.</Typography>
+        </div>
+      )}
       {cards.length !== 0 && (
         <div className={styles.body}>
           <DataTable tableType="cards" />
           <Paginator cardPacksTotalCount={cardsTotalCount} />
         </div>
       )}
-      {cards.length === 0 && ownPack ? (
+      {cards.length === 0 && ownPack && !params.cardQuestion && (
         <div className={styles.body}>
           <Typography className={styles.text}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
-          <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
+          <div className={styles.addButton}>
+            <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
+          </div>
         </div>
-      ) : (
+      )}
+      {cards.length === 0 && !ownPack && !params.cardQuestion && (
         <div className={styles.body}>
-          <Typography>This pack is empty.</Typography>
+          <Typography className={styles.text}>This pack is empty.</Typography>
         </div>
       )}
       <AddAndEditCardModal
