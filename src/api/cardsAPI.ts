@@ -10,6 +10,7 @@ import {
   UpdatedGradeResponseType,
   UpdatePackType,
   UpdatePackResponseType,
+  DeletePackResponseType,
 } from 'api/cardsRequestTypes';
 import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
 
@@ -22,6 +23,9 @@ export const cardPacksAPI = {
   },
   updatePack(data: UpdatePackType) {
     return instance.put<UpdatePackResponseType>(`cards/pack`, data);
+  },
+  deletePack(packId: string) {
+    return instance.delete<DeletePackResponseType>(`cards/pack?id=${packId}`);
   },
 };
 

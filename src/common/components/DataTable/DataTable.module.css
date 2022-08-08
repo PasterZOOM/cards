@@ -4,7 +4,11 @@
     cursor: pointer;
 }
 
-.ico:disabled {
+.ico.invisible:disabled {
+    opacity: 0;
+}
+
+.ico.disable:disabled {
     opacity: 0.5;
 }
 

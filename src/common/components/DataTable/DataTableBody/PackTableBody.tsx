@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -13,12 +12,12 @@ import teacherIco from 'assets/images/teacher.svg';
 import s from 'common/components/DataTable/DataTable.module.css';
 import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
 import { ModalPackFormTypes } from 'common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
+import { DeletePackModal } from 'common/components/Modal/DeletePackModal/DeletePackModal';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { setLocalStorage } from 'common/utils/localStorageUtil';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { getCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
 import { updatePack } from 'features/Cards/CardPacks/cardsPacksReducer';
 
 type PacksTableBodyProps = {
@@ -32,7 +31,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const packParams = useAppSelector(getCardPacksParams);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const myId = useAppSelector(getUserId);
 
   const saveTitle = (): void => {
@@ -56,7 +55,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
       },
     };
 
-    dispatch(updatePack({ update, load: packParams }));
+    dispatch(updatePack(update));
   };
 
   return (
@@ -75,16 +74,26 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
         <TableCell align="right">{updateDate}</TableCell>
         <TableCell align="right">{pack.user_name}</TableCell>
         <TableCell align="right">
-          <Box component="img" src={deleteIco} alt="deleteIco" className={s.ico} />
           <IconButton
-            className={s.ico}
+            className={`${s.ico} + ${s.disable}`}
+            onClick={onClickLearnHandle}
+            disabled={pack.cardsCount === 0}
+          >
+            <img src={teacherIco} alt="learn" />
+          </IconButton>
+          <IconButton
+            className={`${s.ico} + ${s.invisible}`}
             onClick={() => setOpen(true)}
             disabled={pack.user_id !== myId}
           >
             <img src={editIco} alt="edit" />
           </IconButton>
-          <IconButton className={s.ico} onClick={onClickLearnHandle}>
-            <img src={teacherIco} alt="learn" />
+          <IconButton
+            className={`${s.ico} + ${s.invisible}`}
+            onClick={() => setOpenDeleteModal(true)}
+            disabled={pack.user_id !== myId}
+          >
+            <img src={deleteIco} alt="delete" />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -94,6 +103,14 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
         open={open}
         title="Edit pack"
         editableName={pack.name}
+        editablePrivateStatus={pack.private}
+      />
+      <DeletePackModal
+        packId={pack._id}
+        handleClose={() => setOpenDeleteModal(false)}
+        open={openDeleteModal}
+        title="Delete pack"
+        packName={pack.name}
       />
     </>
   );
