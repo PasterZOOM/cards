@@ -21,3 +21,6 @@ export const setLocalStorage = (key: string, value: string): void => {
     // ignore write errors
   }
 };
+export const saveTitle = (packName: string): void => {
+  setLocalStorage('packName', packName);
+};

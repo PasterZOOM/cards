@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
 
+import IconButton from '@mui/material/IconButton/IconButton';
 import Modal from '@mui/material/Modal';
 
+import styles from './BasicModal.module.scss';
+
+import closeIcon from 'assets/images/closeIcon.svg';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 const style = {
@@ -18,12 +22,14 @@ type ModalPropsType = {
   children: ReactElement;
   open: boolean;
   handleClose: () => void;
+  title: string;
 };
 
 export const BasicModal: React.FC<ModalPropsType> = ({
   children,
   open,
   handleClose,
+  title,
 }): ReturnComponentType => {
   return (
     <div>
@@ -33,7 +39,23 @@ export const BasicModal: React.FC<ModalPropsType> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div style={style}>{children}</div>
+        <div style={style}>
+          <div className={styles.main}>
+            <div className={styles.header}>
+              <h3 className={styles.title}>{title}</h3>
+              <IconButton
+                className={styles.icon}
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                <img src={closeIcon} alt="close" />
+              </IconButton>
+            </div>
+            <div className={styles.line} />
+            {children}
+          </div>
+        </div>
       </Modal>
     </div>
   );

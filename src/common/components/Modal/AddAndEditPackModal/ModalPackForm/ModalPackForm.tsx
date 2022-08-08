@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel, TextField } from '@mui/material';
 import Button from '@mui/material/Button/Button';
+import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
-import { Form, FormikProps } from 'formik';
+import FormHelperText from '@mui/material/FormHelperText/FormHelperText';
+import { Form, FormikProps, useField } from 'formik';
 
-import { EmailField } from '../../../Forms/EmailField/EmailField';
 import style from '../AddAndEditPackModal.module.scss';
 
 import { ModalPackFormTypes } from './modalPackFormType';
@@ -21,13 +22,24 @@ export const ModalPackForm: React.FC<PropsType> = ({
   handleClose,
 }): ReturnComponentType => {
   const { isValid, handleChange, values, dirty } = { ...formik };
+  const [field, meta] = useField('namePack');
 
   return (
     <Form>
       <FormGroup>
-        <div className={style.input}>
-          <EmailField name="namePack" label="name Pack" />
-        </div>
+        <FormControl className={style.input} fullWidth variant="standard">
+          <TextField
+            label="Name Pack"
+            {...field}
+            variant="standard"
+            name="namePack"
+            value={values.namePack}
+            onChange={handleChange}
+          />
+          {meta.touched && meta.error && (
+            <FormHelperText error>{meta.error}</FormHelperText>
+          )}
+        </FormControl>
 
         <div className={style.checkbox}>
           <FormControlLabel

@@ -1,33 +1,32 @@
 @import "src/assets/styles/scss/variables";
 @import "src/assets/styles/scss/mixins";
 
-.main {
-  text-align: center;
+
+.form {
   margin-left: 24px;
   margin-right: 24px;
-  .header {
+  @include text(18px, 500, 20px);
+
+  .select {
+
+    margin-top: 22px;
+  }
+
+  .input {
+    margin-top: 24px;
+
+  }
+
+  .buttonContainer {
+    margin: 34px 24px 48px;
     display: flex;
-    width: 395px;
-    justify-content: space-around;
-    .title {
-      display: block;
-      @include text(18px, 500, 22px);
-      margin-left: 24px;
-      margin-right: 202px;
-    }
-    .icon {
-      margin-right: 24px;
+    justify-content: space-between;
+
+    .btn {
+      width: 120px;
+      border-radius: 50px;
     }
   }
-  .line {
-    position: absolute;
-    width: 395px;
-    height: 1px;
-    background: #d9d9d9
-  }
-  .form {
-
-  }
-
-
 }
+
+
