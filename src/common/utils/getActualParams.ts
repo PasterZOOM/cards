@@ -1,4 +1,4 @@
-import { CardPacksParamsType, PackParamsType } from 'api/cardsAPI';
+import { CardPacksParamsType, PackParamsType } from 'api/cardsRequestTypes';
 import { startPageCount } from 'common/constants/projectConstants';
 import { sortCards } from 'common/enums/sortCards';
 import { sortPacks } from 'common/enums/sortPacks';

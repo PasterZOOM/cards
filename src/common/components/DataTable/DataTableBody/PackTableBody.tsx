@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { PackType } from 'api/cardsAPI';
+import { PackType } from 'api/cardsRequestTypes';
 import deleteIco from 'assets/images/delete.svg';
 import editIco from 'assets/images/edit.svg';
 import teacherIco from 'assets/images/teacher.svg';
@@ -28,22 +28,25 @@ type PacksTableBodyProps = {
 export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   pack,
 }): ReturnComponentType => {
-  const dispatch = useAppDispatch();
   const updateDate = new Date(pack.updated).toLocaleDateString('ru');
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-
   const packParams = useAppSelector(getCardPacksParams);
   const myId = useAppSelector(getUserId);
 
-  const savePackName = (): void => {
+  const saveTitle = (): void => {
     setLocalStorage('packName', pack.name);
   };
 
-  const onClickLearnHandle = (): void => {
-    navigate(`${path.LEARN}?cardsPack_id=${pack._id}`);
+  const showCards = (): void => {
+    saveTitle();
   };
 
+  const onClickLearnHandle = (): void => {
+    saveTitle();
+    navigate(`${path.LEARN}?cardsPack_id=${pack._id}&pageCount=${pack.cardsCount}`);
+  };
   const updatePackHandler = (values: ModalPackFormTypes): void => {
     const update = {
       cardsPack: {
@@ -63,7 +66,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
           <NavLink
             to={`${path.PACK}?cardsPack_id=${pack._id}`}
             className={s.nameLink}
-            onClick={savePackName}
+            onClick={showCards}
           >
             {pack.name}
           </NavLink>

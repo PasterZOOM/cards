@@ -7,6 +7,7 @@ import styles from './CardPacks.module.scss';
 import { getCardPacks, getCardPacksTotalCount } from './cardPacksSelectors';
 
 import { DataTable } from 'common/components/DataTable/DataTable';
+import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
 import { ModalPackFormTypes } from 'common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
 import { Paginator } from 'common/components/Paginator/Paginator';
@@ -18,10 +19,6 @@ import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
 import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
 import { createPack, loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
-import { TopPart } from 'features/Cards/common/components/TopPart';
-
-const addNewPackButtonTitle = 'Add new pack';
-const title = 'Packs list';
 
 export const CardPacks = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -43,7 +40,7 @@ export const CardPacks = (): ReturnComponentType => {
         params: getActualCardParamsParams(searchParams),
       }),
     );
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, setSearchParams]);
 
   // читает URL и делает запрос за паками
   useEffect(() => {
@@ -77,26 +74,25 @@ export const CardPacks = (): ReturnComponentType => {
 
   return (
     <div className={styles.main}>
-      <TopPart
-        headTitle={title}
-        buttonTitle={addNewPackButtonTitle}
-        items
-        onClickButton={addNewPackHandler}
-        ownPack
-      />
+      <div className={styles.head}>
+        <Typography className={styles.title}>Packs list</Typography>
+        <GeneralButton label="Add new pack" onClick={addNewPackHandler} />
+      </div>
       <CardPacksParams />
-      {packs.length !== 0 ? (
-        <div>
-          <div className={styles.table}>
-            <DataTable tableType="packs" />
+      <div className={styles.body}>
+        {packs.length !== 0 ? (
+          <div>
+            <div className={styles.table}>
+              <DataTable tableType="packs" />
+            </div>
+            <div className={styles.paginator}>
+              <Paginator cardPacksTotalCount={cardPacksTotalCount} />
+            </div>
           </div>
-          <div className={styles.paginator}>
-            <Paginator cardPacksTotalCount={cardPacksTotalCount} />
-          </div>
-        </div>
-      ) : (
-        <Typography className={styles.title}>Nothing found for your request</Typography>
-      )}
+        ) : (
+          <Typography className={styles.title}>Nothing found for your request</Typography>
+        )}
+      </div>
 
       <AddAndEditPackModal
         callBack={createNewPack}

@@ -12,24 +12,27 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 36px 0 18px;
+    margin: 36px 0 34px;
 
     .title {
       @include text(22px, 600, 27px);
     }
   }
 
-  .table {
-    margin: 0 0 12px;
+  .body {
+    .table {
+      margin: 0 0 12px;
+    }
+
+    .paginator {
+      margin: 4px 0 28px;
+    }
+
+    .title {
+      @include text(16px, 400, 20px);
+      margin: 86px auto 32px;
+      opacity: 0.5;
+    }
   }
 
-  .paginator {
-    margin: 4px 0 28px;
-  }
-
-  .title {
-    @include text(16px, 400, 20px);
-    margin: 86px auto 32px;
-    opacity: 0.5;
-  }
 }

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CardPacksParamsType } from 'api/cardsAPI';
+import { CardPacksParamsType } from 'api/cardsRequestTypes';
 
 const startPageCount = 5;
 

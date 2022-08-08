@@ -8,14 +8,44 @@
   flex-direction: column;
   margin: 0 auto;
 
-  .search {
-    margin: 0 0 24px;
+  .backButton {
+    margin: 24px 0;
   }
-  .title {
-    @include text(16px, 400, 20px);
-    margin: 86px auto 32px;
-    opacity: 0.5;
-    text-align: center;
+
+  .head {
+    .title {
+      display: flex;
+      align-items: center;
+
+      .packName {
+        @include text(22px, 600, 27px);
+      }
+
+      .optionMenu {
+
+      }
+
+      .learnIcon {
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .addButton {
+
+    }
+  }
+
+  .search {
+
+  }
+
+  .body {
+    .text {
+
+    }
   }
 }
 

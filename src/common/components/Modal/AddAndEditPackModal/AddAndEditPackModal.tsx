@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Formik } from 'formik';
 
-import closeIcon from '../../../../assets/images/closeIcon.svg';
 import { BasicModal } from '../BasicModal/BasicModal';
 
 import style from './AddAndEditPackModal.module.scss';
@@ -31,26 +30,18 @@ export const AddAndEditPackModal: React.FC<PropsType> = ({
     callBack(values);
     handleClose();
   };
-
   const initialName = title === 'Edit pack' ? editableName : '';
 
   return (
-    <BasicModal handleClose={handleClose} open={open}>
-      <div className={style.main}>
-        <div className={style.header}>
-          <h3 className={style.title}>{title}</h3>
-          <img className={style.icon} src={closeIcon} alt="" />
-        </div>
-        <div className={style.line} />
-        <div className={style.form}>
-          <Formik
-            initialValues={{ namePack: initialName as string, privatePack: false }}
-            validationSchema={validateCreateAndEditPack}
-            onSubmit={submitLoginForm}
-          >
-            {formik => <ModalPackForm handleClose={handleClose} formik={formik} />}
-          </Formik>
-        </div>
+    <BasicModal title={title} handleClose={handleClose} open={open}>
+      <div className={style.form}>
+        <Formik
+          initialValues={{ namePack: initialName as string, privatePack: false }}
+          validationSchema={validateCreateAndEditPack}
+          onSubmit={submitLoginForm}
+        >
+          {formik => <ModalPackForm handleClose={handleClose} formik={formik} />}
+        </Formik>
       </div>
     </BasicModal>
   );

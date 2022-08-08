@@ -12,8 +12,8 @@ import { Login } from 'features/Auth/User/Login/Login';
 import { Profile } from 'features/Auth/User/Profile/Profile';
 import { Register } from 'features/Auth/User/Register/Register';
 import { CardPacks } from 'features/Cards/CardPacks/CardPacks';
+import { Learn } from 'features/Cards/Learn/Learn';
 import { Pack } from 'features/Cards/Pack/Pack';
-import { Learn } from 'features/Learn/Learn';
 
 export const RoutesPage = (): ReturnComponentType => {
   const routes = [
