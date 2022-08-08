@@ -35,6 +35,8 @@ import {
   getPackUserId,
 } from 'features/Cards/Pack/packSelectors';
 
+const addCardButtonTitle = 'Add new card';
+
 export const Pack = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
@@ -116,47 +118,58 @@ export const Pack = (): ReturnComponentType => {
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;
   }
-  const addCardButtonTitle = 'Add new card';
 
   return (
     <div className={styles.main}>
-      <div className={styles.head}>
+      <div className={styles.backButton}>
         <BackToCardPacks />
-        <Typography className={styles.title}>{packName}</Typography>
-        {ownPack && (
-          <OptionMenu menuItems={menuItems}>
-            <img src={ellipsis} alt="menu" />
-          </OptionMenu>
-        )}
-        {cards.length !== 0 && (
-          <IconButton onClick={onClickLearnHandle}>
-            <img src={teach} alt="learn" />
-          </IconButton>
-        )}
+      </div>
+      <div className={styles.head}>
+        <div className={styles.title}>
+          <Typography className={styles.packName}>{packName}</Typography>
+          {ownPack && (
+            <div className={styles.optionMenu}>
+              <OptionMenu menuItems={menuItems}>
+                <img src={ellipsis} alt="menu" />
+              </OptionMenu>
+            </div>
+          )}
+          {cards.length !== 0 && (
+            <IconButton onClick={onClickLearnHandle} className={styles.learnIcon}>
+              <img src={teach} alt="learn" />
+            </IconButton>
+          )}
+        </div>
+
         {cards.length !== 0 && ownPack && (
-          <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
+          <div className={styles.addButton}>
+            <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
+          </div>
         )}
       </div>
+
       {(cards.length !== 0 || (cards.length === 0 && params.cardQuestion)) && (
         <div className={styles.search}>
           <Search search="cardQuestion" />
         </div>
       )}
       {cards.length !== 0 && (
-        <div>
+        <div className={styles.body}>
           <DataTable tableType="cards" />
           <Paginator cardPacksTotalCount={cardsTotalCount} />
         </div>
       )}
       {cards.length === 0 && ownPack ? (
-        <div>
-          <Typography>
+        <div className={styles.body}>
+          <Typography className={styles.text}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
           <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
         </div>
       ) : (
-        <Typography>This pack is empty.</Typography>
+        <div className={styles.body}>
+          <Typography>This pack is empty.</Typography>
+        </div>
       )}
       <AddAndEditCardModal
         callBack={createNewCard}

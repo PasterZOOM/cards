@@ -12,9 +12,9 @@ import { validateCreateAndEditCard } from './ModalCardForm/modalValidateCard';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
+  title: string;
   open: boolean;
   handleClose: () => void;
-  title: string;
   answer?: string;
   question?: string;
   callBack: (values: ModalCardFormTypes) => void;
@@ -23,10 +23,10 @@ type PropsType = {
 export const AddAndEditCardModal: React.FC<PropsType> = ({
   open,
   handleClose,
-  title,
   callBack,
   answer,
   question,
+  title,
 }): ReturnComponentType => {
   const submitLoginForm = (values: ModalCardFormTypes): void => {
     callBack(values);
