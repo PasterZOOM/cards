@@ -15,7 +15,7 @@ export const getActualPacksParams = (searchParams: URLSearchParams): PacksParams
   };
 };
 
-export const getActualPackParams = (searchParams: URLSearchParams): CardsParamsType => {
+export const getActualCardsParams = (searchParams: URLSearchParams): CardsParamsType => {
   return {
     cardsPack_id: String(searchParams.get('cardsPack_id')),
     page: Number(searchParams.get('page')) || undefined,

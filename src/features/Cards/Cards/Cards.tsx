@@ -26,7 +26,7 @@ import { Search } from 'common/components/Search/Search';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getActualPackParams } from 'common/utils/getActualParams';
+import { getActualCardsParams } from 'common/utils/getActualParams';
 import { getLocalStorage, saveTitle } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
@@ -111,7 +111,7 @@ export const Cards = (): ReturnComponentType => {
   useEffect(() => {
     dispatch(
       setCardsParams({
-        params: getActualPackParams(searchParams),
+        params: getActualCardsParams(searchParams),
       }),
     );
   }, [dispatch, searchParams]);
@@ -119,7 +119,7 @@ export const Cards = (): ReturnComponentType => {
   // читает URL и делает запрос за картами
   useEffect(() => {
     if (searchParams.get('cardsPack_id')) {
-      dispatch(loadCards(getActualPackParams(searchParams)));
+      dispatch(loadCards(getActualCardsParams(searchParams)));
     } else navigate(path.CARD_PACKS);
   }, [dispatch, navigate, searchParams]);
 

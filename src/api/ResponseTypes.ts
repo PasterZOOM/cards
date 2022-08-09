@@ -27,7 +27,6 @@ export type RegisterResponseType = {
 export type MeResponseType = UserType & {
   error?: string;
 };
-
 export type UpdatedUserResponseType = {
   updatedUser: UserType;
   token: string;

@@ -9,7 +9,7 @@ import { CardType } from 'api/ResponseTypes';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getActualPackParams } from 'common/utils/getActualParams';
+import { getActualCardsParams } from 'common/utils/getActualParams';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
 import { loadCards, updatedGrade } from 'features/Cards/Cards/cardsReducer';
 import { getCards } from 'features/Cards/Cards/cardsSelectors';
@@ -70,7 +70,7 @@ export const Learn = (): ReturnComponentType => {
 
   useEffect(() => {
     if (first) {
-      dispatch(loadCards(getActualPackParams(searchParams)));
+      dispatch(loadCards(getActualCardsParams(searchParams)));
       setFirst(false);
     }
 
