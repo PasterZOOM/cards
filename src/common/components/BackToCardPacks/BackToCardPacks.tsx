@@ -9,7 +9,7 @@ import back from 'assets/images/Back.svg';
 import { path } from 'common/enums/path';
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsSelectors';
+import { getCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsSelectors';
 
 export const BackToCardPacks = (): ReturnComponentType => {
   const params = useAppSelector(getCardPacksParams);

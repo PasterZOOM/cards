@@ -4,16 +4,16 @@ import ButtonGroup from '@mui/material/ButtonGroup/ButtonGroup';
 import Typography from '@mui/material/Typography/Typography';
 import { useSearchParams } from 'react-router-dom';
 
-import styles from './OwnCardPacks.module.scss';
+import { FilterButton } from './FilterButton/FilterButton';
+import styles from './OwnPacks.module.scss';
 
 import { packsOwn } from 'common/enums/packsOwn';
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { clearURLParams } from 'common/utils/clearURLParams';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { FilterButton } from 'features/Cards/CardPacks/CardPacksParams/OwnCardPacks/FilterButton/FilterButton';
 
-export const OwnCardPacks = (): ReturnComponentType => {
+export const OwnPacks = (): ReturnComponentType => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const userId = useAppSelector(getUserId);

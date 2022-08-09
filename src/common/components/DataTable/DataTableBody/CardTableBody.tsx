@@ -4,7 +4,7 @@ import { Rating } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
-import { CardType } from 'api/cardsRequestTypes';
+import { CardType } from 'api/ResponseTypes';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type CardTableBodyProps = {

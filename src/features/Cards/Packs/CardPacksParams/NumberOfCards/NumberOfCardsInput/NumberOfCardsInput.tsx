@@ -3,10 +3,7 @@ import React, { ChangeEvent } from 'react';
 import styles from './NumberOfCardsInput.module.scss';
 
 import { useAppSelector } from 'common/hooks/hooks';
-import {
-  getMaxCardsCount,
-  getMinCardsCount,
-} from 'features/Cards/CardPacks/cardPacksSelectors';
+import { getMaxCardsCount, getMinCardsCount } from 'features/Cards/Packs/packsSelectors';
 
 type PropsType = {
   value: Array<number>;

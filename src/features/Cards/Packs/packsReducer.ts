@@ -1,23 +1,19 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { cardPacksAPI } from 'api/cardsAPI';
-import {
-  CardPacksParamsType,
-  CardPacksResponseType,
-  CreatePackDataType,
-  UpdatePackDataType,
-} from 'api/cardsRequestTypes';
+import { packAPI } from 'api/cardsAPI';
+import { CreatePackDataType, PacksParamsType, UpdatePackDataType } from 'api/DataTypes';
+import { GetPacksResponseType, PackType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
 
-export const createPack = createAsyncThunk(
-  'cardPacks/createPack',
-  async (data: CreatePackDataType, { dispatch, rejectWithValue }) => {
+export const loadPacks = createAsyncThunk(
+  'packs/loadPacks',
+  async (param: PacksParamsType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardPacksAPI.createPack(data);
+      const res = await packAPI.getPacks(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -30,17 +26,17 @@ export const createPack = createAsyncThunk(
   },
 );
 
-export const loadCardPacks = createAsyncThunk(
-  'cardPacks/loadCardPacks',
-  async (param: CardPacksParamsType, { dispatch, rejectWithValue }) => {
+export const createPack = createAsyncThunk(
+  'packs/createPack',
+  async (data: CreatePackDataType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardPacksAPI.getPacks(param);
+      const res = await packAPI.createPack(data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data;
+      return res.data.newCardsPack;
     } catch (e) {
       handleError(e, dispatch);
 
@@ -50,12 +46,12 @@ export const loadCardPacks = createAsyncThunk(
 );
 
 export const updatePack = createAsyncThunk(
-  'cardPacks/updatePack',
+  'packs/updatePack',
   async (data: UpdatePackDataType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardPacksAPI.updatePack(data);
+      const res = await packAPI.updatePack(data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -69,12 +65,12 @@ export const updatePack = createAsyncThunk(
 );
 
 export const deletePack = createAsyncThunk(
-  'cardPacks/deletePack',
+  'packs/deletePack',
   async (packId: string, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardPacksAPI.deletePack(packId);
+      const res = await packAPI.deletePack(packId);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -88,9 +84,9 @@ export const deletePack = createAsyncThunk(
 );
 
 const slice = createSlice({
-  name: 'cardPacks',
+  name: 'packs',
   initialState: {
-    cardPacks: [],
+    cardPacks: [] as Array<PackType>,
     page: 1,
     pageCount: 5,
     cardPacksTotalCount: 0,
@@ -98,18 +94,14 @@ const slice = createSlice({
     maxCardsCount: 0,
     token: '',
     tokenDeathTime: 0,
-  } as CardPacksResponseType,
-  reducers: {
-    setPageNumber(state, action: PayloadAction<{ page: number }>) {
-      state.page = action.payload.page;
-    },
-    setPageCount(state, action: PayloadAction<{ pageCount: number }>) {
-      state.pageCount = action.payload.pageCount;
-    },
-  },
+  } as GetPacksResponseType,
+  reducers: {},
   extraReducers: builder => {
-    builder.addCase(loadCardPacks.fulfilled, (state, action) => {
+    builder.addCase(loadPacks.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(createPack.fulfilled, (state, action) => {
+      state.cardPacks.unshift(action.payload);
     });
     builder.addCase(updatePack.fulfilled, (state, action) => {
       state.cardPacks = state.cardPacks.map(pack =>
@@ -124,6 +116,4 @@ const slice = createSlice({
   },
 });
 
-export const { setPageNumber, setPageCount } = slice.actions;
-
-export const cardsPacksReducer = slice.reducer;
+export const packsReducer = slice.reducer;

@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { userAPI } from 'api/authAPI';
+import { LoginDataType } from 'api/DataTypes';
+import { UserType } from 'api/ResponseTypes';
 import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
-import { LoginFormType } from 'features/Auth/User/Login/loginTypes';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
-import { UserType } from 'features/Auth/User/Profile/ProfileTypes';
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (param: LoginFormType, { dispatch }) => {
+  async (param: LoginDataType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
       const res = await userAPI.login(param);

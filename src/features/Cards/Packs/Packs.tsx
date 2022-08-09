@@ -3,9 +3,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
-import styles from './CardPacks.module.scss';
-import { getCardPacks, getCardPacksTotalCount } from './cardPacksSelectors';
-
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
@@ -14,13 +11,18 @@ import { Paginator } from 'common/components/Paginator/Paginator';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getActualCardParamsParams } from 'common/utils/getActualParams';
+import { getActualPacksParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import { CardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/CardPacksParams';
-import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import { createPack, loadCardPacks } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { PacksParams } from 'features/Cards/Packs/CardPacksParams/PacksParams';
+import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
+import styles from 'features/Cards/Packs/Packs.module.scss';
+import { createPack, loadPacks } from 'features/Cards/Packs/packsReducer';
+import {
+  getCardPacks,
+  getCardPacksTotalCount,
+} from 'features/Cards/Packs/packsSelectors';
 
-export const CardPacks = (): ReturnComponentType => {
+export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   const isLoggedIn = useAppSelector(getIsLoggedIn);
@@ -37,7 +39,7 @@ export const CardPacks = (): ReturnComponentType => {
   useEffect(() => {
     dispatch(
       setCardPacksParams({
-        params: getActualCardParamsParams(searchParams),
+        params: getActualPacksParams(searchParams),
       }),
     );
   }, [dispatch, searchParams, setSearchParams]);
@@ -48,7 +50,7 @@ export const CardPacks = (): ReturnComponentType => {
       searchParams.delete('cardsPack_id');
       setSearchParams(searchParams);
     } else {
-      dispatch(loadCardPacks(getActualCardParamsParams(searchParams)));
+      dispatch(loadPacks(getActualPacksParams(searchParams)));
     }
   }, [dispatch, searchParams, setSearchParams]);
 
@@ -59,9 +61,9 @@ export const CardPacks = (): ReturnComponentType => {
   const createNewPack = (values: ModalPackFormTypes): void => {
     dispatch(
       createPack({
-        name: values.namePack,
+        name: values.packName,
         deckCover: '',
-        private: values.privatePack,
+        private: values.packPrivate,
       }),
     );
   };
@@ -74,9 +76,9 @@ export const CardPacks = (): ReturnComponentType => {
     <div className={styles.main}>
       <div className={styles.head}>
         <Typography className={styles.title}>Packs list</Typography>
-        <GeneralButton label="Add new pack" onClick={addNewPackHandler} />
+        <GeneralButton label="Add new cards" onClick={addNewPackHandler} />
       </div>
-      <CardPacksParams />
+      <PacksParams />
       <div className={styles.body}>
         {packs.length !== 0 ? (
           <div>
@@ -92,7 +94,7 @@ export const CardPacks = (): ReturnComponentType => {
         callBack={createNewPack}
         handleClose={handleClose}
         open={open}
-        title="Add new pack"
+        title="Add new cards"
       />
     </div>
   );

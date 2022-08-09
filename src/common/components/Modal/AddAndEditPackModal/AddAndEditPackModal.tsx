@@ -34,8 +34,8 @@ export const AddAndEditPackModal: React.FC<PropsType> = ({
   };
 
   const initialValues = {
-    namePack: title === 'Edit pack' ? (editableName as string) : '',
-    privatePack: title === 'Edit pack' ? (editablePrivateStatus as boolean) : false,
+    packName: title === 'Edit cards' ? (editableName as string) : '',
+    packPrivate: title === 'Edit cards' ? (editablePrivateStatus as boolean) : false,
   };
 
   return (

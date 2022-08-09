@@ -6,8 +6,8 @@ import { CardTableBody } from 'common/components/DataTable/DataTableBody/CardTab
 import { PackTableBody } from 'common/components/DataTable/DataTableBody/PackTableBody';
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getCardPacks } from 'features/Cards/CardPacks/cardPacksSelectors';
-import { getCards } from 'features/Cards/Pack/packSelectors';
+import { getCards } from 'features/Cards/Cards/cardsSelectors';
+import { getCardPacks } from 'features/Cards/Packs/packsSelectors';
 
 type DataTableBodyProps = {
   tableType: 'packs' | 'cards';

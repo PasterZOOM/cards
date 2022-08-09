@@ -8,11 +8,8 @@ import styles from './NumberOfCards.module.scss';
 
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { NumberOfCardsInput } from 'features/Cards/CardPacks/CardPacksParams/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
-import {
-  getMaxCardsCount,
-  getMinCardsCount,
-} from 'features/Cards/CardPacks/cardPacksSelectors';
+import { NumberOfCardsInput } from 'features/Cards/Packs/CardPacksParams/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
+import { getMaxCardsCount, getMinCardsCount } from 'features/Cards/Packs/packsSelectors';
 
 export const NumberOfCards = (): ReturnComponentType => {
   const minCardsCount = useAppSelector(getMinCardsCount);

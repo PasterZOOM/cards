@@ -1,18 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { userAPI } from 'api/authAPI';
+import { RegisterDataType } from 'api/DataTypes';
+import { NewUserType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
 import { login } from 'features/Auth/User/Login/authReducer';
-import {
-  NewUserType,
-  RegisterParamsType,
-} from 'features/Auth/User/Register/RegisterTypes';
 
 export const createUser = createAsyncThunk(
   'register/createUser',
-  async (data: RegisterParamsType, { dispatch }) => {
+  async (data: RegisterDataType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
       const res = await userAPI.register({ ...data, email: data.email.toLowerCase() });

@@ -8,7 +8,7 @@ import { BasicModal } from '../BasicModal/BasicModal';
 import style from 'common/components/Modal/DeletePackModal/DeletePackModal.module.scss';
 import { useAppDispatch } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { deletePack } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { deletePack } from 'features/Cards/Packs/packsReducer';
 
 type PropsType = {
   open: boolean;

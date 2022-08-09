@@ -5,16 +5,16 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Grades } from './Grades/Grades';
 
-import { CardType } from 'api/cardsRequestTypes';
+import { CardType } from 'api/ResponseTypes';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualPackParams } from 'common/utils/getActualParams';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
+import { loadCards, updatedGrade } from 'features/Cards/Cards/cardsReducer';
+import { getCards } from 'features/Cards/Cards/cardsSelectors';
 import styles from 'features/Cards/Learn/Learn.module.scss';
 import { LearnPaper } from 'features/Cards/Learn/LearnPaper/LearnPaper';
-import { loadPack, updatedGrade } from 'features/Cards/Pack/packReducer';
-import { getCards } from 'features/Cards/Pack/packSelectors';
 
 const maxGradeValue = 6;
 
@@ -70,7 +70,7 @@ export const Learn = (): ReturnComponentType => {
 
   useEffect(() => {
     if (first) {
-      dispatch(loadPack(getActualPackParams(searchParams)));
+      dispatch(loadCards(getActualPackParams(searchParams)));
       setFirst(false);
     }
 

@@ -4,7 +4,10 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { PackType } from 'api/cardsRequestTypes';
+import styles from './Cards.module.scss';
+import { setCardsParams } from './CardsParams/cardsParamsReducer';
+
+import { PackType } from 'api/ResponseTypes';
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
 import ellipsis from 'assets/images/ellipsis.svg';
@@ -27,28 +30,26 @@ import { getActualPackParams } from 'common/utils/getActualParams';
 import { getLocalStorage, saveTitle } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { getCardPacks } from 'features/Cards/CardPacks/cardPacksSelectors';
-import { updatePack } from 'features/Cards/CardPacks/cardsPacksReducer';
-import styles from 'features/Cards/Pack/Pack.module.scss';
-import { setPacksParams } from 'features/Cards/Pack/PackParams/packParamsReducer';
-import { getPackParams } from 'features/Cards/Pack/PackParams/packParamsSelectors';
-import { createCard, loadPack } from 'features/Cards/Pack/packReducer';
+import { getCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsSelectors';
+import { createCard, loadCards } from 'features/Cards/Cards/cardsReducer';
 import {
   getCards,
   getCardsTotalCount,
-  getPackUserId,
-} from 'features/Cards/Pack/packSelectors';
+  getCardsPackUserId,
+} from 'features/Cards/Cards/cardsSelectors';
+import { updatePack } from 'features/Cards/Packs/packsReducer';
+import { getCardPacks } from 'features/Cards/Packs/packsSelectors';
 
 const addCardButtonTitle = 'Add new card';
 
-export const Pack = (): ReturnComponentType => {
+export const Cards = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const packName = getLocalStorage('packName') as string;
-  const ownPack = useAppSelector(getUserId) === useAppSelector(getPackUserId);
+  const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
   const cards = useAppSelector(getCards);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
-  const params = useAppSelector(getPackParams);
+  const params = useAppSelector(getCardsParams);
   const packs = useAppSelector(getCardPacks);
 
   const [searchParams] = useSearchParams();
@@ -91,12 +92,12 @@ export const Pack = (): ReturnComponentType => {
     );
   };
   const updatePackHandler = (values: ModalPackFormTypes): void => {
-    saveTitle(values.namePack);
+    saveTitle(values.packName);
     dispatch(
       updatePack({
         _id: pack._id,
-        name: values.namePack,
-        private: values.privatePack,
+        name: values.packName,
+        private: values.packPrivate,
       }),
     );
   };
@@ -109,7 +110,7 @@ export const Pack = (): ReturnComponentType => {
   // читает URL и сохраняет params в стейт
   useEffect(() => {
     dispatch(
-      setPacksParams({
+      setCardsParams({
         params: getActualPackParams(searchParams),
       }),
     );
@@ -118,7 +119,7 @@ export const Pack = (): ReturnComponentType => {
   // читает URL и делает запрос за картами
   useEffect(() => {
     if (searchParams.get('cardsPack_id')) {
-      dispatch(loadPack(getActualPackParams(searchParams)));
+      dispatch(loadCards(getActualPackParams(searchParams)));
     } else navigate(path.CARD_PACKS);
   }, [dispatch, navigate, searchParams]);
 
@@ -173,14 +174,14 @@ export const Pack = (): ReturnComponentType => {
       {cards.length === 0 && ownPack && !params.cardQuestion && (
         <div className={styles.body}>
           <Typography className={styles.text}>
-            This pack is empty. Click add new card to fill this pack
+            This cards is empty. Click add new card to fill this cards
           </Typography>
           <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
         </div>
       )}
       {cards.length === 0 && !ownPack && !params.cardQuestion && (
         <div className={styles.body}>
-          <Typography className={styles.text}>This pack is empty.</Typography>
+          <Typography className={styles.text}>This cards is empty.</Typography>
         </div>
       )}
       <AddAndEditCardModal
@@ -193,7 +194,7 @@ export const Pack = (): ReturnComponentType => {
         callBack={updatePackHandler}
         handleClose={handleClose}
         open={open === 'editPack'}
-        title="Edit pack"
+        title="Edit cards"
         editableName={pack.name}
         editablePrivateStatus={pack.private}
       />
@@ -201,7 +202,7 @@ export const Pack = (): ReturnComponentType => {
         packId={pack._id}
         handleClose={handleClose}
         open={open === 'deletePack'}
-        title="Delete pack"
+        title="Delete cards"
         packName={pack.name}
       />
     </div>

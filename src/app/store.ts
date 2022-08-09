@@ -8,10 +8,10 @@ import { forgotReducer } from 'features/Auth/Forgot/forgotReducer';
 import { authReducer } from 'features/Auth/User/Login/authReducer';
 import { profileReducer } from 'features/Auth/User/Profile/profileReducer';
 import { registerReducer } from 'features/Auth/User/Register/registerReducer';
-import { cardPacksParamsReducer } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import { cardsPacksReducer } from 'features/Cards/CardPacks/cardsPacksReducer';
-import { packParamsReducer } from 'features/Cards/Pack/PackParams/packParamsReducer';
-import { packReducer } from 'features/Cards/Pack/packReducer';
+import { cardsParamsReducer } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
+import { cardsReducer } from 'features/Cards/Cards/cardsReducer';
+import { packsParamsReducer } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
+import { packsReducer } from 'features/Cards/Packs/packsReducer';
 
 export const rootReducer = combineReducers({
   register: registerReducer,
@@ -19,10 +19,10 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   forgot: forgotReducer,
-  pack: packReducer,
-  cardPacks: cardsPacksReducer,
-  packParams: packParamsReducer,
-  cardPacksParams: cardPacksParamsReducer,
+  cards: cardsReducer,
+  cardsParams: cardsParamsReducer,
+  packs: packsReducer,
+  packsParams: packsParamsReducer,
 });
 
 export const store = configureStore({

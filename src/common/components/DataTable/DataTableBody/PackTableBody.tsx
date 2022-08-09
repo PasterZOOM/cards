@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { PackType } from 'api/cardsRequestTypes';
+import { PackType } from 'api/ResponseTypes';
 import deleteIco from 'assets/images/delete.svg';
 import editIco from 'assets/images/edit.svg';
 import teacherIco from 'assets/images/teacher.svg';
@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { setLocalStorage } from 'common/utils/localStorageUtil';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { updatePack } from 'features/Cards/CardPacks/cardsPacksReducer';
+import { updatePack } from 'features/Cards/Packs/packsReducer';
 
 type PacksTableBodyProps = {
   pack: PackType;
@@ -50,8 +50,8 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     dispatch(
       updatePack({
         _id: pack._id,
-        name: values.namePack,
-        private: values.privatePack,
+        name: values.packName,
+        private: values.packPrivate,
       }),
     );
   };
@@ -99,7 +99,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
         callBack={updatePackHandler}
         handleClose={() => setOpen(false)}
         open={open}
-        title="Edit pack"
+        title="Edit cards"
         editableName={pack.name}
         editablePrivateStatus={pack.private}
       />
@@ -107,7 +107,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
         packId={pack._id}
         handleClose={() => setOpenDeleteModal(false)}
         open={openDeleteModal}
-        title="Delete pack"
+        title="Delete cards"
         packName={pack.name}
       />
     </>

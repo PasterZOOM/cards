@@ -5,14 +5,14 @@ import { Form, FormikProps } from 'formik';
 
 import styles from './RegisterForm.module.scss';
 
+import { RegisterDataType } from 'api/DataTypes';
 import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
 import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { RegisterFormType } from 'features/Auth/User/Register/RegisterTypes';
 
 type PropsType = {
-  formik: FormikProps<RegisterFormType>;
+  formik: FormikProps<RegisterDataType & { confirmPassword: string }>;
 };
 export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, dirty, isSubmitting } = { ...formik };

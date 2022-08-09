@@ -1,25 +1,28 @@
-import { instance } from 'api/authAPI';
 import {
-  CardPacksParamsType,
-  CardPacksResponseType,
+  PacksParamsType,
   CreateCardDataType,
-  CreatePackType,
-  PackParamsType,
-  PackResponseType,
+  CreatePackDataType,
+  CardsParamsType,
   UpdatedGradeDataType,
-  UpdatedGradeResponseType,
   UpdatePackDataType,
-  UpdatePackResponseType,
+} from 'api/DataTypes';
+import { instance } from 'api/instance';
+import {
+  GetPacksResponseType,
+  CreateCardResponseType,
+  CreatePackResponseType,
   DeletePackResponseType,
-} from 'api/cardsRequestTypes';
-import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
+  GetCardsResponseType,
+  UpdateGradeResponseType,
+  UpdatePackResponseType,
+} from 'api/ResponseTypes';
 
-export const cardPacksAPI = {
-  getPacks(params: CardPacksParamsType) {
-    return instance.get<CardPacksResponseType>(`cards/pack`, { params });
+export const packAPI = {
+  getPacks(params: PacksParamsType) {
+    return instance.get<GetPacksResponseType>(`cards/pack`, { params });
   },
-  createPack(data: CreatePackType) {
-    return instance.post<CreatePackResponseType>(`cards/pack`, data);
+  createPack(data: CreatePackDataType) {
+    return instance.post<CreatePackResponseType>(`cards/pack`, { cardsPack: data });
   },
   updatePack(data: UpdatePackDataType) {
     return instance.put<UpdatePackResponseType>(`cards/pack`, { cardsPack: data });
@@ -29,14 +32,17 @@ export const cardPacksAPI = {
   },
 };
 
-export const packAPI = {
-  getPack(params: PackParamsType) {
-    return instance.get<PackResponseType>('cards/card', { params });
+export const cardAPI = {
+  getCards(params: CardsParamsType) {
+    return instance.get<GetCardsResponseType>('cards/card', { params });
   },
   createCard(data: CreateCardDataType) {
     return instance.post<CreateCardResponseType>(`cards/card`, { card: data });
   },
-  updatedGrade(data: UpdatedGradeDataType) {
-    return instance.put<UpdatedGradeResponseType>('cards/grade', data);
+};
+
+export const gradeAPI = {
+  updateGrade(data: UpdatedGradeDataType) {
+    return instance.put<UpdateGradeResponseType>('cards/grade', data);
   },
 };

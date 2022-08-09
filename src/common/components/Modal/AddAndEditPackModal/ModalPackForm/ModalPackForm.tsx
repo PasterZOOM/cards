@@ -22,7 +22,7 @@ export const ModalPackForm: React.FC<PropsType> = ({
   handleClose,
 }): ReturnComponentType => {
   const { isValid, handleChange, values, dirty } = { ...formik };
-  const [field, meta] = useField('namePack');
+  const [field, meta] = useField('packName');
 
   return (
     <Form>
@@ -32,8 +32,8 @@ export const ModalPackForm: React.FC<PropsType> = ({
             label="Name Pack"
             {...field}
             variant="standard"
-            name="namePack"
-            value={values.namePack}
+            name="packName"
+            value={values.packName}
             onChange={handleChange}
           />
           {meta.touched && meta.error && (
@@ -46,12 +46,12 @@ export const ModalPackForm: React.FC<PropsType> = ({
             control={
               <Checkbox
                 className={style.checkBox}
-                name="privatePack"
+                name="packPrivate"
                 onChange={handleChange}
-                checked={values.privatePack}
+                checked={values.packPrivate}
               />
             }
-            label="Private pack"
+            label="Private cards"
           />
         </div>
 
