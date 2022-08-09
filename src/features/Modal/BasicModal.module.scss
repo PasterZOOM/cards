@@ -1,0 +1,26 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  width: 395px;
+
+  .header {
+    padding: 18px 24px;
+    border-bottom: 1px solid #d9d9d9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      @include text(18px, 500, 22px);
+    }
+  }
+  .body {
+    padding: 0 24px 47px;
+  }
+}

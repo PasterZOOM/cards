@@ -6,9 +6,9 @@ import { Form, FormikProps } from 'formik';
 import styles from './RegisterForm.module.scss';
 
 import { RegisterDataType } from 'api/DataTypes';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {

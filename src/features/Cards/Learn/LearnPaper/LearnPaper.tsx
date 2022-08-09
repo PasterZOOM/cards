@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography/Typography';
 import styles from './LearnPaper.module.scss';
 
 import { CardType } from 'api/ResponseTypes';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {

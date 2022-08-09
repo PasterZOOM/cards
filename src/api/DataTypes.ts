@@ -24,9 +24,9 @@ export type PacksParamsType = {
   user_id?: string;
 };
 export type CreatePackDataType = {
-  name: string;
-  deckCover: string;
-  private: boolean;
+  name?: string;
+  deckCover?: string;
+  private?: boolean;
 };
 export type UpdatePackDataType = {
   _id: string;

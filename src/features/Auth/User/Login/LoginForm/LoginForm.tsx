@@ -6,9 +6,9 @@ import { Form, FormikProps } from 'formik';
 import { NavLink } from 'react-router-dom';
 
 import { LoginDataType } from 'api/DataTypes';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { path } from 'common/enums/path';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import style from 'features/Auth/User/Login/Login.module.css';

@@ -1,0 +1,15 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.form {
+  padding: 30px 0 0;
+  .title{
+    @include text(14px, 400, 24px);
+    word-wrap: break-word !important;
+  }
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0 0;
+  }
+}

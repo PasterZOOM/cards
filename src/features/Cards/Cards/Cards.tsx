@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import IconButton from '@mui/material/IconButton/IconButton';
 import Typography from '@mui/material/Typography/Typography';
@@ -13,13 +13,8 @@ import edit from 'assets/images/edit.svg';
 import ellipsis from 'assets/images/ellipsis.svg';
 import teach from 'assets/images/teacher.svg';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { DataTable } from 'common/components/DataTable/DataTable';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
-import { AddAndEditCardModal } from 'common/components/Modal/AddAndEditCardModal/AddAndEditCardModal';
-import { ModalCardFormTypes } from 'common/components/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
-import { AddAndEditPackModal } from 'common/components/Modal/AddAndEditPackModal/AddAndEditPackModal';
-import { ModalPackFormTypes } from 'common/components/Modal/AddAndEditPackModal/ModalPackForm/modalPackFormType';
-import { DeletePackModal } from 'common/components/Modal/DeletePackModal/DeletePackModal';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
@@ -31,13 +26,12 @@ import { getLocalStorage, saveTitle } from 'common/utils/localStorageUtil';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { getCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsSelectors';
-import { createCard, loadCards } from 'features/Cards/Cards/cardsReducer';
+import { loadCards } from 'features/Cards/Cards/cardsReducer';
 import {
   getCards,
-  getCardsTotalCount,
   getCardsPackUserId,
+  getCardsTotalCount,
 } from 'features/Cards/Cards/cardsSelectors';
-import { updatePack } from 'features/Cards/Packs/packsReducer';
 import { getCardPacks } from 'features/Cards/Packs/packsSelectors';
 
 const addCardButtonTitle = 'Add new card';
@@ -55,52 +49,22 @@ export const Cards = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [open, setOpen] = useState<null | 'addCard' | 'editPack' | 'deletePack'>(null);
-
   const menuItems = [
     {
       title: 'Edit',
       icon: edit,
-      action: (): void => {
-        setOpen('editPack');
-      },
+      action: (): void => {},
     },
     {
       title: 'Delete',
       icon: del,
-      action: (): void => {
-        setOpen('deletePack');
-      },
+      action: (): void => {},
     },
   ];
-  const addNewCardHandler = useCallback((): void => {
-    setOpen('addCard');
-  }, []);
-  const handleClose = (): void => setOpen(null);
 
   const pack = packs.find(
     pack => pack._id === searchParams.get('cardsPack_id'),
   ) as PackType;
-
-  const createNewCard = (values: ModalCardFormTypes): void => {
-    dispatch(
-      createCard({
-        cardsPack_id: params.cardsPack_id,
-        question: values.question,
-        answer: values.answer,
-      }),
-    );
-  };
-  const updatePackHandler = (values: ModalPackFormTypes): void => {
-    saveTitle(values.packName);
-    dispatch(
-      updatePack({
-        _id: pack._id,
-        name: values.packName,
-        private: values.packPrivate,
-      }),
-    );
-  };
 
   const onClickLearnHandle = (): void => {
     saveTitle(pack.name);
@@ -150,7 +114,7 @@ export const Cards = (): ReturnComponentType => {
         {((cards.length !== 0 && ownPack) ||
           (cards.length === 0 && params.cardQuestion && ownPack)) && (
           <div>
-            <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
+            <GeneralButton label={addCardButtonTitle} onClick={() => {}} />
           </div>
         )}
       </div>
@@ -176,7 +140,7 @@ export const Cards = (): ReturnComponentType => {
           <Typography className={styles.text}>
             This cards is empty. Click add new card to fill this cards
           </Typography>
-          <GeneralButton label={addCardButtonTitle} onClick={addNewCardHandler} />
+          <GeneralButton label={addCardButtonTitle} onClick={() => {}} />
         </div>
       )}
       {cards.length === 0 && !ownPack && !params.cardQuestion && (
@@ -184,27 +148,6 @@ export const Cards = (): ReturnComponentType => {
           <Typography className={styles.text}>This cards is empty.</Typography>
         </div>
       )}
-      <AddAndEditCardModal
-        callBack={createNewCard}
-        handleClose={handleClose}
-        open={open === 'addCard'}
-        title="Add new card"
-      />
-      <AddAndEditPackModal
-        callBack={updatePackHandler}
-        handleClose={handleClose}
-        open={open === 'editPack'}
-        title="Edit cards"
-        editableName={pack.name}
-        editablePrivateStatus={pack.private}
-      />
-      <DeletePackModal
-        packId={pack._id}
-        handleClose={handleClose}
-        open={open === 'deletePack'}
-        title="Delete cards"
-        packName={pack.name}
-      />
     </div>
   );
 };

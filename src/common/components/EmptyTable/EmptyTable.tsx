@@ -2,8 +2,9 @@ import React from 'react';
 
 import Typography from '@mui/material/Typography/Typography';
 
-import styles from 'common/components/EmptyTable/EmptyTable.module.scss';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
+import styles from './EmptyTable.module.scss';
+
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 
 type SubTablePropsType = {
   buttonTitle: string;

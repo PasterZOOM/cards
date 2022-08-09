@@ -7,12 +7,10 @@ import FormGroup from '@mui/material/FormGroup/FormGroup';
 import FormHelperText from '@mui/material/FormHelperText/FormHelperText';
 import { Form, FormikProps, useField } from 'formik';
 
-import style from '../AddAndEditCardModal.module.scss';
-
-import { ModalCardFormTypes } from './modalCardFormType';
-
 import { Selected } from 'common/components/Selected/Selected';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import style from 'features/Modal/AddAndEditCardModal/AddAndEditCardModal.module.scss';
+import { ModalCardFormTypes } from 'features/Modal/AddAndEditCardModal/ModalCardForm/modalCardFormType';
 
 type PropsType = {
   formik: FormikProps<ModalCardFormTypes>;

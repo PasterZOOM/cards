@@ -12,6 +12,7 @@ import { cardsParamsReducer } from 'features/Cards/Cards/CardsParams/cardsParams
 import { cardsReducer } from 'features/Cards/Cards/cardsReducer';
 import { packsParamsReducer } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
 import { packsReducer } from 'features/Cards/Packs/packsReducer';
+import { modalsReducer } from 'features/Modal/modalReduscer';
 
 export const rootReducer = combineReducers({
   register: registerReducer,
@@ -23,6 +24,7 @@ export const rootReducer = combineReducers({
   cardsParams: cardsParamsReducer,
   packs: packsReducer,
   packsParams: packsParamsReducer,
+  modals: modalsReducer,
 });
 
 export const store = configureStore({

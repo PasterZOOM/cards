@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { HeaderAvatar } from './HeaderAvatar/HeaderAvatar';
 
 import logo from 'assets/images/logo.svg';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import styles from 'common/components/Header/Header.module.scss';
 import { path } from 'common/enums/path';
 import { useAppSelector } from 'common/hooks/hooks';
