@@ -31,7 +31,7 @@ export const CardTableBody: React.FC<CardTableBodyProps> = ({
     dispatch(
       openModal({
         title: modal.EDIT_CARD,
-        data: { cardsPack_id: _id, question, answer },
+        data: { _id, question, answer },
       }),
     );
   };

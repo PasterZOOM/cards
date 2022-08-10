@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Formik, FormikHelpers } from 'formik';
 
-import { UpdateCardDataType } from 'api/DataTypes';
+import { CreateCardDataType, UpdateCardDataType } from 'api/DataTypes';
 import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
@@ -15,7 +15,8 @@ import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
 
 export const CardsModal = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const data = useAppSelector(getPackData) as UpdateCardDataType;
+  const createData = useAppSelector(getPackData) as CreateCardDataType;
+  const updateData = useAppSelector(getPackData) as UpdateCardDataType;
   const title = useAppSelector(getModalTitle);
 
   const submitModal = async (
@@ -27,7 +28,7 @@ export const CardsModal = (): ReturnComponentType => {
         createCard({
           answer: values.answer,
           question: values.question,
-          cardsPack_id: data._id,
+          cardsPack_id: createData.cardsPack_id,
         }),
       );
     }
@@ -37,7 +38,7 @@ export const CardsModal = (): ReturnComponentType => {
         updateCard({
           answer: values.answer,
           question: values.question,
-          _id: data._id,
+          _id: updateData._id,
         }),
       );
     }
@@ -47,7 +48,10 @@ export const CardsModal = (): ReturnComponentType => {
 
   return (
     <Formik
-      initialValues={{ answer: data.answer, question: data.question }}
+      initialValues={{
+        answer: updateData.answer || '',
+        question: updateData.question || '',
+      }}
       validationSchema={validateCardModalForm}
       onSubmit={submitModal}
     >

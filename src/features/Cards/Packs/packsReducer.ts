@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { packAPI } from 'api/cardsAPI';
 import { CreatePackDataType, PacksParamsType, UpdatePackDataType } from 'api/DataTypes';
-import { GetPacksResponseType, PackType } from 'api/ResponseTypes';
+import { GetPacksResponseType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
@@ -88,7 +88,26 @@ export const deletePack = createAsyncThunk(
 const slice = createSlice({
   name: 'packs',
   initialState: {
-    cardPacks: [] as Array<PackType>,
+    cardPacks: [
+      {
+        _id: '',
+        user_id: '',
+        user_name: '',
+        private: false,
+        name: '',
+        path: '',
+        grade: 0,
+        shots: 0,
+        cardsCount: 0,
+        type: '',
+        rating: 0,
+        created: '',
+        updated: '',
+        more_id: '',
+        __v: 0,
+        deckCover: null,
+      },
+    ],
     page: 1,
     pageCount: 0,
     cardPacksTotalCount: 0,

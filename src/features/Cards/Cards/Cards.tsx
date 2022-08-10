@@ -7,7 +7,6 @@ import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './Cards.module.scss';
 import { setCardsParams } from './CardsParams/cardsParamsReducer';
 
-import { PackType } from 'api/ResponseTypes';
 import del from 'assets/images/delete.svg';
 import edit from 'assets/images/edit.svg';
 import ellipsis from 'assets/images/ellipsis.svg';
@@ -51,11 +50,9 @@ export const Cards = (): ReturnComponentType => {
   const params = useAppSelector(getCardsParams);
   const packs = useAppSelector(getCardPacks);
 
-  const pack = packs.find(
-    pack => pack._id === searchParams.get('cardsPack_id'),
-  ) as PackType;
+  const index = packs.findIndex(pack => pack._id === searchParams.get('cardsPack_id'));
 
-  const { cardsCount, _id, name } = pack;
+  const { cardsCount, _id, name } = index > -1 ? packs[index] : packs[0];
 
   const menuItems = [
     {
@@ -65,7 +62,7 @@ export const Cards = (): ReturnComponentType => {
         dispatch(
           openModal({
             title: modal.EDIT_PACK,
-            data: { _id, name, private: pack.private },
+            data: { _id, name, private: packs[index].private || false },
           }),
         );
       },
@@ -93,7 +90,11 @@ export const Cards = (): ReturnComponentType => {
     dispatch(
       openModal({
         title: modal.ADD_CARD,
-        data: { cardsPack_id: _id, question: '', answer: '' },
+        data: {
+          cardsPack_id: searchParams.get('cardsPack_id') as string,
+          question: '',
+          answer: '',
+        },
       }),
     );
   };
