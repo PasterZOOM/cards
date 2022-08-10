@@ -23,16 +23,14 @@ export type PacksParamsType = {
   pageCount?: number;
   user_id?: string;
 };
-export type CreatePackDataType = {
-  name?: string;
-  deckCover?: string;
-  private?: boolean;
-};
-export type UpdatePackDataType = {
-  _id: string;
+export type PackDataType = {
   name: string;
   private: boolean;
 };
+export type CreatePackDataType = PackDataType;
+export type UpdatePackDataType = {
+  _id: string;
+} & CreatePackDataType;
 
 export type CardsParamsType = {
   cardsPack_id: string;
@@ -42,11 +40,14 @@ export type CardsParamsType = {
   page?: number;
   pageCount?: number;
 };
-export type CreateCardDataType = {
-  cardsPack_id: string;
+export type CardDataType = {
   question: string;
   answer: string;
 };
+export type CreateCardDataType = { cardsPack_id: string } & CardDataType;
+export type UpdateCardDataType = { _id: string } & CardDataType;
+
+export type DeleteParamType = { _id: string; name: string };
 
 export type UpdatedGradeDataType = {
   grade: number;

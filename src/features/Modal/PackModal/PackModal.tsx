@@ -1,52 +1,59 @@
 import React from 'react';
 
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
+import { UpdatePackDataType } from 'api/DataTypes';
 import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { closeModal } from 'common/utils/modalUtils';
 import { createPack, updatePack } from 'features/Cards/Packs/packsReducer';
-import { getModalOpenStatus, getPackModal } from 'features/Modal/modalSelectors';
-import { ModalPackForm } from 'features/Modal/PackModal/ModalPackForm/ModalPackForm';
-import { ModalPackFormTypes } from 'features/Modal/PackModal/ModalPackForm/modalPackFormType';
-import { validateCreateAndEditPack } from 'features/Modal/PackModal/ModalPackForm/modalValidatePack';
+import { closeModal } from 'features/Modal/modalReduscer';
+import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
+import { PackModalForm } from 'features/Modal/PackModal/PackModalForm/PackModalForm';
+import { PackModalFormType } from 'features/Modal/PackModal/PackModalForm/PackModalFormType';
+import { validatePackModalForm } from 'features/Modal/PackModal/PackModalForm/validatePackModalForm';
 
 export const PackModal = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const packModal = useAppSelector(getPackModal);
-  const open = useAppSelector(getModalOpenStatus);
+  const data = useAppSelector(getPackData) as UpdatePackDataType;
+  const title = useAppSelector(getModalTitle);
 
-  const submitModal = async (values: ModalPackFormTypes): Promise<void> => {
-    if (open === modal.CREATE_PACK) {
+  const submitModal = async (
+    values: PackModalFormType,
+    { setSubmitting }: FormikHelpers<PackModalFormType>,
+  ): Promise<void> => {
+    if (title === modal.ADD_PACK) {
       await dispatch(
         createPack({
           name: values.packName,
           private: values.packPrivate,
         }),
       );
-      closeModal(dispatch);
     }
 
-    if (open === modal.UPDATE_PACK) {
+    if (title === modal.EDIT_PACK) {
       await dispatch(
         updatePack({
-          _id: packModal._id,
+          _id: data._id,
           name: values.packName,
           private: values.packPrivate,
         }),
       );
-      closeModal(dispatch);
     }
+    dispatch(closeModal());
+    setSubmitting(false);
   };
 
   return (
     <Formik
-      initialValues={{ packName: packModal.name, packPrivate: packModal.private }}
-      validationSchema={validateCreateAndEditPack}
+      initialValues={{
+        packName: data.name,
+        packPrivate: data.private,
+      }}
+      validationSchema={validatePackModalForm}
       onSubmit={submitModal}
     >
-      {formik => <ModalPackForm formik={formik} />}
+      {formik => <PackModalForm formik={formik} />}
     </Formik>
   );
 };

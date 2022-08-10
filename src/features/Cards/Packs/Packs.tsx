@@ -11,7 +11,6 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualPacksParams } from 'common/utils/getActualParams';
-import { openModal } from 'common/utils/modalUtils';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { PacksParams } from 'features/Cards/Packs/CardPacksParams/PacksParams';
 import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
@@ -21,7 +20,7 @@ import {
   getCardPacks,
   getCardPacksTotalCount,
 } from 'features/Cards/Packs/packsSelectors';
-import { PackModalType } from 'features/Modal/modalReduscer';
+import { openModal } from 'features/Modal/modalReduscer';
 
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -43,22 +42,15 @@ export const Packs = (): ReturnComponentType => {
 
   // читает URL и делает запрос за паками
   useEffect(() => {
-    if (searchParams.get('cardsPack_id')) {
-      searchParams.delete('cardsPack_id');
-      setSearchParams(searchParams);
-    } else {
-      dispatch(loadPacks(getActualPacksParams(searchParams)));
-    }
+    dispatch(loadPacks(getActualPacksParams(searchParams)));
   }, [dispatch, searchParams, setSearchParams]);
 
   const createNewPack = (): void => {
-    openModal(
-      {
-        open: modal.CREATE_PACK,
-        title: 'Add new pack',
-        packModal: { name: '', private: false } as PackModalType,
-      },
-      dispatch,
+    dispatch(
+      openModal({
+        title: modal.ADD_PACK,
+        data: { name: '', private: false },
+      }),
     );
   };
 

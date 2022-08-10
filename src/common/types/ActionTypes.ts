@@ -5,7 +5,7 @@ import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
 import { setCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
 import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
-import { setModalStatus } from 'features/Modal/modalReduscer';
+import { closeModal, openModal } from 'features/Modal/modalReduscer';
 
 export type AppActionsType =
   | ReturnType<typeof changeThemeAC>
@@ -15,5 +15,6 @@ export type AppActionsType =
   | ReturnType<typeof setAppSnackbarValue>
   | ReturnType<typeof changeRedirect>
   | ReturnType<typeof setCardPacksParams>
-  | ReturnType<typeof setModalStatus>
+  | ReturnType<typeof openModal>
+  | ReturnType<typeof closeModal>
   | ReturnType<typeof setCardsParams>;

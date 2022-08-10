@@ -18,6 +18,7 @@ import { DataTable } from 'common/components/DataTable/DataTable';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { Search } from 'common/components/Search/Search';
+import { modal } from 'common/enums/modal';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
@@ -33,42 +34,68 @@ import {
   getCardsTotalCount,
 } from 'features/Cards/Cards/cardsSelectors';
 import { getCardPacks } from 'features/Cards/Packs/packsSelectors';
+import { openModal } from 'features/Modal/modalReduscer';
 
 const addCardButtonTitle = 'Add new card';
 
 export const Cards = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(getIsLoggedIn);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const packName = getLocalStorage('packName') as string;
+
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
   const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
   const cards = useAppSelector(getCards);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
   const params = useAppSelector(getCardsParams);
   const packs = useAppSelector(getCardPacks);
 
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const pack = packs.find(
+    pack => pack._id === searchParams.get('cardsPack_id'),
+  ) as PackType;
+
+  const { cardsCount, _id, name } = pack;
 
   const menuItems = [
     {
       title: 'Edit',
       icon: edit,
-      action: (): void => {},
+      action: (): void => {
+        dispatch(
+          openModal({
+            title: modal.EDIT_PACK,
+            data: { _id, name, private: pack.private },
+          }),
+        );
+      },
     },
     {
       title: 'Delete',
       icon: del,
-      action: (): void => {},
+      action: (): void => {
+        dispatch(
+          openModal({
+            title: modal.DELETE_PACK,
+            data: { _id, name },
+          }),
+        );
+      },
     },
   ];
 
-  const pack = packs.find(
-    pack => pack._id === searchParams.get('cardsPack_id'),
-  ) as PackType;
-
   const onClickLearnHandle = (): void => {
-    saveTitle(pack.name);
-    navigate(`${path.LEARN}?cardsPack_id=${pack._id}&pageCount=${pack.cardsCount}`);
+    saveTitle(name);
+    navigate(`${path.LEARN}?cardsPack_id=${_id}&pageCount=${cardsCount}`);
+  };
+
+  const createNewCard = (): void => {
+    dispatch(
+      openModal({
+        title: modal.ADD_CARD,
+        data: { cardsPack_id: _id, question: '', answer: '' },
+      }),
+    );
   };
 
   // читает URL и сохраняет params в стейт
@@ -84,7 +111,7 @@ export const Cards = (): ReturnComponentType => {
   useEffect(() => {
     if (searchParams.get('cardsPack_id')) {
       dispatch(loadCards(getActualCardsParams(searchParams)));
-    } else navigate(path.CARD_PACKS);
+    } else navigate(path.PACKS);
   }, [dispatch, navigate, searchParams]);
 
   if (!isLoggedIn) {
@@ -114,7 +141,7 @@ export const Cards = (): ReturnComponentType => {
         {((cards.length !== 0 && ownPack) ||
           (cards.length === 0 && params.cardQuestion && ownPack)) && (
           <div>
-            <GeneralButton label={addCardButtonTitle} onClick={() => {}} />
+            <GeneralButton label={addCardButtonTitle} onClick={createNewCard} />
           </div>
         )}
       </div>
@@ -140,7 +167,7 @@ export const Cards = (): ReturnComponentType => {
           <Typography className={styles.text}>
             This cards is empty. Click add new card to fill this cards
           </Typography>
-          <GeneralButton label={addCardButtonTitle} onClick={() => {}} />
+          <GeneralButton label={addCardButtonTitle} onClick={createNewCard} />
         </div>
       )}
       {cards.length === 0 && !ownPack && !params.cardQuestion && (

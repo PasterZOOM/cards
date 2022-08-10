@@ -1,18 +1,21 @@
 import {
-  PacksParamsType,
+  CardsParamsType,
   CreateCardDataType,
   CreatePackDataType,
-  CardsParamsType,
+  PacksParamsType,
+  UpdateCardDataType,
   UpdatedGradeDataType,
   UpdatePackDataType,
 } from 'api/DataTypes';
 import { instance } from 'api/instance';
 import {
-  GetPacksResponseType,
-  CreateCardResponseType,
+  CardResponseType,
   CreatePackResponseType,
+  DeleteCardResponseType,
   DeletePackResponseType,
   GetCardsResponseType,
+  GetPacksResponseType,
+  UpdateCardResponseType,
   UpdateGradeResponseType,
   UpdatePackResponseType,
 } from 'api/ResponseTypes';
@@ -37,7 +40,13 @@ export const cardAPI = {
     return instance.get<GetCardsResponseType>('cards/card', { params });
   },
   createCard(data: CreateCardDataType) {
-    return instance.post<CreateCardResponseType>(`cards/card`, { card: data });
+    return instance.post<CardResponseType>(`cards/card`, { card: data });
+  },
+  updateCard(data: UpdateCardDataType) {
+    return instance.put<UpdateCardResponseType>(`cards/card`, { card: data });
+  },
+  deleteCard(cardId: string) {
+    return instance.delete<DeleteCardResponseType>(`cards/card?id=${cardId}`);
   },
 };
 

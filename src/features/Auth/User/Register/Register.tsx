@@ -13,7 +13,7 @@ import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import styles from 'features/Auth/User/Register/Register.module.scss';
 import { RegisterForm } from 'features/Auth/User/Register/RegisterForm/RegisterForm';
 import { validateRegisterForm } from 'features/Auth/User/Register/RegisterForm/validateRegisterForm';
-import { createUser } from 'features/Auth/User/Register/registerReducer';
+import { createUser } from 'features/Auth/User/Register/registerThunk';
 
 export const Register = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(getIsLoggedIn);
@@ -27,7 +27,7 @@ export const Register = (): ReturnComponentType => {
     setSubmitting(false);
   };
 
-  if (isLoggedIn) return <Navigate to={path.CARD_PACKS} />;
+  if (isLoggedIn) return <Navigate to={path.PACKS} />;
 
   return (
     <Paper elevation={3} className={styles.main}>

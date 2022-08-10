@@ -15,9 +15,8 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { setLocalStorage } from 'common/utils/localStorageUtil';
-import { openModal } from 'common/utils/modalUtils';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { PackModalType } from 'features/Modal/modalReduscer';
+import { openModal } from 'features/Modal/modalReduscer';
 
 type PacksTableBodyProps = {
   pack: PackType;
@@ -46,27 +45,20 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   };
 
   const updatePackHandler = (): void => {
-    openModal(
-      {
-        open: modal.UPDATE_PACK,
-        title: 'Edit pack',
-        packModal: {
-          _id,
-          name,
-          private: pack.private,
-        },
-      },
-      dispatch,
+    dispatch(
+      openModal({
+        title: modal.EDIT_PACK,
+        data: { _id, name, private: pack.private },
+      }),
     );
   };
+
   const deletePackHandler = (): void => {
-    openModal(
-      {
-        open: modal.DELETE_PACK,
-        title: 'Delete Pack',
-        packModal: { _id, name } as PackModalType,
-      },
-      dispatch,
+    dispatch(
+      openModal({
+        title: modal.DELETE_PACK,
+        data: { _id, name },
+      }),
     );
   };
 
@@ -74,7 +66,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     <TableRow hover>
       <TableCell component="th" scope="row">
         <NavLink
-          to={`${path.PACK}?cardsPack_id=${_id}`}
+          to={`${path.CARDS}?cardsPack_id=${_id}`}
           className={s.nameLink}
           onClick={showCards}
         >

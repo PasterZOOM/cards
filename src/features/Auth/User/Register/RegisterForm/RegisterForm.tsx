@@ -7,8 +7,8 @@ import styles from './RegisterForm.module.scss';
 
 import { RegisterDataType } from 'api/DataTypes';
 import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
-import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
+import { ProjectTextField } from 'common/components/Forms/ProjectTextField/ProjectTextField';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PropsType = {
@@ -20,7 +20,7 @@ export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentTy
   return (
     <Form className={styles.main}>
       <FormGroup>
-        <EmailField name="email" label="Email" disabled={isSubmitting} />
+        <ProjectTextField name="email" label="Email" disabled={isSubmitting} />
         <PasswordField name="password" label="Password" disabled={isSubmitting} />
         <PasswordField
           name="confirmPassword"
@@ -31,7 +31,7 @@ export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentTy
           <GeneralButton
             type="submit"
             label="Sing Up"
-            disabled={!isValid || !dirty || isSubmitting}
+            disabled={!isValid || !dirty}
             fullWidth
           />
         </div>

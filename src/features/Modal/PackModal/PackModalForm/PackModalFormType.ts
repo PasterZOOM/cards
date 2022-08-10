@@ -1,4 +1,4 @@
-export type ModalPackFormTypes = {
+export type PackModalFormType = {
   packName: string;
   packPrivate: boolean;
 };

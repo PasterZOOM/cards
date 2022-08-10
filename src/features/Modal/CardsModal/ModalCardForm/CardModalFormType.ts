@@ -1,4 +1,4 @@
-export type ModalCardFormTypes = {
+export type CardModalFormTypes = {
   answer: string;
   question: string;
 };

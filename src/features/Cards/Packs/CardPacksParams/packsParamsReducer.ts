@@ -2,8 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { PacksParamsType } from 'api/DataTypes';
 
-const startPageCount = 5;
-
 const slice = createSlice({
   name: 'cardPacksParams',
   initialState: {
@@ -12,7 +10,7 @@ const slice = createSlice({
     max: undefined,
     sortPacks: undefined,
     page: undefined,
-    pageCount: startPageCount,
+    pageCount: undefined,
     user_id: undefined,
   } as PacksParamsType,
   reducers: {

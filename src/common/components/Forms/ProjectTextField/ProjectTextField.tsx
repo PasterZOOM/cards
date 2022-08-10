@@ -15,7 +15,7 @@ type PropsType = {
   disabled?: boolean;
 };
 
-export const EmailField: React.FC<PropsType> = ({
+export const ProjectTextField: React.FC<PropsType> = ({
   label,
   name,
   disabled,

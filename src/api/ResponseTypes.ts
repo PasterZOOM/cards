@@ -3,7 +3,7 @@ export type InfoResponseType = {
   error: string;
 };
 
-export type NewUserType = {
+export type UserType = {
   _id: string;
   email: string;
   rememberMe: boolean;
@@ -14,14 +14,10 @@ export type NewUserType = {
   created: string;
   updated: string;
   __v: number;
-};
-export type UserType = NewUserType & {
-  token: string;
-  tokenDeathTime: number;
   avatar: string | null;
-};
+} & TokenType;
 export type RegisterResponseType = {
-  addedUser: NewUserType;
+  addedUser: UserType;
   error?: string;
 };
 export type MeResponseType = UserType & {
@@ -29,10 +25,8 @@ export type MeResponseType = UserType & {
 };
 export type UpdatedUserResponseType = {
   updatedUser: UserType;
-  token: string;
-  tokenDeathTime: number;
   error?: string;
-};
+} & TokenType;
 
 export type PackType = {
   _id: string;
@@ -59,24 +53,16 @@ export type GetPacksResponseType = {
   cardPacksTotalCount: number;
   minCardsCount: number;
   maxCardsCount: number;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 export type CreatePackResponseType = {
   newCardsPack: PackType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 export type UpdatePackResponseType = {
   updatedCardsPack: PackType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 export type DeletePackResponseType = {
   deletedCardsPack: PackType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 
 export type CardType = {
   _id: string;
@@ -106,24 +92,16 @@ export type GetCardsResponseType = {
   cardsTotalCount: number;
   minGrade: number;
   maxGrade: number;
-  token: string;
-  tokenDeathTime: number;
-};
-export type CreateCardResponseType = {
+} & TokenType;
+export type CardResponseType = {
   newCard: CardType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 export type UpdateCardResponseType = {
   updatedCard: CardType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 export type DeleteCardResponseType = {
   deletedCard: CardType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 
 export type UpdatedGradeType = {
   _id: string;
@@ -139,6 +117,11 @@ export type UpdatedGradeType = {
 };
 export type UpdateGradeResponseType = {
   updatedGrade: UpdatedGradeType;
+  token: string;
+  tokenDeathTime: number;
+};
+
+type TokenType = {
   token: string;
   tokenDeathTime: number;
 };

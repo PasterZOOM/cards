@@ -7,8 +7,8 @@ import { NavLink } from 'react-router-dom';
 
 import { LoginDataType } from 'api/DataTypes';
 import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
-import { EmailField } from 'common/components/Forms/EmailField/EmailField';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
+import { ProjectTextField } from 'common/components/Forms/ProjectTextField/ProjectTextField';
 import { path } from 'common/enums/path';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import style from 'features/Auth/User/Login/Login.module.css';
@@ -22,7 +22,7 @@ export const LoginForm: React.FC<PropsType> = ({ formik }): ReturnComponentType 
   return (
     <Form>
       <FormGroup>
-        <EmailField name="email" label="Email" disabled={isSubmitting} />
+        <ProjectTextField name="email" label="Email" disabled={isSubmitting} />
         <PasswordField name="password" label="Password" disabled={isSubmitting} />
         <div className={style.checkbox}>
           <FormControlLabel

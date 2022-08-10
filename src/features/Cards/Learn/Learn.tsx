@@ -75,10 +75,6 @@ export const Learn = (): ReturnComponentType => {
     }
 
     if (cards.length > 0) setCard(getCard(cards));
-
-    return () => {
-      setSearchParams({});
-    };
   }, [dispatch, cards, first, searchParams, setSearchParams]);
 
   const onShowAnswer = (): void => setIsChecked(true);

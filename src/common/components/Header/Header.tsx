@@ -25,7 +25,7 @@ export const Header = (): ReturnComponentType => {
   return (
     <AppBar position="static" className={styles.main}>
       <Toolbar className={styles.toolbar}>
-        <NavLink to={path.CARD_PACKS}>
+        <NavLink to={path.PACKS}>
           <img src={logo} alt="logo" className={styles.logo} />
         </NavLink>
         {!isLoggedIn ? (

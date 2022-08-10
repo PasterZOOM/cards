@@ -8,32 +8,36 @@ import closeIcon from 'assets/images/closeIcon.svg';
 import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { closeModal } from 'common/utils/modalUtils';
 import styles from 'features/Modal/BasicModal.module.scss';
+import { CardsModal } from 'features/Modal/CardsModal/CardsModal';
 import { DeleteModal } from 'features/Modal/DeleteModal/DeleteModal';
-import { getModalOpenStatus, getTitle } from 'features/Modal/modalSelectors';
+import { closeModal } from 'features/Modal/modalReduscer';
+import { getModalTitle } from 'features/Modal/modalSelectors';
 import { PackModal } from 'features/Modal/PackModal/PackModal';
 
 export const BasicModal = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+  const title = useAppSelector(getModalTitle);
 
-  const open = useAppSelector(getModalOpenStatus);
-  const title = useAppSelector(getTitle);
-
-  const onCloseHandle = (): void => closeModal(dispatch);
+  const onClose = (): void => {
+    dispatch(closeModal());
+  };
 
   return (
-    <Modal open={!!open} onClose={onCloseHandle} sx={{ zIndex: 1 }}>
+    <Modal open={!!title} onClose={onClose} sx={{ zIndex: 1 }}>
       <div className={styles.main}>
         <div className={styles.header}>
           <Typography className={styles.title}>{title}</Typography>
-          <IconButton onClick={onCloseHandle}>
+          <IconButton onClick={onClose}>
             <img src={closeIcon} alt="close" />
           </IconButton>
         </div>
         <div className={styles.body}>
-          {(open === modal.CREATE_PACK || open === modal.UPDATE_PACK) && <PackModal />}
-          {open === modal.DELETE_PACK && <DeleteModal />}
+          {(title === modal.ADD_PACK || title === modal.EDIT_PACK) && <PackModal />}
+          {(title === modal.ADD_CARD || title === modal.EDIT_CARD) && <CardsModal />}
+          {(title === modal.DELETE_PACK || title === modal.DELETE_CARD) && (
+            <DeleteModal />
+          )}
         </div>
       </div>
     </Modal>

@@ -6,6 +6,7 @@ import { GetPacksResponseType, PackType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
+import { saveTitle } from 'common/utils/localStorageUtil';
 
 export const loadPacks = createAsyncThunk(
   'packs/loadPacks',
@@ -54,6 +55,7 @@ export const updatePack = createAsyncThunk(
       const res = await packAPI.updatePack(data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
+      saveTitle(res.data.updatedCardsPack.name);
 
       return res.data.updatedCardsPack;
     } catch (e) {
@@ -88,7 +90,7 @@ const slice = createSlice({
   initialState: {
     cardPacks: [] as Array<PackType>,
     page: 1,
-    pageCount: 5,
+    pageCount: 0,
     cardPacksTotalCount: 0,
     minCardsCount: 0,
     maxCardsCount: 0,
@@ -105,9 +107,7 @@ const slice = createSlice({
     });
     builder.addCase(updatePack.fulfilled, (state, action) => {
       state.cardPacks = state.cardPacks.map(pack =>
-        pack._id === action.payload._id
-          ? { ...pack, name: action.payload.name, private: action.payload.private }
-          : pack,
+        pack._id === action.payload._id ? action.payload : pack,
       );
     });
     builder.addCase(deletePack.fulfilled, (state, action) => {

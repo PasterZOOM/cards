@@ -1,8 +1,8 @@
 export enum modal {
-  CREATE_PACK = 'CREATE_PACK',
-  CREATE_CARD = 'CREATE_CARD',
-  UPDATE_PACK = 'UPDATE_PACK',
-  UPDATE_CARD = 'UPDATE_CARD',
-  DELETE_PACK = 'DELETE_PACK',
-  DELETE_CARD = 'DELETE_CARD',
+  ADD_PACK = 'Add new pack',
+  EDIT_PACK = 'Edit pack',
+  DELETE_PACK = 'Delete Pack',
+  ADD_CARD = 'Add new card',
+  EDIT_CARD = 'Edit card',
+  DELETE_CARD = 'Delete Card',
 }

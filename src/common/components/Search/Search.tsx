@@ -31,10 +31,9 @@ export const Search: React.FC<PropsType> = ({ search }) => {
 
     if (debouncedValue) {
       queryParams[search] = debouncedValue;
+      searchParams.delete('page');
+      setSearchParams(searchParams);
     } else searchParams.delete(search);
-
-    searchParams.delete('page');
-    setSearchParams(searchParams);
 
     setSearchParams({
       ...Object.fromEntries(searchParams),

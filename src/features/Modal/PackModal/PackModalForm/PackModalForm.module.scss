@@ -4,17 +4,8 @@
 .main {
   padding: 34px 0 0;
 
-  .field {
-    @include text(16px, 500, 24px);
-    height: 72px;
-  }
-
   .checkbox {
     @include text(16px, 500, 20px);
     margin: 0 0 24px;
-  }
-  .buttonGroup {
-    display: flex;
-    justify-content: space-between;
   }
 }
