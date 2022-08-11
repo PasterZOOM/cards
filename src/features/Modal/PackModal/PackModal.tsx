@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { Formik, FormikHelpers } from 'formik';
+import { useSearchParams } from 'react-router-dom';
 
 import { UpdatePackDataType } from 'api/DataTypes';
 import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getActualCardsParams } from 'common/utils/getActualParams';
 import { createPack, updatePack } from 'features/Cards/Packs/packsReducer';
 import { closeModal } from 'features/Modal/modalReduscer';
 import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
@@ -14,9 +16,12 @@ import { PackModalFormType } from 'features/Modal/PackModal/PackModalForm/PackMo
 import { validatePackModalForm } from 'features/Modal/PackModal/PackModalForm/validatePackModalForm';
 
 export const PackModal = (): ReturnComponentType => {
+  const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const data = useAppSelector(getPackData) as UpdatePackDataType;
   const title = useAppSelector(getModalTitle);
+
+  const params = getActualCardsParams(searchParams);
 
   const submitModal = async (
     values: PackModalFormType,
@@ -25,8 +30,11 @@ export const PackModal = (): ReturnComponentType => {
     if (title === modal.ADD_PACK) {
       await dispatch(
         createPack({
-          name: values.packName,
-          private: values.packPrivate,
+          data: {
+            name: values.packName,
+            private: values.packPrivate,
+          },
+          params,
         }),
       );
     }
@@ -34,9 +42,12 @@ export const PackModal = (): ReturnComponentType => {
     if (title === modal.EDIT_PACK) {
       await dispatch(
         updatePack({
-          _id: data._id,
-          name: values.packName,
-          private: values.packPrivate,
+          data: {
+            _id: data._id,
+            name: values.packName,
+            private: values.packPrivate,
+          },
+          params,
         }),
       );
     }

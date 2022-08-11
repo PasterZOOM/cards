@@ -117,9 +117,7 @@ export type UpdatedGradeType = {
 };
 export type UpdateGradeResponseType = {
   updatedGrade: UpdatedGradeType;
-  token: string;
-  tokenDeathTime: number;
-};
+} & TokenType;
 
 type TokenType = {
   token: string;

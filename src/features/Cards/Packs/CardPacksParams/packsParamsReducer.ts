@@ -14,8 +14,8 @@ const slice = createSlice({
     user_id: undefined,
   } as PacksParamsType,
   reducers: {
-    setCardPacksParams: (state, action: PayloadAction<{ params: PacksParamsType }>) => {
-      return action.payload.params;
+    setCardPacksParams: (state, action: PayloadAction<PacksParamsType>) => {
+      return action.payload;
     },
   },
 });

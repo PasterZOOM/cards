@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useSearchParams } from 'react-router-dom';
@@ -29,21 +29,19 @@ export const Packs = (): ReturnComponentType => {
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
   const packs = useAppSelector(getCardPacks);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+
+  const params = useMemo(() => getActualPacksParams(searchParams), [searchParams]);
 
   // читает URL и сохраняет params в стейт
   useEffect(() => {
-    dispatch(
-      setCardPacksParams({
-        params: getActualPacksParams(searchParams),
-      }),
-    );
-  }, [dispatch, searchParams, setSearchParams]);
+    dispatch(setCardPacksParams(params));
+  }, [dispatch, params]);
 
   // читает URL и делает запрос за паками
   useEffect(() => {
-    dispatch(loadPacks(getActualPacksParams(searchParams)));
-  }, [dispatch, searchParams, setSearchParams]);
+    dispatch(loadPacks(params));
+  }, [dispatch, params]);
 
   const createNewPack = (): void => {
     dispatch(

@@ -3,8 +3,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { packAPI } from 'api/cardsAPI';
 import { CreatePackDataType, PacksParamsType, UpdatePackDataType } from 'api/DataTypes';
 import { GetPacksResponseType } from 'api/ResponseTypes';
-import { setAppStatus } from 'app/appReducer';
+import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
+import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
 import { saveTitle } from 'common/utils/localStorageUtil';
 
@@ -29,15 +30,25 @@ export const loadPacks = createAsyncThunk(
 
 export const createPack = createAsyncThunk(
   'packs/createPack',
-  async (data: CreatePackDataType, { dispatch, rejectWithValue }) => {
+  async (
+    params: { data: CreatePackDataType; params: PacksParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.createPack(data);
+      const res = await packAPI.createPack(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data.newCardsPack;
+      dispatch(
+        setAppSnackbarValue({
+          type: snackbarType.SUCCESS,
+          message: `Pack "${res.data.newCardsPack.name}" created.`,
+        }),
+      );
+
+      loadPacks(params.params);
     } catch (e) {
       handleError(e, dispatch);
 
@@ -48,16 +59,26 @@ export const createPack = createAsyncThunk(
 
 export const updatePack = createAsyncThunk(
   'packs/updatePack',
-  async (data: UpdatePackDataType, { dispatch, rejectWithValue }) => {
+  async (
+    params: { data: UpdatePackDataType; params: PacksParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.updatePack(data);
+      const res = await packAPI.updatePack(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       saveTitle(res.data.updatedCardsPack.name);
 
-      return res.data.updatedCardsPack;
+      await dispatch(loadPacks(params.params));
+
+      dispatch(
+        setAppSnackbarValue({
+          type: snackbarType.SUCCESS,
+          message: `Pack "${res.data.updatedCardsPack.name}" updated.`,
+        }),
+      );
     } catch (e) {
       handleError(e, dispatch);
 
@@ -68,15 +89,25 @@ export const updatePack = createAsyncThunk(
 
 export const deletePack = createAsyncThunk(
   'packs/deletePack',
-  async (packId: string, { dispatch, rejectWithValue }) => {
+  async (
+    params: { packId: string; params: PacksParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.deletePack(packId);
+      const res = await packAPI.deletePack(params.packId);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data.deletedCardsPack._id;
+      await dispatch(loadPacks(params.params));
+
+      dispatch(
+        setAppSnackbarValue({
+          type: snackbarType.SUCCESS,
+          message: `Pack "${res.data.deletedCardsPack.name}" deleted.`,
+        }),
+      );
     } catch (e) {
       handleError(e, dispatch);
 
@@ -120,17 +151,6 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(loadPacks.fulfilled, (state, action) => {
       return action.payload;
-    });
-    builder.addCase(createPack.fulfilled, (state, action) => {
-      state.cardPacks.unshift(action.payload);
-    });
-    builder.addCase(updatePack.fulfilled, (state, action) => {
-      state.cardPacks = state.cardPacks.map(pack =>
-        pack._id === action.payload._id ? action.payload : pack,
-      );
-    });
-    builder.addCase(deletePack.fulfilled, (state, action) => {
-      state.cardPacks = state.cardPacks.filter(pack => pack._id !== action.payload);
     });
   },
 });

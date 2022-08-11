@@ -8,17 +8,18 @@ import {
   UpdatedGradeDataType,
 } from 'api/DataTypes';
 import { CardType, GetCardsResponseType } from 'api/ResponseTypes';
-import { setAppStatus } from 'app/appReducer';
+import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
+import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
 
 export const loadCards = createAsyncThunk(
   'cards/loadCards',
-  async (param: CardsParamsType, { dispatch, rejectWithValue }) => {
+  async (params: CardsParamsType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardAPI.getCards(param);
+      const res = await cardAPI.getCards(params);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
@@ -33,15 +34,25 @@ export const loadCards = createAsyncThunk(
 
 export const createCard = createAsyncThunk(
   'cards/createCard',
-  async (data: CreateCardDataType, { dispatch, rejectWithValue }) => {
+  async (
+    params: { data: CreateCardDataType; params: CardsParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardAPI.createCard(data);
+      await cardAPI.createCard(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data.newCard;
+      await dispatch(loadCards(params.params));
+
+      dispatch(
+        setAppSnackbarValue({
+          type: snackbarType.SUCCESS,
+          message: `Created new card.`,
+        }),
+      );
     } catch (e) {
       handleError(e, dispatch);
 
@@ -52,15 +63,25 @@ export const createCard = createAsyncThunk(
 
 export const updateCard = createAsyncThunk(
   'cards/updateCard',
-  async (data: UpdateCardDataType, { dispatch, rejectWithValue }) => {
+  async (
+    params: { data: UpdateCardDataType; params: CardsParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardAPI.updateCard(data);
+      await cardAPI.updateCard(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data.updatedCard;
+      await dispatch(loadCards(params.params));
+
+      dispatch(
+        setAppSnackbarValue({
+          type: snackbarType.SUCCESS,
+          message: `Card updated.`,
+        }),
+      );
     } catch (e) {
       handleError(e, dispatch);
 
@@ -71,15 +92,25 @@ export const updateCard = createAsyncThunk(
 
 export const deleteCard = createAsyncThunk(
   'cards/deleteCard',
-  async (cardId: string, { dispatch, rejectWithValue }) => {
+  async (
+    params: { cardId: string; params: CardsParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await cardAPI.deleteCard(cardId);
+      await cardAPI.deleteCard(params.cardId);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data.deletedCard._id;
+      await dispatch(loadCards(params.params));
+
+      dispatch(
+        setAppSnackbarValue({
+          type: snackbarType.SUCCESS,
+          message: `Card deleted.`,
+        }),
+      );
     } catch (e) {
       handleError(e, dispatch);
 
@@ -90,15 +121,18 @@ export const deleteCard = createAsyncThunk(
 
 export const updatedGrade = createAsyncThunk(
   'cards/updatedGrade',
-  async (param: UpdatedGradeDataType, { dispatch, rejectWithValue }) => {
+  async (
+    params: { data: UpdatedGradeDataType; params: CardsParamsType },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await gradeAPI.updateGrade(param);
+      await gradeAPI.updateGrade(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      return res.data.updatedGrade;
+      dispatch(loadCards(params.params));
     } catch (e) {
       handleError(e, dispatch);
 
@@ -125,22 +159,6 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(loadCards.fulfilled, (state, action) => {
       return action.payload;
-    });
-    builder.addCase(createCard.fulfilled, (state, action) => {
-      state.cards.unshift(action.payload);
-    });
-    builder.addCase(updateCard.fulfilled, (state, action) => {
-      state.cards = state.cards.map(card =>
-        card._id === action.payload._id ? action.payload : card,
-      );
-    });
-    builder.addCase(deleteCard.fulfilled, (state, action) => {
-      state.cards = state.cards.filter(card => card._id !== action.payload);
-    });
-    builder.addCase(updatedGrade.fulfilled, (state, action) => {
-      state.cards = state.cards.map(card =>
-        card._id === action.payload.card_id ? { ...card, ...action.payload } : card,
-      );
     });
   },
 });

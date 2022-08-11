@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualCardsParams } from 'common/utils/getActualParams';
 import { getLocalStorage } from 'common/utils/localStorageUtil';
+import { getCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsSelectors';
 import { loadCards, updatedGrade } from 'features/Cards/Cards/cardsReducer';
 import { getCards } from 'features/Cards/Cards/cardsSelectors';
 import styles from 'features/Cards/Learn/Learn.module.scss';
@@ -40,10 +41,12 @@ const getCard = (cards: Array<CardType>): CardType => {
 export const Learn = (): ReturnComponentType => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [first, setFirst] = useState<boolean>(true);
-  const cards = useAppSelector(getCards);
   const [searchParams, setSearchParams] = useSearchParams();
-  const packName = getLocalStorage('packName') as string;
   const [grade, setGrade] = useState(1);
+
+  const packName = getLocalStorage('packName') as string;
+  const cards = useAppSelector(getCards);
+  const params = useAppSelector(getCardsParams);
 
   const [card, setCard] = useState<CardType>({
     _id: '',
@@ -80,7 +83,7 @@ export const Learn = (): ReturnComponentType => {
   const onShowAnswer = (): void => setIsChecked(true);
 
   const onNext = (): void => {
-    dispatch(updatedGrade({ grade, card_id: card._id }));
+    dispatch(updatedGrade({ data: { grade, card_id: card._id }, params }));
     setIsChecked(false);
 
     if (cards.length > 0) {
