@@ -92,6 +92,7 @@ export type GetCardsResponseType = {
   cardsTotalCount: number;
   minGrade: number;
   maxGrade: number;
+  packName: string;
 } & TokenType;
 export type CardResponseType = {
   newCard: CardType;

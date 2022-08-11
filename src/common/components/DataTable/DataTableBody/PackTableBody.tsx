@@ -14,8 +14,8 @@ import { modal } from 'common/enums/modal';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { setLocalStorage } from 'common/utils/localStorageUtil';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
+import { setLearnParams } from 'features/Cards/Learn/learnReducer';
 import { openModal } from 'features/Modal/modalReduscer';
 
 type PacksTableBodyProps = {
@@ -31,24 +31,16 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   const dispatch = useAppDispatch();
   const myId = useAppSelector(getUserId);
 
-  const saveTitle = (): void => {
-    setLocalStorage('packName', name);
-  };
-
-  const showCards = (): void => {
-    saveTitle();
-  };
-
   const onClickLearnHandle = (): void => {
-    saveTitle();
-    navigate(`${path.LEARN}?cardsPack_id=${_id}&pageCount=${cardsCount}`);
+    navigate(path.LEARN);
+    dispatch(setLearnParams({ cardsPack_id: _id, pageCount: cardsCount }));
   };
 
   const updatePackHandler = (): void => {
     dispatch(
       openModal({
         title: modal.EDIT_PACK,
-        data: { _id, name, private: pack.private },
+        data: { _id, name, private: pack.private, loadPacks: true },
       }),
     );
   };
@@ -57,7 +49,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     dispatch(
       openModal({
         title: modal.DELETE_PACK,
-        data: { _id, name },
+        data: { _id, name, loadPacks: true },
       }),
     );
   };
@@ -65,11 +57,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   return (
     <TableRow hover>
       <TableCell component="th" scope="row">
-        <NavLink
-          to={`${path.CARDS}?cardsPack_id=${_id}`}
-          className={s.nameLink}
-          onClick={showCards}
-        >
+        <NavLink to={`${path.CARDS}?cardsPack_id=${_id}`} className={s.nameLink}>
           {name}
         </NavLink>
       </TableCell>

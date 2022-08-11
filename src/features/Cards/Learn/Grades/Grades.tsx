@@ -31,7 +31,7 @@ export const Grades: React.FC<PropsType> = ({ setGrade }): ReturnComponentType =
   return (
     <FormControl className={styles.main}>
       <FormLabel className={styles.rate}>Rate yourself:</FormLabel>
-      <RadioGroup onChange={onChangeRadioHandle}>
+      <RadioGroup onChange={onChangeRadioHandle} defaultValue={1}>
         {grades.map(grade => (
           <FormControlLabel
             key={grade.id}

@@ -1,12 +1,13 @@
 import React from 'react';
 
 import Typography from '@mui/material/Typography/Typography';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { DeleteParamType } from 'api/DataTypes';
 import { MultiButton } from 'common/components/Buttons/MultiButton/MultiButton';
 import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { useBack } from 'common/hooks/useBack';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualCardsParams } from 'common/utils/getActualParams';
 import { deleteCard } from 'features/Cards/Cards/cardsReducer';
@@ -19,9 +20,11 @@ import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
 export const DeleteModal = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  const data = useAppSelector(getPackData) as DeleteParamType;
+  const data = useAppSelector(getPackData) as DeleteParamType & { loadPacks: boolean };
   const title = useAppSelector(getModalTitle);
   const params = getActualCardsParams(searchParams);
+  const navigate = useNavigate();
+  const backToPacks = useBack();
 
   const onClose = (): void => {
     dispatch(closeModal());
@@ -29,8 +32,9 @@ export const DeleteModal = (): ReturnComponentType => {
 
   const deleteItem = async (): Promise<void> => {
     if (title === modal.DELETE_PACK) {
-      await dispatch(deletePack({ packId: data._id, params }));
+      await dispatch(deletePack({ packId: data._id, params, loadPacks: data.loadPacks }));
       onClose();
+      if (!data.loadPacks) navigate(backToPacks);
     }
 
     if (title === modal.DELETE_CARD) {

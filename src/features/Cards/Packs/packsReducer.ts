@@ -7,7 +7,6 @@ import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
-import { saveTitle } from 'common/utils/localStorageUtil';
 
 export const loadPacks = createAsyncThunk(
   'packs/loadPacks',
@@ -41,14 +40,14 @@ export const createPack = createAsyncThunk(
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
+      await dispatch(loadPacks(params.params));
+
       dispatch(
         setAppSnackbarValue({
           type: snackbarType.SUCCESS,
           message: `Pack "${res.data.newCardsPack.name}" created.`,
         }),
       );
-
-      loadPacks(params.params);
     } catch (e) {
       handleError(e, dispatch);
 
@@ -60,7 +59,7 @@ export const createPack = createAsyncThunk(
 export const updatePack = createAsyncThunk(
   'packs/updatePack',
   async (
-    params: { data: UpdatePackDataType; params: PacksParamsType },
+    params: { data: UpdatePackDataType; params: PacksParamsType; loadPacks: boolean },
     { dispatch, rejectWithValue },
   ) => {
     try {
@@ -69,9 +68,10 @@ export const updatePack = createAsyncThunk(
       const res = await packAPI.updatePack(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-      saveTitle(res.data.updatedCardsPack.name);
 
-      await dispatch(loadPacks(params.params));
+      if (params.loadPacks) {
+        await dispatch(loadPacks(params.params));
+      }
 
       dispatch(
         setAppSnackbarValue({
@@ -79,6 +79,8 @@ export const updatePack = createAsyncThunk(
           message: `Pack "${res.data.updatedCardsPack.name}" updated.`,
         }),
       );
+
+      return res.data.updatedCardsPack.name;
     } catch (e) {
       handleError(e, dispatch);
 
@@ -90,7 +92,7 @@ export const updatePack = createAsyncThunk(
 export const deletePack = createAsyncThunk(
   'packs/deletePack',
   async (
-    params: { packId: string; params: PacksParamsType },
+    params: { packId: string; params: PacksParamsType; loadPacks: boolean },
     { dispatch, rejectWithValue },
   ) => {
     try {
@@ -100,14 +102,16 @@ export const deletePack = createAsyncThunk(
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      await dispatch(loadPacks(params.params));
+      if (params.loadPacks) {
+        await dispatch(loadPacks(params.params));
 
-      dispatch(
-        setAppSnackbarValue({
-          type: snackbarType.SUCCESS,
-          message: `Pack "${res.data.deletedCardsPack.name}" deleted.`,
-        }),
-      );
+        dispatch(
+          setAppSnackbarValue({
+            type: snackbarType.SUCCESS,
+            message: `Pack "${res.data.deletedCardsPack.name}" deleted.`,
+          }),
+        );
+      }
     } catch (e) {
       handleError(e, dispatch);
 

@@ -12,6 +12,7 @@ import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
+import { updatePack } from 'features/Cards/Packs/packsReducer';
 
 export const loadCards = createAsyncThunk(
   'cards/loadCards',
@@ -121,18 +122,15 @@ export const deleteCard = createAsyncThunk(
 
 export const updatedGrade = createAsyncThunk(
   'cards/updatedGrade',
-  async (
-    params: { data: UpdatedGradeDataType; params: CardsParamsType },
-    { dispatch, rejectWithValue },
-  ) => {
+  async (params: UpdatedGradeDataType, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      await gradeAPI.updateGrade(params.data);
+      const res = await gradeAPI.updateGrade(params);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
-      dispatch(loadCards(params.params));
+      return res.data.updatedGrade;
     } catch (e) {
       handleError(e, dispatch);
 
@@ -153,12 +151,23 @@ const slice = createSlice({
     maxGrade: 0,
     token: '',
     tokenDeathTime: 0,
+    packName: '',
   } as GetCardsResponseType,
 
   reducers: {},
   extraReducers: builder => {
     builder.addCase(loadCards.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(updatedGrade.fulfilled, (state, action) => {
+      state.cards = state.cards.map(card =>
+        card._id === action.payload.card_id
+          ? { ...card, grade: action.payload.grade, shots: action.payload.shots }
+          : card,
+      );
+    });
+    builder.addCase(updatePack.fulfilled, (state, action) => {
+      state.packName = action.payload;
     });
   },
 });

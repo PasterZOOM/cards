@@ -10,7 +10,7 @@ type PropsType = {
   label: string;
   disabled?: boolean;
   fullWidth?: boolean;
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 };

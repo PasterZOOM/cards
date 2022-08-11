@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import Typography from '@mui/material/Typography/Typography';
-import { useSearchParams } from 'react-router-dom';
 
 import { Grades } from './Grades/Grades';
 
@@ -9,13 +8,11 @@ import { CardType } from 'api/ResponseTypes';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getActualCardsParams } from 'common/utils/getActualParams';
-import { getLocalStorage } from 'common/utils/localStorageUtil';
-import { getCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsSelectors';
 import { loadCards, updatedGrade } from 'features/Cards/Cards/cardsReducer';
-import { getCards } from 'features/Cards/Cards/cardsSelectors';
+import { getCards, getPackName } from 'features/Cards/Cards/cardsSelectors';
 import styles from 'features/Cards/Learn/Learn.module.scss';
 import { LearnPaper } from 'features/Cards/Learn/LearnPaper/LearnPaper';
+import { getLearnParams } from 'features/Cards/Learn/learnSelectors';
 
 const maxGradeValue = 6;
 
@@ -41,12 +38,10 @@ const getCard = (cards: Array<CardType>): CardType => {
 export const Learn = (): ReturnComponentType => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [first, setFirst] = useState<boolean>(true);
-  const [searchParams, setSearchParams] = useSearchParams();
   const [grade, setGrade] = useState(1);
-
-  const packName = getLocalStorage('packName') as string;
+  const packName = useAppSelector(getPackName);
   const cards = useAppSelector(getCards);
-  const params = useAppSelector(getCardsParams);
+  const params = useAppSelector(getLearnParams);
 
   const [card, setCard] = useState<CardType>({
     _id: '',
@@ -73,17 +68,17 @@ export const Learn = (): ReturnComponentType => {
 
   useEffect(() => {
     if (first) {
-      dispatch(loadCards(getActualCardsParams(searchParams)));
+      dispatch(loadCards(params));
       setFirst(false);
     }
 
     if (cards.length > 0) setCard(getCard(cards));
-  }, [dispatch, cards, first, searchParams, setSearchParams]);
+  }, [dispatch, cards, first, params]);
 
   const onShowAnswer = (): void => setIsChecked(true);
 
   const onNext = (): void => {
-    dispatch(updatedGrade({ data: { grade, card_id: card._id }, params }));
+    dispatch(updatedGrade({ grade, card_id: card._id }));
     setIsChecked(false);
 
     if (cards.length > 0) {

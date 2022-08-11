@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   CreateCardDataType,
-  DeleteParamType,
   CreatePackDataType,
+  DeleteParamType,
   UpdateCardDataType,
   UpdatePackDataType,
 } from 'api/DataTypes';
@@ -21,8 +21,7 @@ const slice = createSlice({
         data: ModalStateDataType;
       }>,
     ) => {
-      state.title = action.payload.title;
-      state.data = action.payload.data;
+      return action.payload;
     },
     closeModal: () => {
       return {} as ModalStateType<ModalStateDataType>;
@@ -40,7 +39,7 @@ export type ModalStateType<T> = {
 
 export type ModalStateDataType =
   | CreatePackDataType
-  | UpdatePackDataType
+  | (UpdatePackDataType & { loadPacks: boolean })
   | CreateCardDataType
   | UpdateCardDataType
-  | DeleteParamType;
+  | (DeleteParamType & { loadPacks: boolean });

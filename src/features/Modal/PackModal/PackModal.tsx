@@ -7,7 +7,7 @@ import { UpdatePackDataType } from 'api/DataTypes';
 import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getActualCardsParams } from 'common/utils/getActualParams';
+import { getActualPacksParams } from 'common/utils/getActualParams';
 import { createPack, updatePack } from 'features/Cards/Packs/packsReducer';
 import { closeModal } from 'features/Modal/modalReduscer';
 import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
@@ -18,10 +18,10 @@ import { validatePackModalForm } from 'features/Modal/PackModal/PackModalForm/va
 export const PackModal = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  const data = useAppSelector(getPackData) as UpdatePackDataType;
+  const data = useAppSelector(getPackData) as UpdatePackDataType & { loadPacks: boolean };
   const title = useAppSelector(getModalTitle);
 
-  const params = getActualCardsParams(searchParams);
+  const params = getActualPacksParams(searchParams);
 
   const submitModal = async (
     values: PackModalFormType,
@@ -48,6 +48,7 @@ export const PackModal = (): ReturnComponentType => {
             private: values.packPrivate,
           },
           params,
+          loadPacks: data.loadPacks,
         }),
       );
     }

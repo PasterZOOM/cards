@@ -40,7 +40,7 @@ export const CardTableBody: React.FC<CardTableBodyProps> = ({
     dispatch(
       openModal({
         title: modal.DELETE_CARD,
-        data: { _id, name: '' },
+        data: { _id, name: '', loadPacks: false },
       }),
     );
   };

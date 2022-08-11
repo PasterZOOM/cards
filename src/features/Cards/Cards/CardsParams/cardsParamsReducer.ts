@@ -15,8 +15,8 @@ const slice = createSlice({
     pageCount: startPageCount,
   } as CardsParamsType,
   reducers: {
-    setCardsParams: (state, action: PayloadAction<{ params: CardsParamsType }>) => {
-      return action.payload.params;
+    setCardsParams: (state, action: PayloadAction<CardsParamsType>) => {
+      return action.payload;
     },
   },
 });

@@ -14,6 +14,7 @@ import { getActualPacksParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
 import { PacksParams } from 'features/Cards/Packs/CardPacksParams/PacksParams';
 import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
+import { getPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsSelectors';
 import styles from 'features/Cards/Packs/Packs.module.scss';
 import { loadPacks } from 'features/Cards/Packs/packsReducer';
 import {
@@ -28,20 +29,11 @@ export const Packs = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
   const packs = useAppSelector(getCardPacks);
+  const stateParams = useAppSelector(getPacksParams);
 
   const [searchParams] = useSearchParams();
 
-  const params = useMemo(() => getActualPacksParams(searchParams), [searchParams]);
-
-  // читает URL и сохраняет params в стейт
-  useEffect(() => {
-    dispatch(setCardPacksParams(params));
-  }, [dispatch, params]);
-
-  // читает URL и делает запрос за паками
-  useEffect(() => {
-    dispatch(loadPacks(params));
-  }, [dispatch, params]);
+  const paramsURL = useMemo(() => getActualPacksParams(searchParams), [searchParams]);
 
   const createNewPack = (): void => {
     dispatch(
@@ -51,6 +43,17 @@ export const Packs = (): ReturnComponentType => {
       }),
     );
   };
+
+  // читает URL и сохраняет params в стейт
+  useEffect(() => {
+    if (JSON.stringify(stateParams) !== JSON.stringify(paramsURL))
+      dispatch(setCardPacksParams(paramsURL));
+  }, [dispatch, paramsURL]);
+
+  useEffect(() => {
+    if (JSON.stringify(stateParams) === JSON.stringify(paramsURL))
+      dispatch(loadPacks(stateParams));
+  }, [dispatch, stateParams]);
 
   if (!isLoggedIn) {
     return <Navigate to={path.LOGIN} />;

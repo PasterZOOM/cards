@@ -9,7 +9,8 @@ import { useSearchParams } from 'react-router-dom';
 import { getAppStatus } from 'app/appSelectors';
 import styles from 'common/components/Search/Search.module.scss';
 import { requestStatus } from 'common/enums/requestStatus';
-import { useAppSelector, useDebounce } from 'common/hooks/hooks';
+import { useAppSelector } from 'common/hooks/hooks';
+import { useDebounce } from 'common/hooks/useDebounce';
 
 type PropsType = {
   search: 'packName' | 'cardQuestion';
@@ -39,7 +40,7 @@ export const Search: React.FC<PropsType> = ({ search }) => {
       ...Object.fromEntries(searchParams),
       ...queryParams,
     });
-  }, [debouncedValue]);
+  }, [debouncedValue, search, searchParams, setSearchParams]);
 
   return (
     <div className={styles.main}>
