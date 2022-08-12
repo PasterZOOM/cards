@@ -30,6 +30,7 @@ import {
   getCardsPackUserId,
   getCardsTotalCount,
   getPackName,
+  getPackPrivate,
 } from 'features/Cards/Cards/cardsSelectors';
 import { setLearnParams } from 'features/Cards/Learn/learnReducer';
 import { openModal } from 'features/Modal/modalReduscer';
@@ -40,14 +41,13 @@ export const Cards = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const packName = useAppSelector(getPackName);
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
   const cards = useAppSelector(getCards);
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
-  const name = useAppSelector(getPackName);
-
-  const _id = searchParams.get('cardsPack_id') as string;
+  const packName = useAppSelector(getPackName);
+  const packPrivate = useAppSelector(getPackPrivate);
+  const cardsPack_id = searchParams.get('cardsPack_id') as string;
 
   const menuItems = [
     {
@@ -57,7 +57,12 @@ export const Cards = (): ReturnComponentType => {
         dispatch(
           openModal({
             title: modal.EDIT_PACK,
-            data: { _id, name, private: false, loadPacks: false },
+            data: {
+              _id: cardsPack_id,
+              name: packName,
+              private: packPrivate,
+              loadPacks: false,
+            },
           }),
         );
       },
@@ -69,7 +74,7 @@ export const Cards = (): ReturnComponentType => {
         dispatch(
           openModal({
             title: modal.DELETE_PACK,
-            data: { _id, name, loadPacks: false },
+            data: { _id: cardsPack_id, name: packName, loadPacks: false },
           }),
         );
       },
@@ -78,7 +83,7 @@ export const Cards = (): ReturnComponentType => {
 
   const onClickLearnHandle = (): void => {
     navigate(path.LEARN);
-    dispatch(setLearnParams({ cardsPack_id: _id, pageCount: cardsTotalCount }));
+    dispatch(setLearnParams({ cardsPack_id, pageCount: cardsTotalCount }));
   };
 
   const createNewCard = (): void => {
@@ -86,7 +91,7 @@ export const Cards = (): ReturnComponentType => {
       openModal({
         title: modal.ADD_CARD,
         data: {
-          cardsPack_id: searchParams.get('cardsPack_id') as string,
+          cardsPack_id,
           question: '',
           answer: '',
         },

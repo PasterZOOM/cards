@@ -87,12 +87,16 @@ export type CardType = {
 export type GetCardsResponseType = {
   cards: Array<CardType>;
   packUserId: string;
+  packName: string;
+  packPrivate: boolean;
+  packDeckCover: string;
+  packCreated: string;
+  packUpdated: string;
   page: number;
   pageCount: number;
   cardsTotalCount: number;
   minGrade: number;
   maxGrade: number;
-  packName: string;
 } & TokenType;
 export type CardResponseType = {
   newCard: CardType;
