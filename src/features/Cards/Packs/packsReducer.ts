@@ -3,9 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { packAPI } from 'api/cardsAPI';
 import { CreatePackDataType, PacksParamsType, UpdatePackDataType } from 'api/DataTypes';
 import { GetPacksResponseType } from 'api/ResponseTypes';
-import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
+import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
-import { snackbarType } from 'common/enums/snackbarType';
 import { handleError } from 'common/utils/handleError';
 
 export const loadPacks = createAsyncThunk(
@@ -36,18 +35,10 @@ export const createPack = createAsyncThunk(
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.createPack(params.data);
+      await packAPI.createPack(params.data);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-
-      await dispatch(loadPacks(params.params));
-
-      dispatch(
-        setAppSnackbarValue({
-          type: snackbarType.SUCCESS,
-          message: `Pack "${res.data.newCardsPack.name}" created.`,
-        }),
-      );
+      dispatch(loadPacks(params.params));
     } catch (e) {
       handleError(e, dispatch);
 
@@ -73,13 +64,6 @@ export const updatePack = createAsyncThunk(
         await dispatch(loadPacks(params.params));
       }
 
-      dispatch(
-        setAppSnackbarValue({
-          type: snackbarType.SUCCESS,
-          message: `Pack "${res.data.updatedCardsPack.name}" updated.`,
-        }),
-      );
-
       return res.data.updatedCardsPack.name;
     } catch (e) {
       handleError(e, dispatch);
@@ -98,19 +82,12 @@ export const deletePack = createAsyncThunk(
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.deletePack(params.packId);
+      await packAPI.deletePack(params.packId);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
       if (params.loadPacks) {
         await dispatch(loadPacks(params.params));
-
-        dispatch(
-          setAppSnackbarValue({
-            type: snackbarType.SUCCESS,
-            message: `Pack "${res.data.deletedCardsPack.name}" deleted.`,
-          }),
-        );
       }
     } catch (e) {
       handleError(e, dispatch);

@@ -10,7 +10,7 @@ import { ModalButtonGroup } from 'common/components/Buttons/ModalButtonGroup/Mod
 import { ProjectTextField } from 'common/components/Forms/ProjectTextField/ProjectTextField';
 import { useAppDispatch } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { closeModal } from 'features/Modal/modalReduscer';
+import { closeModal } from 'features/Modal/modalReducer';
 import { PackModalFormType } from 'features/Modal/PackModal/PackModalForm/PackModalFormType';
 
 type PropsType = {

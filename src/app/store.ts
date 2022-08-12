@@ -12,7 +12,7 @@ import { cardsReducer } from 'features/Cards/Cards/cardsReducer';
 import { learnReducer } from 'features/Cards/Learn/learnReducer';
 import { packsParamsReducer } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
 import { packsReducer } from 'features/Cards/Packs/packsReducer';
-import { modalsReducer } from 'features/Modal/modalReduscer';
+import { modalsReducer } from 'features/Modal/modalReducer';
 
 export const rootReducer = combineReducers({
   app: appReducer,

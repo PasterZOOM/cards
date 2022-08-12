@@ -6,7 +6,7 @@ import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
 import { setCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
 import { setLearnParams } from 'features/Cards/Learn/learnReducer';
 import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
-import { closeModal, openModal } from 'features/Modal/modalReduscer';
+import { closeModal, openModal } from 'features/Modal/modalReducer';
 
 export type AppActionsType =
   | ReturnType<typeof changeThemeAC>

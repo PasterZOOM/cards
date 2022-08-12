@@ -33,7 +33,7 @@ import {
   getPackPrivate,
 } from 'features/Cards/Cards/cardsSelectors';
 import { setLearnParams } from 'features/Cards/Learn/learnReducer';
-import { openModal } from 'features/Modal/modalReduscer';
+import { openModal } from 'features/Modal/modalReducer';
 
 const addCardButtonTitle = 'Add new card';
 

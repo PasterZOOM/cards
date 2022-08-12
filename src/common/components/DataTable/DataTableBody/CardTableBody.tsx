@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { getCardsPackUserId } from 'features/Cards/Cards/cardsSelectors';
-import { openModal } from 'features/Modal/modalReduscer';
+import { openModal } from 'features/Modal/modalReducer';
 
 type CardTableBodyProps = {
   card: CardType;

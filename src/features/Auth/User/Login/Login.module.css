@@ -4,7 +4,6 @@
     left: 50%;
     margin-left: -207px;
     width: 348px;
-    height: 451px;
     text-align: center;
     padding: 35px 33px 42px;
 }
@@ -14,6 +13,7 @@
     font-weight: 600 !important;
     font-size: 26px !important;
     font-style: normal !important;
+    margin: 0 0 40px !important;
 }
 
 .checkbox {
@@ -24,7 +24,7 @@
     width: 100%;
     display: inline-block;
     text-align: right!important;
-    margin-bottom: 20px;
+    margin:30px 0 50px;
 }
 
 .linkToPassword a {
@@ -46,8 +46,11 @@
 }
 
 .linkToRegistration {
-    font-size: large;
-    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
 }
 
 .linkToRegistration a {

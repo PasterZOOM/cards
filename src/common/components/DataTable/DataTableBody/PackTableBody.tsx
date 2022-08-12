@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import { setLearnParams } from 'features/Cards/Learn/learnReducer';
-import { openModal } from 'features/Modal/modalReduscer';
+import { openModal } from 'features/Modal/modalReducer';
 
 type PacksTableBodyProps = {
   pack: PackType;

@@ -32,7 +32,7 @@ export const RoutesPage = (): ReturnComponentType => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Navigate to={path.REGISTRATION} />} />
+        <Route path="/" element={<Navigate to={path.LOGIN} />} />
         {routes.map(route => (
           <Route path={route.path} element={route.component} key={route.path} />
         ))}

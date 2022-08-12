@@ -11,7 +11,7 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import styles from 'features/Modal/BasicModal.module.scss';
 import { CardsModal } from 'features/Modal/CardsModal/CardsModal';
 import { DeleteModal } from 'features/Modal/DeleteModal/DeleteModal';
-import { closeModal } from 'features/Modal/modalReduscer';
+import { closeModal } from 'features/Modal/modalReducer';
 import { getModalTitle } from 'features/Modal/modalSelectors';
 import { PackModal } from 'features/Modal/PackModal/PackModal';
 

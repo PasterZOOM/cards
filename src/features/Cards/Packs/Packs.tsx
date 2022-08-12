@@ -21,7 +21,7 @@ import {
   getCardPacks,
   getCardPacksTotalCount,
 } from 'features/Cards/Packs/packsSelectors';
-import { openModal } from 'features/Modal/modalReduscer';
+import { openModal } from 'features/Modal/modalReducer';
 
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();

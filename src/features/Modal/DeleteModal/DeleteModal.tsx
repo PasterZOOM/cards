@@ -14,7 +14,7 @@ import { deleteCard } from 'features/Cards/Cards/cardsReducer';
 import { deletePack } from 'features/Cards/Packs/packsReducer';
 import styles from 'features/Modal/BasicModal.module.scss';
 import style from 'features/Modal/DeleteModal/DeleteModal.module.scss';
-import { closeModal } from 'features/Modal/modalReduscer';
+import { closeModal } from 'features/Modal/modalReducer';
 import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
 
 export const DeleteModal = (): ReturnComponentType => {

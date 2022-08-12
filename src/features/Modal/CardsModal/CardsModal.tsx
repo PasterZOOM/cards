@@ -12,7 +12,7 @@ import { createCard, updateCard } from 'features/Cards/Cards/cardsReducer';
 import { CardModalForm } from 'features/Modal/CardsModal/ModalCardForm/CardModalForm';
 import { CardModalFormTypes } from 'features/Modal/CardsModal/ModalCardForm/CardModalFormType';
 import { validateCardModalForm } from 'features/Modal/CardsModal/ModalCardForm/validateCardFormModal';
-import { closeModal } from 'features/Modal/modalReduscer';
+import { closeModal } from 'features/Modal/modalReducer';
 import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
 
 export const CardsModal = (): ReturnComponentType => {

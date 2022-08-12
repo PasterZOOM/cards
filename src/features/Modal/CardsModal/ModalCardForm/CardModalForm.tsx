@@ -11,7 +11,7 @@ import { Selected } from 'common/components/Selected/Selected';
 import { useAppDispatch } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { CardModalFormTypes } from 'features/Modal/CardsModal/ModalCardForm/CardModalFormType';
-import { closeModal } from 'features/Modal/modalReduscer';
+import { closeModal } from 'features/Modal/modalReducer';
 
 type PropsType = {
   formik: FormikProps<CardModalFormTypes>;

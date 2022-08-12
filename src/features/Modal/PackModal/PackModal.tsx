@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualPacksParams } from 'common/utils/getActualParams';
 import { createPack, updatePack } from 'features/Cards/Packs/packsReducer';
-import { closeModal } from 'features/Modal/modalReduscer';
+import { closeModal } from 'features/Modal/modalReducer';
 import { getModalTitle, getPackData } from 'features/Modal/modalSelectors';
 import { PackModalForm } from 'features/Modal/PackModal/PackModalForm/PackModalForm';
 import { PackModalFormType } from 'features/Modal/PackModal/PackModalForm/PackModalFormType';

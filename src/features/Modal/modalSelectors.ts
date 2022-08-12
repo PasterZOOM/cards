@@ -1,7 +1,7 @@
 import { AppRootStateType } from 'app/AppRootStateTypes';
 import { modal } from 'common/enums/modal';
 import { Nullable } from 'common/types/Nullable';
-import { ModalStateDataType } from 'features/Modal/modalReduscer';
+import { ModalStateDataType } from 'features/Modal/modalReducer';
 
 export const getModalTitle = (state: AppRootStateType): Nullable<modal> =>
   state.modals.title;
