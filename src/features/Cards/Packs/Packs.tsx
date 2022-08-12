@@ -26,14 +26,14 @@ import { openModal } from 'features/Modal/modalReduscer';
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
+  const [searchParams] = useSearchParams();
+
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
   const packs = useAppSelector(getCardPacks);
+
   const stateParams = useAppSelector(getPacksParams);
-
-  const [searchParams] = useSearchParams();
-
-  const paramsURL = useMemo(() => getActualPacksParams(searchParams), [searchParams]);
+  const URLParams = useMemo(() => getActualPacksParams(searchParams), [searchParams]);
 
   const createNewPack = (): void => {
     dispatch(
@@ -46,12 +46,12 @@ export const Packs = (): ReturnComponentType => {
 
   // читает URL и сохраняет params в стейт
   useEffect(() => {
-    if (JSON.stringify(stateParams) !== JSON.stringify(paramsURL))
-      dispatch(setCardPacksParams(paramsURL));
-  }, [dispatch, paramsURL]);
+    if (JSON.stringify(stateParams) !== JSON.stringify(URLParams))
+      dispatch(setCardPacksParams(URLParams));
+  }, [dispatch, URLParams]);
 
   useEffect(() => {
-    if (JSON.stringify(stateParams) === JSON.stringify(paramsURL))
+    if (JSON.stringify(stateParams) === JSON.stringify(URLParams))
       dispatch(loadPacks(stateParams));
   }, [dispatch, stateParams]);
 

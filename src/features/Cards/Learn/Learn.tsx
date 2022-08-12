@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import Typography from '@mui/material/Typography/Typography';
+import { Navigate } from 'react-router-dom';
 
 import { Grades } from './Grades/Grades';
 
 import { CardType } from 'api/ResponseTypes';
 import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
+import { useBack } from 'common/hooks/useBack';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { loadCards, updatedGrade } from 'features/Cards/Cards/cardsReducer';
 import { getCards, getPackName } from 'features/Cards/Cards/cardsSelectors';
@@ -42,32 +44,14 @@ export const Learn = (): ReturnComponentType => {
   const packName = useAppSelector(getPackName);
   const cards = useAppSelector(getCards);
   const params = useAppSelector(getLearnParams);
+  const back = useBack();
 
-  const [card, setCard] = useState<CardType>({
-    _id: '',
-    cardsPack_id: '',
-    user_id: '',
-    answer: '',
-    question: '',
-    grade: 0,
-    shots: 0,
-    questionImg: '',
-    answerImg: '',
-    answerVideo: '',
-    questionVideo: '',
-    comments: '',
-    type: '',
-    rating: 0,
-    more_id: '',
-    created: '',
-    updated: '',
-    __v: 0,
-  });
+  const [card, setCard] = useState<CardType>({} as CardType);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (first) {
+    if (first && cards.length > 0) {
       dispatch(loadCards(params));
       setFirst(false);
     }
@@ -85,6 +69,8 @@ export const Learn = (): ReturnComponentType => {
       setCard(getCard(cards));
     }
   };
+
+  if (cards.length === 0) return <Navigate to={back} />;
 
   return (
     <div className={styles.container}>
