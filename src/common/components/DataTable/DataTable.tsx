@@ -15,7 +15,13 @@ import {
   PackData,
 } from 'common/components/DataTable/DataTableTypes';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { sortCardsHelper, sortPacksHelper } from 'common/utils/dataTableSortHelper';
+import {
+  setCurrentOrder,
+  setCurrentOrderBy,
+  sortCardsHelper,
+  sortPacksHelper,
+} from 'common/utils/dataTableSortHelper';
+import { getActualCardsParams, getActualPacksParams } from 'common/utils/getActualParams';
 
 type DataTableProps = {
   tableType: 'packs' | 'cards';
@@ -24,19 +30,29 @@ type DataTableProps = {
 export const DataTable: React.FC<DataTableProps> = ({
   tableType,
 }): ReturnComponentType => {
-  const [order, setOrder] = useState<Order>('desc');
-  const [orderBy, setOrderBy] = useState<DataKeys>('actions');
   const [searchParams, setSearchParams] = useSearchParams();
+  const actualSortPackUrlValue = getActualPacksParams(searchParams).sortPacks;
+  const actualSorCardUrlValue = getActualCardsParams(searchParams).sortCards;
+  const [order, setOrder] = useState<Order>(
+    tableType === 'packs'
+      ? setCurrentOrder(actualSortPackUrlValue as string)
+      : setCurrentOrder(actualSorCardUrlValue as string),
+  );
+  const [orderBy, setOrderBy] = useState<DataKeys>(
+    tableType === 'packs'
+      ? setCurrentOrderBy(actualSortPackUrlValue as string)
+      : setCurrentOrderBy(actualSorCardUrlValue as string),
+  );
 
   const handleRequestSort = (event: MouseEvent<unknown>, property: DataKeys): void => {
-    const isAsc = orderBy === property && order === 'asc';
+    const isAsc = orderBy === property && order === 'desc';
 
     if (tableType === 'packs')
       sortPacksHelper(property as keyof PackData, order, setSearchParams, searchParams);
     if (tableType === 'cards')
       sortCardsHelper(property as keyof CardData, order, setSearchParams, searchParams);
 
-    setOrder(isAsc ? 'desc' : 'asc');
+    setOrder(isAsc ? 'asc' : 'desc');
     setOrderBy(property);
   };
 

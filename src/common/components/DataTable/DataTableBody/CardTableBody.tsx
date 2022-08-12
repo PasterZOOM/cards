@@ -47,23 +47,19 @@ export const CardTableBody: React.FC<CardTableBodyProps> = ({
 
   return (
     <TableRow hover>
-      <TableCell component="th" scope="row">
-        {card.question}
-      </TableCell>
-      <TableCell align="right">{card.answer}</TableCell>
-      <TableCell align="right">{updateDate}</TableCell>
-      <TableCell align="right">
+      <TableCell>{card.question}</TableCell>
+      <TableCell>{card.answer}</TableCell>
+      <TableCell>{updateDate}</TableCell>
+      <TableCell style={{ paddingBottom: '9px' }}>
         <Rating value={card.grade} readOnly />
-        {ownPack && (
-          <div style={{ display: 'contents' }}>
-            <IconButton onClick={updateCardHandler}>
-              <img src={editIco} alt="edit" />
-            </IconButton>
-            <IconButton onClick={deleteCardHandler}>
-              <img src={deleteIco} alt="delete" />
-            </IconButton>
-          </div>
-        )}
+      </TableCell>
+      <TableCell align="right" style={!ownPack ? { display: 'none' } : {}}>
+        <IconButton onClick={updateCardHandler}>
+          <img src={editIco} alt="edit" />
+        </IconButton>
+        <IconButton onClick={deleteCardHandler}>
+          <img src={deleteIco} alt="delete" />
+        </IconButton>
       </TableCell>
     </TableRow>
   );
