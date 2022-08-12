@@ -5,7 +5,7 @@
 }
 
 .ico.invisible:disabled {
-    opacity: 0;
+    display: none;
 }
 
 .ico.disable:disabled {

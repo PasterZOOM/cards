@@ -73,10 +73,10 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
           {name}
         </NavLink>
       </TableCell>
-      <TableCell align="right">{cardsCount}</TableCell>
-      <TableCell align="right">{updateDate}</TableCell>
-      <TableCell align="right">{user_name}</TableCell>
-      <TableCell align="right">
+      <TableCell align="left">{cardsCount}</TableCell>
+      <TableCell align="left">{updateDate}</TableCell>
+      <TableCell align="left">{user_name}</TableCell>
+      <TableCell align="left">
         <IconButton
           className={`${s.ico} + ${s.disable}`}
           onClick={onClickLearnHandle}
