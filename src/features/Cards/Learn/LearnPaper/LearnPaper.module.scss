@@ -1,0 +1,19 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.paper {
+  width: 440px;
+  padding: 30px 32px 42px;
+  margin: 0 auto 60px;
+  display: flex;
+  flex-direction: column;
+
+  .question {
+    @include text(16px, 400, 24px);
+    margin: 0 0 12px !important;
+  }
+  .attempts {
+    @include text(14px, 400, 24px);
+    margin: 0 0 30px !important;
+  }
+}

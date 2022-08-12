@@ -5,16 +5,16 @@ import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
 import { NavLink } from 'react-router-dom';
 
-import { EmailField } from 'common/components/Forms/EmailField/EmailField';
+import { LoginDataType } from 'api/DataTypes';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
+import { ProjectTextField } from 'common/components/Forms/ProjectTextField/ProjectTextField';
 import { path } from 'common/enums/path';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import style from 'features/Auth/User/Login/Login.module.css';
-import { LoginFormType } from 'features/Auth/User/Login/loginTypes';
 
 type PropsType = {
-  formik: FormikProps<LoginFormType>;
+  formik: FormikProps<LoginDataType>;
 };
 export const LoginForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, handleChange, values, dirty, isSubmitting } = { ...formik };
@@ -22,7 +22,7 @@ export const LoginForm: React.FC<PropsType> = ({ formik }): ReturnComponentType 
   return (
     <Form>
       <FormGroup>
-        <EmailField name="email" label="Email" disabled={isSubmitting} />
+        <ProjectTextField name="email" label="Email" disabled={isSubmitting} />
         <PasswordField name="password" label="Password" disabled={isSubmitting} />
         <div className={style.checkbox}>
           <FormControlLabel

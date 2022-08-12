@@ -13,6 +13,7 @@ import { RoutesPage } from 'common/components/RoutesPage/RoutesPage';
 import { requestStatus } from 'common/enums/requestStatus';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { BasicModal } from 'features/Modal/BasicModal';
 
 export const App = (): ReturnComponentType => {
   const isInitialized = useAppSelector(getInitialized);
@@ -39,11 +40,12 @@ export const App = (): ReturnComponentType => {
 
   return (
     <div>
-      <Backdrop open={open} className={styles.backdrop}>
+      <Backdrop open={open} sx={{ color: '#fff', zIndex: 2 }}>
         <CircularProgress color="inherit" />
       </Backdrop>
 
       <InfoSnackbar />
+      <BasicModal />
       <Header />
       <RoutesPage />
     </div>

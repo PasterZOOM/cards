@@ -1,0 +1,14 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  padding: 34px 0 0;
+
+  .select {
+    margin: 0 0 22px;
+  }
+
+  .fields {
+    margin: 0 0 22px;
+  }
+}

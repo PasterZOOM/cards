@@ -31,7 +31,13 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     (event: React.ChangeEvent<unknown>, value: number): void => {
       const queryParams: { page?: string } = {};
 
-      queryParams.page = String(value);
+      if (value !== 1) {
+        queryParams.page = String(value);
+      } else {
+        searchParams.delete('page');
+        setSearchParams(searchParams);
+      }
+
       setPage(value);
 
       setSearchParams({

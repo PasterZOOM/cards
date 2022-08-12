@@ -1,0 +1,10 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  margin: 0 0 40px !important;
+  .rate{
+    @include text(15px, 400, 24px);
+    color: #000000 !important;
+  }
+}

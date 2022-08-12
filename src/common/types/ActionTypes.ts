@@ -3,9 +3,10 @@ import { changeThemeAC } from 'app/themeReducer';
 import { changeRedirect } from 'features/Auth/Forgot/forgotReducer';
 import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
-import { setCardPacksParams } from 'features/Cards/CardPacks/CardPacksParams/cardPacksParamsReducer';
-import { setPageCount, setPageNumber } from 'features/Cards/CardPacks/cardsPacksReducer';
-import { setPacksParams } from 'features/Cards/Pack/packParams/packParamsReducer';
+import { setCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
+import { setLearnParams } from 'features/Cards/Learn/learnReducer';
+import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
+import { closeModal, openModal } from 'features/Modal/modalReduscer';
 
 export type AppActionsType =
   | ReturnType<typeof changeThemeAC>
@@ -14,7 +15,8 @@ export type AppActionsType =
   | ReturnType<typeof setAppStatus>
   | ReturnType<typeof setAppSnackbarValue>
   | ReturnType<typeof changeRedirect>
-  | ReturnType<typeof setPageNumber>
   | ReturnType<typeof setCardPacksParams>
-  | ReturnType<typeof setPacksParams>
-  | ReturnType<typeof setPageCount>;
+  | ReturnType<typeof openModal>
+  | ReturnType<typeof closeModal>
+  | ReturnType<typeof setLearnParams>
+  | ReturnType<typeof setCardsParams>;

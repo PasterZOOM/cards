@@ -5,10 +5,13 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 
 import {
   DataKeys,
-  Order,
   HeadCellType,
+  Order,
 } from 'common/components/DataTable/DataTableTypes';
+import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
+import { getCardsPackUserId } from 'features/Cards/Cards/cardsSelectors';
 
 type HeadCellProps = {
   headCell: HeadCellType;
@@ -23,15 +26,18 @@ export const HeadCell: React.FC<HeadCellProps> = ({
   orderBy,
   sortCallback,
 }): ReturnComponentType => {
+  const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
+
   return (
     <TableCell
       key={headCell.id}
-      align={headCell.numeric ? 'right' : 'left'}
       sortDirection={orderBy === headCell.id ? order : false}
-      width="20%"
+      width={headCell.width}
+      style={!ownPack && headCell.isOwner ? { display: 'none' } : {}}
     >
       {headCell.isSortable ? (
         <TableSortLabel
+          active={orderBy === headCell.id}
           direction={orderBy === headCell.id ? order : 'asc'}
           onClick={sortCallback(headCell.id)}
         >

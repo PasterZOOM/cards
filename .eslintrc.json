@@ -106,8 +106,9 @@
     ],
     "no-shadow": "off",
     "no-underscore-dangle": "off",
-    "no-debugger": "error",
+    "no-debugger": "warn",
     "no-unused-vars": "off",
+    "camelcase": "off",
     "no-magic-numbers": [
       "error",
       {

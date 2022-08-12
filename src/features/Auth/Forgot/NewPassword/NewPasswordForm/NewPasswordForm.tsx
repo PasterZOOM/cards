@@ -4,10 +4,11 @@ import FormGroup from '@mui/material/FormGroup/FormGroup';
 import Typography from '@mui/material/Typography/Typography';
 import { Form, FormikProps } from 'formik';
 
+import styles from './NewPasswordForm.module.scss';
+
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import styles from 'features/Auth/Forgot/NewPassword/NewPasswordForm/NewPasswordForm.module.scss';
 
 type PropsType = {
   formik: FormikProps<{ password: string }>;

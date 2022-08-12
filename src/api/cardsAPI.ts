@@ -1,99 +1,57 @@
-import { instance } from 'api/authAPI';
-import { CreateCardType, CreatePackType } from 'api/cardsRequestTypes';
-import { CreateCardResponseType, CreatePackResponseType } from 'api/ResponseTypes';
-import { sortPacks } from 'common/enums/sortPacks';
+import {
+  CardsParamsType,
+  CreateCardDataType,
+  CreatePackDataType,
+  PacksParamsType,
+  UpdateCardDataType,
+  UpdatedGradeDataType,
+  UpdatePackDataType,
+} from 'api/DataTypes';
+import { instance } from 'api/instance';
+import {
+  CardResponseType,
+  CreatePackResponseType,
+  DeleteCardResponseType,
+  DeletePackResponseType,
+  GetCardsResponseType,
+  GetPacksResponseType,
+  UpdateCardResponseType,
+  UpdateGradeResponseType,
+  UpdatePackResponseType,
+} from 'api/ResponseTypes';
 
-export const cardPacksAPI = {
-  createPack(data: CreatePackType) {
-    return instance.post<CreatePackResponseType>(`cards/pack`, data);
+export const packAPI = {
+  getPacks(params: PacksParamsType) {
+    return instance.get<GetPacksResponseType>(`cards/pack`, { params });
   },
-  getPacks(params: CardPacksParamsType) {
-    return instance.get<CardPacksResponseType>(`cards/pack`, { params });
+  createPack(data: CreatePackDataType) {
+    return instance.post<CreatePackResponseType>(`cards/pack`, { cardsPack: data });
   },
-};
-
-export const cardPackAPI = {
-  getCardPack(params: PackParamsType) {
-    return instance.get<PackResponseType>('cards/card', { params: { ...params } });
+  updatePack(data: UpdatePackDataType) {
+    return instance.put<UpdatePackResponseType>(`cards/pack`, { cardsPack: data });
   },
-  createCardPack(data: CreateCardType) {
-    return instance.post<CreateCardResponseType>(`cards/card`, data);
+  deletePack(packId: string) {
+    return instance.delete<DeletePackResponseType>(`cards/pack?id=${packId}`);
   },
 };
 
-export type CardPacksResponseType = {
-  cardPacks: Array<PackType>;
-  page: number;
-  pageCount: number;
-  cardPacksTotalCount: number;
-  minCardsCount: number;
-  maxCardsCount: number;
-  token: string;
-  tokenDeathTime: number;
+export const cardAPI = {
+  getCards(params: CardsParamsType) {
+    return instance.get<GetCardsResponseType>('cards/card', { params });
+  },
+  createCard(data: CreateCardDataType) {
+    return instance.post<CardResponseType>(`cards/card`, { card: data });
+  },
+  updateCard(data: UpdateCardDataType) {
+    return instance.put<UpdateCardResponseType>(`cards/card`, { card: data });
+  },
+  deleteCard(cardId: string) {
+    return instance.delete<DeleteCardResponseType>(`cards/card?id=${cardId}`);
+  },
 };
-export type PackResponseType = {
-  cards: Array<CardType>;
-  packUserId: string;
-  page: number;
-  pageCount: number;
-  cardsTotalCount: number;
-  minGrade: number;
-  maxGrade: number;
-  token: string;
-  tokenDeathTime: number;
-};
-export type PackType = {
-  _id: string;
-  user_id: string;
-  user_name: string;
-  private: boolean;
-  name: string;
-  path: string;
-  grade: number;
-  shots: number;
-  cardsCount: number;
-  type: string;
-  rating: number;
-  created: string;
-  updated: string;
-  more_id: string;
-  __v: number;
-  deckCover: string | null;
-};
-export type CardType = {
-  _id: string;
-  cardsPack_id: string;
-  user_id: string;
-  answer: string;
-  question: string;
-  grade: number;
-  shots: number;
-  questionImg: string;
-  answerImg: string;
-  answerVideo: string;
-  questionVideo: string;
-  comments: string;
-  type: string;
-  rating: number;
-  more_id: string;
-  created: string;
-  updated: string;
-  __v: number;
-};
-export type CardPacksParamsType = {
-  packName?: string;
-  min?: number;
-  max?: number;
-  sortPacks?: sortPacks;
-  page?: number;
-  pageCount?: number;
-  user_id?: string;
-};
-export type PackParamsType = {
-  cardsPack_id: string;
-  cardQuestion?: string;
-  cardAnswer?: string;
-  sortCards?: string;
-  page?: number;
-  pageCount?: number;
+
+export const gradeAPI = {
+  updateGrade(data: UpdatedGradeDataType) {
+    return instance.put<UpdateGradeResponseType>('cards/grade', data);
+  },
 };

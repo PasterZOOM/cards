@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography/Typography';
 import { useNavigate } from 'react-router-dom';
 
 import checkEmail from 'assets/images/checkEmail.svg';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';

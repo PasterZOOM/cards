@@ -1,0 +1,11 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  padding: 34px 0 0;
+
+  .checkbox {
+    @include text(16px, 500, 20px);
+    margin: 0 0 24px;
+  }
+}

@@ -4,6 +4,14 @@
     cursor: pointer;
 }
 
+.ico.invisible:disabled {
+    display: none;
+}
+
+.ico.disable:disabled {
+    opacity: 0.5;
+}
+
 .tableHead {
     background: #EFEFEF;
 }

@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { userAPI } from 'api/authAPI';
+import { UserType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
-import { UserType } from 'features/Auth/User/Profile/ProfileTypes';
 
 export const updateUser = createAsyncThunk(
   'profile/updateUser',

@@ -31,9 +31,7 @@ export const OptionMenu: React.FC<OptionMenuPropsType> = ({
 
   return (
     <div>
-      <IconButton onClick={handleClick} sx={{ ml: 2 }}>
-        {children}
-      </IconButton>
+      <IconButton onClick={handleClick}>{children}</IconButton>
       <Menu
         anchorEl={anchorEl}
         open={open}

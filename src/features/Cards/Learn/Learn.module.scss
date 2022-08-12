@@ -1,0 +1,25 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.container {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .back {
+    margin: 24px 0 26px;
+  }
+
+  .title {
+    @include text(22px, 600, 27px);
+    text-align: center !important;
+    margin: 0 0 18px !important;
+  }
+  .answer {
+    @include text(16px, 400, 24px);
+    margin: 6px 0 24px !important;
+  }
+
+}

@@ -5,14 +5,14 @@ import { Form, FormikProps } from 'formik';
 
 import styles from './RegisterForm.module.scss';
 
-import { EmailField } from 'common/components/Forms/EmailField/EmailField';
+import { RegisterDataType } from 'api/DataTypes';
+import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { PasswordField } from 'common/components/Forms/PasswordField/PasswordField';
-import { GeneralButton } from 'common/components/GeneralButton/GeneralButton';
+import { ProjectTextField } from 'common/components/Forms/ProjectTextField/ProjectTextField';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { RegisterFormType } from 'features/Auth/User/Register/RegisterTypes';
 
 type PropsType = {
-  formik: FormikProps<RegisterFormType>;
+  formik: FormikProps<RegisterDataType & { confirmPassword: string }>;
 };
 export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, dirty, isSubmitting } = { ...formik };
@@ -20,7 +20,7 @@ export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentTy
   return (
     <Form className={styles.main}>
       <FormGroup>
-        <EmailField name="email" label="Email" disabled={isSubmitting} />
+        <ProjectTextField name="email" label="Email" disabled={isSubmitting} />
         <PasswordField name="password" label="Password" disabled={isSubmitting} />
         <PasswordField
           name="confirmPassword"
@@ -31,7 +31,7 @@ export const RegisterForm: React.FC<PropsType> = ({ formik }): ReturnComponentTy
           <GeneralButton
             type="submit"
             label="Sing Up"
-            disabled={!isValid || !dirty || isSubmitting}
+            disabled={!isValid || !dirty}
             fullWidth
           />
         </div>

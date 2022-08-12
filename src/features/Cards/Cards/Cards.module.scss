@@ -1,0 +1,51 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .backButton {
+    margin: 24px 0;
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 22px;
+    .title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      .packName {
+        @include text(22px, 600, 27px);
+        margin: 0 10px 0 0;
+      }
+      .learnIcon {
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+
+  .search {
+    margin: 0 0 24px;
+  }
+
+  .body {
+    text-align: center;
+    .text {
+      @include text(16px, 400, 20px);
+      opacity: 0.5;
+      margin: 86px 0 32px;
+    }
+  }
+}
+
+
