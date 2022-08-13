@@ -29,6 +29,7 @@ import {
   getCards,
   getCardsPackUserId,
   getCardsTotalCount,
+  getPackDeckCover,
   getPackName,
   getPackPrivate,
 } from 'features/Cards/Cards/cardsSelectors';
@@ -47,6 +48,7 @@ export const Cards = (): ReturnComponentType => {
   const cardsTotalCount = useAppSelector(getCardsTotalCount);
   const packName = useAppSelector(getPackName);
   const packPrivate = useAppSelector(getPackPrivate);
+  const packDeckCover = useAppSelector(getPackDeckCover);
   const cardsPack_id = searchParams.get('cardsPack_id') as string;
 
   const menuItems = [
@@ -134,7 +136,6 @@ export const Cards = (): ReturnComponentType => {
             </OptionMenu>
           )}
         </div>
-
         {((cards.length !== 0 && ownPack) ||
           (cards.length === 0 && params.cardQuestion && ownPack)) && (
           <div>
@@ -143,22 +144,34 @@ export const Cards = (): ReturnComponentType => {
         )}
       </div>
 
+      {packDeckCover && (
+        <img
+          src={packDeckCover}
+          style={{ width: '100px' }}
+          alt="ava"
+          className={styles.cover}
+        />
+      )}
+
       {(cards.length !== 0 || (cards.length === 0 && params.cardQuestion)) && (
         <div className={styles.search}>
           <Search search="cardQuestion" />
         </div>
       )}
+
       {cards.length === 0 && params.cardQuestion && (
         <div className={styles.body}>
           <Typography className={styles.text}>Nothing found for your request.</Typography>
         </div>
       )}
+
       {cards.length !== 0 && (
         <div className={styles.body}>
           <DataTable tableType="cards" />
           <Paginator cardPacksTotalCount={cardsTotalCount} />
         </div>
       )}
+
       {cards.length === 0 && ownPack && !params.cardQuestion && (
         <div className={styles.body}>
           <Typography className={styles.text}>
@@ -167,6 +180,7 @@ export const Cards = (): ReturnComponentType => {
           <GeneralButton label={addCardButtonTitle} onClick={createNewCard} />
         </div>
       )}
+
       {cards.length === 0 && !ownPack && !params.cardQuestion && (
         <div className={styles.body}>
           <Typography className={styles.text}>This cards is empty.</Typography>

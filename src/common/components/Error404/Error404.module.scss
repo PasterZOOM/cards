@@ -1,0 +1,20 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+    display: flex;
+    justify-content: center;
+    margin: 200px auto;
+    .left{
+        margin: 0 62px 0 0;
+        .title {
+            @include text(50px, 600, 61px);
+            margin: 0 0 10px;
+        }
+        .text {
+            @include text(16px, 500, 36px);
+            margin: 0 0 36px;
+        }
+
+    }
+}

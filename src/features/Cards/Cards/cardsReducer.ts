@@ -119,6 +119,11 @@ const slice = createSlice({
   initialState: {
     cards: [] as Array<CardType>,
     packUserId: '',
+    packName: '',
+    packPrivate: false,
+    packDeckCover: '',
+    packCreated: '',
+    packUpdated: '',
     page: 0,
     pageCount: 0,
     cardsTotalCount: 0,
@@ -126,7 +131,6 @@ const slice = createSlice({
     maxGrade: 0,
     token: '',
     tokenDeathTime: 0,
-    packName: '',
   } as GetCardsResponseType,
 
   reducers: {},

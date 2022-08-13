@@ -16,15 +16,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 0 22px;
+
     .title {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+
       .packName {
         @include text(22px, 600, 27px);
         margin: 0 10px 0 0;
       }
+
       .learnIcon {
         img {
           width: 20px;
@@ -32,14 +34,20 @@
         }
       }
     }
+
+  }
+
+  .cover {
+    margin: 12px 0;
   }
 
   .search {
-    margin: 0 0 24px;
+    margin: 28px 0 24px;
   }
 
   .body {
     text-align: center;
+
     .text {
       @include text(16px, 400, 20px);
       opacity: 0.5;

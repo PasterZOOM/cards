@@ -9,3 +9,5 @@ export const getCardsTotalCount = (state: AppRootStateType): number =>
 export const getPackName = (state: AppRootStateType): string => state.cards.packName;
 export const getPackPrivate = (state: AppRootStateType): boolean =>
   state.cards.packPrivate;
+export const getPackDeckCover = (state: AppRootStateType): string =>
+  state.cards.packDeckCover;

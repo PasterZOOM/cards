@@ -10,32 +10,12 @@ import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPac
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { useBack } from 'common/hooks/useBack';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getCard } from 'common/utils/getCard';
 import { loadCards, updatedGrade } from 'features/Cards/Cards/cardsReducer';
 import { getCards, getPackName } from 'features/Cards/Cards/cardsSelectors';
 import styles from 'features/Cards/Learn/Learn.module.scss';
 import { LearnPaper } from 'features/Cards/Learn/LearnPaper/LearnPaper';
 import { getLearnParams } from 'features/Cards/Learn/learnSelectors';
-
-const maxGradeValue = 6;
-
-const getCard = (cards: Array<CardType>): CardType => {
-  const sum = cards.reduce(
-    (acc, card) => acc + (maxGradeValue - card.grade) * (maxGradeValue - card.grade),
-    0,
-  );
-  const rand = Math.random() * sum;
-  const res = cards.reduce(
-    (acc: { sum: number; id: number }, card, i) => {
-      const newSum =
-        acc.sum + (maxGradeValue - card.grade) * (maxGradeValue - card.grade);
-
-      return { sum: newSum, id: newSum < rand ? i : acc.id };
-    },
-    { sum: 0, id: -1 },
-  );
-
-  return cards[res.id + 1];
-};
 
 export const Learn = (): ReturnComponentType => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -84,7 +64,8 @@ export const Learn = (): ReturnComponentType => {
         <LearnPaper card={card} onClick={onNext} buttonLabel="Next">
           <div>
             <Typography className={styles.answer}>
-              <b>Answer:</b> {card.answer}
+              <b>Answer:</b> {card.answer !== 'no answer' && card.answer}
+              {card.answerImg && <div>{card.answerImg}</div>}
             </Typography>
             <Grades setGrade={setGrade} />
           </div>
