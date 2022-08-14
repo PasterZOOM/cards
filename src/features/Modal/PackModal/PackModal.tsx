@@ -28,7 +28,6 @@ export const PackModal = (): ReturnComponentType => {
     { setSubmitting }: FormikHelpers<PackModalFormType>,
   ): Promise<void> => {
     if (title === modal.ADD_PACK) {
-      console.log(JSON.stringify(values));
       await dispatch(
         createPack({
           data: {
@@ -61,6 +60,7 @@ export const PackModal = (): ReturnComponentType => {
 
   return (
     <Formik
+      /* enableReinitialize */
       initialValues={{
         packName: data.name,
         packPrivate: data.private,

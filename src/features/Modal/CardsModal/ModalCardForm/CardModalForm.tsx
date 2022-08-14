@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
+
+import { ImageInput } from '../../../../common/components/Forms/ImageInput/ImageInput';
 
 import styles from './CardModalForm.module.scss';
 
@@ -17,8 +19,20 @@ type PropsType = {
   formik: FormikProps<CardModalFormTypes>;
 };
 export const CardModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
-  const { isValid, dirty, isSubmitting } = { ...formik };
+  const { isValid, dirty, isSubmitting, values } = { ...formik };
   const dispatch = useAppDispatch();
+  const [question, setQuestion] = useState<string>('text');
+  const [val, setVal] = useState(values);
+
+  const changeQuestionValue = (value: string): void => {
+    values.questionImg = value;
+    setVal({ ...val, questionImg: value });
+  };
+
+  const changeAnswerValue = (value: string): void => {
+    values.answerImg = value;
+    setVal({ ...val, answerImg: value });
+  };
 
   const onClose = (): void => {
     dispatch(closeModal());
@@ -28,11 +42,34 @@ export const CardModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentT
     <Form>
       <FormGroup className={styles.main}>
         <div className={styles.select}>
-          <Selected />
+          <Selected callback={setQuestion} />
         </div>
         <div className={styles.fields}>
-          <ProjectTextField name="question" label="Question" disabled={isSubmitting} />
-          <ProjectTextField name="answer" label="Answer" disabled={isSubmitting} />
+          {question === 'text' ? (
+            <div>
+              <ProjectTextField
+                name="question"
+                label="Question"
+                disabled={isSubmitting}
+              />
+              <ProjectTextField name="answer" label="Answer" disabled={isSubmitting} />
+            </div>
+          ) : (
+            <div>
+              <ImageInput
+                name="questionImg"
+                title="Upload question"
+                value={values.questionImg}
+                changeValue={changeQuestionValue}
+              />
+              <ImageInput
+                name="answerImg"
+                title="Upload answer"
+                value={values.answerImg}
+                changeValue={changeAnswerValue}
+              />
+            </div>
+          )}
         </div>
         <ModalButtonGroup onClose={onClose} dirty={dirty} isValid={isValid} />
       </FormGroup>
