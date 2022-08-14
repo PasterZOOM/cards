@@ -7,25 +7,3 @@
   font-style: normal !important;
   line-height: $lineHeight !important;
 }
-@mixin cardPacks($margin) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: $margin;
-  .left{
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    .titleBlock {
-      flex-wrap: wrap;
-      display: flex;
-      align-items: center;
-
-      .title {
-        @include text(22px, 600, 27px);
-        margin: 28px 0;
-      }
-    }
-  }
-}
