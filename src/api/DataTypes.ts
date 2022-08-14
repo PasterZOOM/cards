@@ -10,8 +10,8 @@ export type LoginDataType = {
   rememberMe: boolean;
 };
 export type UpdateUserDataType = {
-  name: string;
-  avatar: string;
+  name?: string;
+  avatar?: string;
 };
 
 export type PacksParamsType = {

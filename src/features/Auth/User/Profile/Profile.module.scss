@@ -6,7 +6,7 @@
   margin: 0 auto;
 
   .back {
-    margin: 24px 0 12px ;
+    margin: 24px 0 12px;
   }
 
   .card {
@@ -25,19 +25,18 @@
     margin: 27px !important;
   }
 
-  .icoContainer span {
+  .icoContainer label {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     background: #808080;
-    color: white;
     margin-right: 5px;
     margin-bottom: 5px;
     border: 1px solid #FFFFFF;
+  }
 
-    .avatar {
-      margin: 3px;
-    }
+  .icoContainer .cameraIco {
+    padding-top: 2px;
   }
 
   .email {
