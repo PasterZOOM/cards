@@ -24,7 +24,7 @@ export const userAPI = {
   me() {
     return instance.post<MeResponseType>('auth/me');
   },
-  changeUserName(data: UpdateUserDataType) {
+  changeUserNameOrAvatar(data: UpdateUserDataType) {
     return instance.put<UpdatedUserResponseType>('auth/me', data);
   },
 };

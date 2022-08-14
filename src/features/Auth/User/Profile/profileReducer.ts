@@ -8,10 +8,10 @@ import { handleError } from 'common/utils/handleError';
 
 export const updateUser = createAsyncThunk(
   'profile/updateUser',
-  async (param: { name: string; avatar: string }, { dispatch }) => {
+  async (param: { name?: string; avatar?: string }, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await userAPI.changeUserName(param);
+      const res = await userAPI.changeUserNameOrAvatar(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 

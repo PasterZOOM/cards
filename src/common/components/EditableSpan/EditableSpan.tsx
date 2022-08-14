@@ -36,7 +36,7 @@ export const EditableSpan: React.FC<PropsType> = ({ name }): ReturnComponentType
       return errors;
     },
     onSubmit: value => {
-      dispatch(updateUser({ name: value.name, avatar: '' }));
+      dispatch(updateUser({ name: value.name }));
       setEditMode(false);
     },
   });
