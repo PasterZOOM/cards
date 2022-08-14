@@ -44,7 +44,7 @@ export type PackType = {
   updated: string;
   more_id: string;
   __v: number;
-  deckCover: string | null;
+  deckCover: string;
 };
 export type GetPacksResponseType = {
   cardPacks: Array<PackType>;

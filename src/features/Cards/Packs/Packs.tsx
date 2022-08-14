@@ -39,7 +39,7 @@ export const Packs = (): ReturnComponentType => {
     dispatch(
       openModal({
         title: modal.ADD_PACK,
-        data: { name: '', private: false },
+        data: { name: '', private: false, deckCover: '' },
       }),
     );
   };

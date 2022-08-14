@@ -94,6 +94,8 @@ export const Cards = (): ReturnComponentType => {
           cardsPack_id,
           question: '',
           answer: '',
+          answerImg: '',
+          questionImg: '',
         },
       }),
     );

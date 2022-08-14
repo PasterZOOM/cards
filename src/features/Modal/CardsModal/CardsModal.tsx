@@ -35,6 +35,8 @@ export const CardsModal = (): ReturnComponentType => {
             answer: values.answer,
             question: values.question,
             cardsPack_id: createData.cardsPack_id,
+            answerImg: '',
+            questionImg: '',
           },
           params,
         }),
@@ -44,7 +46,13 @@ export const CardsModal = (): ReturnComponentType => {
     if (title === modal.EDIT_CARD) {
       await dispatch(
         updateCard({
-          data: { answer: values.answer, question: values.question, _id: updateData._id },
+          data: {
+            answer: values.answer,
+            question: values.question,
+            _id: updateData._id,
+            answerImg: '',
+            questionImg: '',
+          },
           params,
         }),
       );
@@ -58,6 +66,8 @@ export const CardsModal = (): ReturnComponentType => {
       initialValues={{
         answer: updateData.answer || '',
         question: updateData.question || '',
+        answerImg: updateData.answerImg || '',
+        questionImg: updateData.questionImg || '',
       }}
       validationSchema={validateCardModalForm}
       onSubmit={submitModal}
