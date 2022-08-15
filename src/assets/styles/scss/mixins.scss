@@ -7,3 +7,11 @@
   font-style: normal !important;
   line-height: $lineHeight !important;
 }
+
+@mixin forLongTextInColumns($maxWidth) {
+  display: block;
+  max-width: $maxWidth;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

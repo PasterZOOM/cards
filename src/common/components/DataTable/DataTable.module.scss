@@ -1,0 +1,39 @@
+@import "src/assets/styles/scss/mixins";
+
+.ico {
+  padding-right: 7px;
+  padding-left: 7px;
+  cursor: pointer;
+}
+
+.ico.invisible:disabled {
+  display: none;
+}
+
+.ico.disable:disabled {
+  opacity: 0.5;
+}
+
+.tableHead {
+  background: #EFEFEF;
+}
+
+.nameLink, .nameLink:hover, .nameLink:focus, .nameLink:active {
+  text-decoration: none;
+  color: #000;
+}
+
+.deckCoverContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+}
+
+.packNameColumn {
+  @include forLongTextInColumns(300px)
+}
+
+.userNameColumn {
+  @include forLongTextInColumns(200px)
+}

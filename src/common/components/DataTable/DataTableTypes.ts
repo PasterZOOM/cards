@@ -6,6 +6,7 @@ export type PackData = {
   updated: string;
   user_name: string;
   actions: string;
+  deckCover: string | null;
 };
 
 export type CardData = {

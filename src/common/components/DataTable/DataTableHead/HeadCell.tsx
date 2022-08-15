@@ -34,6 +34,7 @@ export const HeadCell: React.FC<HeadCellProps> = ({
       sortDirection={orderBy === headCell.id ? order : false}
       width={headCell.width}
       style={!ownPack && headCell.isOwner ? { display: 'none' } : {}}
+      padding={headCell.label === 'Name' ? 'none' : 'normal'}
     >
       {headCell.isSortable ? (
         <TableSortLabel

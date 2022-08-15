@@ -2,11 +2,18 @@ import { HeadCellType } from 'common/components/DataTable/DataTableTypes';
 
 export const headCellsPacks: readonly HeadCellType[] = [
   {
+    id: 'deckCover',
+    label: '',
+    isSortable: false,
+    tableType: 'packs',
+    width: '5%',
+  },
+  {
     id: 'name',
     label: 'Name',
     isSortable: true,
     tableType: 'packs',
-    width: '30%',
+    width: '25%',
   },
   {
     id: 'cardsCount',
@@ -27,7 +34,7 @@ export const headCellsPacks: readonly HeadCellType[] = [
     label: 'Created by',
     isSortable: true,
     tableType: 'packs',
-    width: '18%',
+    width: '15%',
   },
   {
     id: 'actions',
