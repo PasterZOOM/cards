@@ -17,13 +17,23 @@ import { closeModal } from 'features/Modal/modalReduscer';
 
 type PropsType = {
   formik: FormikProps<CardModalFormTypes>;
+  setQuestion: (value: string) => void;
+  question: string;
 };
-export const CardModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
-  const { isValid, dirty, isSubmitting, values } = { ...formik };
+export const CardModalForm: React.FC<PropsType> = ({
+  formik,
+  setQuestion,
+  question,
+}): ReturnComponentType => {
+  const { isValid, dirty, isSubmitting, values } = {
+    ...formik,
+  };
   const dispatch = useAppDispatch();
-  const [question, setQuestion] = useState<string>('text');
   const [val, setVal] = useState(values);
 
+  console.log('formik: ', isValid, dirty);
+  console.log(values);
+  console.log(question);
   const changeQuestionValue = (value: string): void => {
     values.questionImg = value;
     setVal({ ...val, questionImg: value });
@@ -71,7 +81,15 @@ export const CardModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentT
             </div>
           )}
         </div>
-        <ModalButtonGroup onClose={onClose} dirty={dirty} isValid={isValid} />
+        {question === 'text' ? (
+          <ModalButtonGroup onClose={onClose} dirty={dirty} isValid={isValid} />
+        ) : (
+          <ModalButtonGroup
+            onClose={onClose}
+            dirty
+            isValid={!!(values.questionImg && values.answerImg)}
+          />
+        )}
       </FormGroup>
     </Form>
   );

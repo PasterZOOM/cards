@@ -12,6 +12,7 @@ type ImageInputPropsType = {
   changeValue: (value: string) => void;
   title: string;
   name: string;
+  /* handleChange?: (e: string | ChangeEvent<any>) => void; */
 };
 
 export const ImageInput: React.FC<ImageInputPropsType> = ({
@@ -19,6 +20,7 @@ export const ImageInput: React.FC<ImageInputPropsType> = ({
   changeValue,
   title,
   name,
+  /* handleChange, */
 }): ReturnComponentType => {
   const [errorSize, setErrorSize] = useState<null | string>(null);
 
@@ -57,18 +59,19 @@ export const ImageInput: React.FC<ImageInputPropsType> = ({
       fullWidth
       variant="standard"
     >
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label>
-        <input
-          name={name}
-          type="file"
-          onChange={uploadHandler}
-          style={{ display: 'none' }}
-        />
+      <label htmlFor={name}>
         <Button variant="contained" component="span" fullWidth>
           {title}
         </Button>
       </label>
+      <input
+        id={name}
+        name={name}
+        type="file"
+        onChange={uploadHandler}
+        /*  onChange={handleChange} */
+        style={{ display: 'none' }}
+      />
       {value && !errorSize ? <img className={styles.image} src={value} alt="" /> : null}
       {errorSize ? <span className={styles.error}>{errorSize}</span> : null}
     </FormControl>

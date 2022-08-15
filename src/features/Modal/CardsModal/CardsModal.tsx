@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Formik, FormikHelpers } from 'formik';
 import { useSearchParams } from 'react-router-dom';
@@ -23,12 +23,15 @@ export const CardsModal = (): ReturnComponentType => {
   const title = useAppSelector(getModalTitle);
 
   const params = getActualCardsParams(searchParams);
+  const format = updateData.answerImg || updateData.questionImg ? 'image' : 'text';
+  const [question, setQuestion] = useState<string>(format);
 
   const submitModal = async (
     values: CardModalFormTypes,
     { setSubmitting }: FormikHelpers<CardModalFormTypes>,
   ): Promise<void> => {
     if (title === modal.ADD_CARD) {
+      debugger;
       await dispatch(
         createCard({
           data: {
@@ -69,10 +72,12 @@ export const CardsModal = (): ReturnComponentType => {
         answerImg: updateData.answerImg || '',
         questionImg: updateData.questionImg || '',
       }}
-      validationSchema={validateCardModalForm}
+      validationSchema={question === 'text' ? validateCardModalForm : null}
       onSubmit={submitModal}
     >
-      {formik => <CardModalForm formik={formik} />}
+      {formik => (
+        <CardModalForm question={question} setQuestion={setQuestion} formik={formik} />
+      )}
     </Formik>
   );
 };

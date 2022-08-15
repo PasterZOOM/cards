@@ -6,6 +6,6 @@ export const validateCardModalForm = Yup.object().shape({
 });
 
 export const validateCardModalFormImage = Yup.object().shape({
-  answerImg: Yup.string().url('la'),
-  questionImg: Yup.string().url('pa'),
+  /* answerImg: Yup.string().required('required'),
+  questionImg: Yup.string().required('required'), */
 });
