@@ -33,7 +33,6 @@ import {
   getPackName,
   getPackPrivate,
 } from 'features/Cards/Cards/cardsSelectors';
-import { setLearnParams } from 'features/Cards/Learn/learnReducer';
 import { openModal } from 'features/Modal/modalReducer';
 
 const addCardButtonTitle = 'Add new card';
@@ -83,9 +82,9 @@ export const Cards = (): ReturnComponentType => {
     },
   ];
 
-  const onClickLearnHandle = (): void => {
+  const onClickLearnHandle = async (): Promise<void> => {
+    await dispatch(loadCards({ cardsPack_id, pageCount: cardsTotalCount }));
     navigate(path.LEARN);
-    dispatch(setLearnParams({ cardsPack_id, pageCount: cardsTotalCount }));
   };
 
   const createNewCard = (): void => {

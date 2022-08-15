@@ -15,7 +15,7 @@ import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
-import { setLearnParams } from 'features/Cards/Learn/learnReducer';
+import { loadCards } from 'features/Cards/Cards/cardsReducer';
 import { openModal } from 'features/Modal/modalReducer';
 
 type PacksTableBodyProps = {
@@ -31,9 +31,9 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   const dispatch = useAppDispatch();
   const myId = useAppSelector(getUserId);
 
-  const onClickLearnHandle = (): void => {
+  const onClickLearnHandle = async (): Promise<void> => {
+    await dispatch(loadCards({ cardsPack_id: _id, pageCount: cardsCount }));
     navigate(path.LEARN);
-    dispatch(setLearnParams({ cardsPack_id: _id, pageCount: cardsCount }));
   };
 
   const updatePackHandler = (): void => {
