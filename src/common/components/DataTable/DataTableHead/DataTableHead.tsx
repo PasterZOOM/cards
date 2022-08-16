@@ -3,7 +3,7 @@ import React, { MouseEvent } from 'react';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import s from 'common/components/DataTable/DataTable.module.css';
+import s from 'common/components/DataTable/DataTable.module.scss';
 import { HeadCell } from 'common/components/DataTable/DataTableHead/HeadCell';
 import {
   headCellsCards,

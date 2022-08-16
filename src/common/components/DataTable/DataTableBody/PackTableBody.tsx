@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
+import { Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -9,7 +10,7 @@ import { PackType } from 'api/ResponseTypes';
 import deleteIco from 'assets/images/delete.svg';
 import editIco from 'assets/images/edit.svg';
 import teacherIco from 'assets/images/teacher.svg';
-import s from 'common/components/DataTable/DataTable.module.css';
+import s from 'common/components/DataTable/DataTable.module.scss';
 import { modal } from 'common/enums/modal';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
@@ -54,17 +55,40 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     );
   };
 
+  const showDeckCoverImage = (): ReactElement | undefined => {
+    const countOfSymbols = 11;
+
+    if (deckCover) {
+      if (deckCover.substring(0, countOfSymbols) === 'data:image/') {
+        return (
+          <Box sx={{ height: '36px' }} component="img" src={deckCover} alt="cover" />
+        );
+      }
+    }
+  };
+
   return (
     <TableRow hover>
-      <TableCell component="th" scope="row">
-        <NavLink to={`${path.CARDS}?cardsPack_id=${_id}`} className={s.nameLink}>
-          {name}
-        </NavLink>
+      <TableCell>
+        <Box component="span" className={s.deckCoverContainer}>
+          {showDeckCoverImage()}
+        </Box>
       </TableCell>
-      <TableCell align="left">{cardsCount}</TableCell>
-      <TableCell align="left">{updateDate}</TableCell>
-      <TableCell align="left">{user_name}</TableCell>
-      <TableCell align="left">
+      <TableCell padding="none">
+        <Box component="span" className={s.packNameColumn}>
+          <NavLink to={`${path.CARDS}?cardsPack_id=${_id}`} className={s.nameLink}>
+            {name}
+          </NavLink>
+        </Box>
+      </TableCell>
+      <TableCell>{cardsCount}</TableCell>
+      <TableCell>{updateDate}</TableCell>
+      <TableCell>
+        <Box component="span" className={s.userNameColumn}>
+          {user_name}
+        </Box>
+      </TableCell>
+      <TableCell>
         <IconButton
           className={`${s.ico} + ${s.disable}`}
           onClick={onClickLearnHandle}
