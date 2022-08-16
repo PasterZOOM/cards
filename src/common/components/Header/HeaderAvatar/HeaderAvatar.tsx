@@ -30,6 +30,13 @@ export const HeaderAvatar = (): ReturnComponentType => {
       },
     },
     {
+      title: 'Users',
+      icon: profile,
+      action: (): void => {
+        navigate(path.USERS);
+      },
+    },
+    {
       title: 'Log out',
       icon: logout,
       action: (): void => {

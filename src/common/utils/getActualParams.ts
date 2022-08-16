@@ -1,4 +1,4 @@
-import { PacksParamsType, CardsParamsType } from 'api/DataTypes';
+import { PacksParamsType, CardsParamsType, UsersParamsType } from 'api/DataTypes';
 import { startPageCount } from 'common/constants/projectConstants';
 import { sortCards } from 'common/enums/sortCards';
 import { sortPacks } from 'common/enums/sortPacks';
@@ -22,5 +22,15 @@ export const getActualCardsParams = (searchParams: URLSearchParams): CardsParams
     sortCards: (searchParams.get('sortCards') as sortCards) || undefined,
     pageCount: Number(searchParams.get('pageCount')) || startPageCount,
     cardQuestion: searchParams.get('cardQuestion') || undefined,
+  };
+};
+export const getActualUsersParams = (searchParams: URLSearchParams): UsersParamsType => {
+  return {
+    userName: searchParams.get('userName') || undefined,
+    min: Number(searchParams.get('min')) || undefined,
+    max: Number(searchParams.get('max')) || undefined,
+    sortUsers: (searchParams.get('sortUsers') as string) || undefined,
+    page: Number(searchParams.get('page')) || undefined,
+    pageCount: Number(searchParams.get('pageCount')) || startPageCount,
   };
 };

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { userAPI } from 'api/authAPI';
+import { authAPI } from 'api/authAPI';
 import { RegisterDataType } from 'api/DataTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -12,7 +12,7 @@ export const createUser = createAsyncThunk(
   async (data: RegisterDataType, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      await userAPI.register({ ...data, email: data.email.toLowerCase() });
+      await authAPI.register({ ...data, email: data.email.toLowerCase() });
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(login({ ...data, rememberMe: false }));

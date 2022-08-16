@@ -8,5 +8,5 @@ export enum path {
   PACKS = '/packs',
   CARDS = '/cards',
   LEARN = '/learn',
-  SETTINGS = '/settings',
+  USERS = '/users',
 }

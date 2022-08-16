@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { userAPI } from 'api/authAPI';
+import { authAPI } from 'api/authAPI';
 import { SnackbarType } from 'app/AppTypes';
 import { requestStatus } from 'common/enums/requestStatus';
 import { snackbarType } from 'common/enums/snackbarType';
@@ -13,7 +13,7 @@ export const initializeApp = createAsyncThunk(
   async (param, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await userAPI.me();
+      const res = await authAPI.me();
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
       dispatch(sendUserDate(res.data));

@@ -14,6 +14,7 @@ import { Register } from 'features/Auth/User/Register/Register';
 import { Cards } from 'features/Cards/Cards/Cards';
 import { Learn } from 'features/Cards/Learn/Learn';
 import { Packs } from 'features/Cards/Packs/Packs';
+import { Users } from 'features/Social/Users/Users';
 
 export const RoutesPage = (): ReturnComponentType => {
   const routes = [
@@ -26,6 +27,7 @@ export const RoutesPage = (): ReturnComponentType => {
     { path: path.PACKS, component: <Packs /> },
     { path: path.CARDS, component: <Cards /> },
     { path: path.LEARN, component: <Learn /> },
+    { path: path.USERS, component: <Users /> },
     { path: '*', component: <Error404 /> },
   ];
 

@@ -11,7 +11,7 @@ import {
   RepairPasswordRequestType,
 } from 'features/Auth/Forgot/ForgotPassword/ForgotPasswordTypes';
 
-export const userAPI = {
+export const authAPI = {
   register(data: RegisterDataType) {
     return instance.post<RegisterResponseType>('auth/register', data);
   },

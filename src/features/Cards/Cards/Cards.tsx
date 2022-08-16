@@ -146,12 +146,9 @@ export const Cards = (): ReturnComponentType => {
       </div>
 
       {packDeckCover && (
-        <img
-          src={packDeckCover}
-          style={{ width: '100px' }}
-          alt="ava"
-          className={styles.cover}
-        />
+        <div className={styles.cover}>
+          <img src={packDeckCover} alt="ava" className={styles.img} />
+        </div>
       )}
 
       {(cards.length !== 0 || (cards.length === 0 && params.cardQuestion)) && (
@@ -169,7 +166,7 @@ export const Cards = (): ReturnComponentType => {
       {cards.length !== 0 && (
         <div className={styles.body}>
           <DataTable tableType="cards" />
-          <Paginator cardPacksTotalCount={cardsTotalCount} />
+          <Paginator totalCount={cardsTotalCount} />
         </div>
       )}
 

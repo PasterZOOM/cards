@@ -12,20 +12,18 @@ import styles from './Paginator.module.scss';
 
 import { startPageCount } from 'common/constants/projectConstants';
 
-type PaginatorPropsType = {
-  cardPacksTotalCount: number;
+type PropsType = {
+  totalCount: number;
 };
 
-export const Paginator: React.FC<PaginatorPropsType> = ({
-  cardPacksTotalCount,
-}): ReturnComponentType => {
+export const Paginator: React.FC<PropsType> = ({ totalCount }): ReturnComponentType => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState<number>(Number(searchParams.get('page')) || 1);
   const [pageCount, setPageCount] = useState<number>(
     Number(searchParams.get('pageCount')) || startPageCount,
   );
 
-  const pagesCount = Math.ceil(cardPacksTotalCount / pageCount);
+  const pagesCount = Math.ceil(totalCount / pageCount);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<unknown>, value: number): void => {

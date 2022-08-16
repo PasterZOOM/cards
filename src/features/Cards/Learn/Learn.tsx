@@ -49,8 +49,14 @@ export const Learn = (): ReturnComponentType => {
         <LearnPaper card={card} onClick={onNext} buttonLabel="Next">
           <div>
             <Typography className={styles.answer}>
-              <b>Answer:</b> {card.answer !== 'no answer' && card.answer}
-              {card.answerImg && <div>{card.answerImg}</div>}
+              <b>Answer:</b>
+              {card.answerImg ? (
+                <div>
+                  <img src={card.answerImg} alt="question" className={styles.answerImg} />
+                </div>
+              ) : (
+                card.question
+              )}
             </Typography>
             <Grades setGrade={setGrade} />
           </div>

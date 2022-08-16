@@ -124,6 +124,15 @@ export type UpdateGradeResponseType = {
   updatedGrade: UpdatedGradeType;
 } & TokenType;
 
+export type GetUsersResponseType = {
+  users: Array<Omit<UserType, 'rememberMe' | '__v'>>;
+  page: number;
+  pageCount: number;
+  usersTotalCount: number;
+  minPublicCardPacksCount: number;
+  maxPublicCardPacksCount: number;
+} & TokenType;
+
 type TokenType = {
   token: string;
   tokenDeathTime: number;

@@ -11,6 +11,10 @@
   .question {
     @include text(16px, 400, 24px);
     margin: 0 0 12px !important;
+    .questionImg {
+      margin: 0 auto;
+      width: 100%;
+    }
   }
   .attempts {
     @include text(14px, 400, 24px);

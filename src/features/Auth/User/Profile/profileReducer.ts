@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { userAPI } from 'api/authAPI';
+import { authAPI } from 'api/authAPI';
 import { UserType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
@@ -11,7 +11,7 @@ export const updateUser = createAsyncThunk(
   async (param: { name?: string; avatar?: string }, { dispatch }) => {
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
-      const res = await userAPI.changeUserNameOrAvatar(param);
+      const res = await authAPI.changeUserNameOrAvatar(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 

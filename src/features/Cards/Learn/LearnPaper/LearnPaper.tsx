@@ -24,8 +24,14 @@ export const LearnPaper: React.FC<PropsType> = ({
   return (
     <Paper elevation={3} className={styles.paper}>
       <Typography className={styles.question}>
-        <b>Question:</b> {card.question !== 'no question' && card.question}
-        {card.questionImg && <div>{card.questionImg}</div>}
+        <b>Question:</b>{' '}
+        {card.questionImg ? (
+          <div>
+            <img src={card.questionImg} alt="question" className={styles.questionImg} />
+          </div>
+        ) : (
+          card.question
+        )}
       </Typography>
       <Typography className={styles.attempts}>
         Number of attempts to answer the question: <b>{card.shots}</b>

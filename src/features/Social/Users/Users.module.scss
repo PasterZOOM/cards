@@ -1,0 +1,31 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 36px 0 34px;
+
+    .title {
+      @include text(22px, 600, 27px);
+    }
+  }
+
+  .body {
+    .title {
+      @include text(16px, 400, 20px);
+      text-align: center;
+      margin: 86px auto 32px;
+      opacity: 0.5;
+    }
+  }
+
+}

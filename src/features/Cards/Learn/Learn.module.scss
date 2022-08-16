@@ -20,6 +20,10 @@
   .answer {
     @include text(16px, 400, 24px);
     margin: 6px 0 24px !important;
+    .answerImg {
+      margin: 0 auto;
+      width: 100%;
+    }
   }
 
 }

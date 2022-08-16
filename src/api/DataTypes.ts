@@ -56,3 +56,12 @@ export type UpdatedGradeDataType = {
   grade: number;
   card_id: string;
 };
+
+export type UsersParamsType = {
+  userName?: string;
+  min?: number;
+  max?: number;
+  sortUsers?: string;
+  page?: number;
+  pageCount?: number;
+};
