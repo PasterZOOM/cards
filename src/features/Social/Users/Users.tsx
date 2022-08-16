@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualUsersParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import { PacksParams } from 'features/Cards/Packs/CardPacksParams/PacksParams';
+import { UsersParams } from 'features/Social/Users/UsersParams/UsersParams';
 import { setUsersParams } from 'features/Social/Users/UsersParams/usersParamsReducer';
 import { getUsersParams } from 'features/Social/Users/UsersParams/usersParamsSelectors';
 import { loadUsers } from 'features/Social/Users/usersReducer';
@@ -50,7 +50,7 @@ export const Users = (): ReturnComponentType => {
       <div className={styles.head}>
         <Typography className={styles.title}>Users</Typography>
       </div>
-      <PacksParams />
+      <UsersParams />
       <div className={styles.body}>
         {users.length !== 0 ? (
           <div>

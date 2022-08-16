@@ -6,19 +6,18 @@ import { useSearchParams } from 'react-router-dom';
 
 import styles from './NumberOfCards.module.scss';
 
-import { useAppSelector } from 'common/hooks/hooks';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { NumberOfCardsInput } from 'features/Cards/Packs/CardPacksParams/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
-import { getMaxCardsCount, getMinCardsCount } from 'features/Cards/Packs/packsSelectors';
+import { NumberOfCardsInput } from 'common/components/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
 
-export const NumberOfCards = (): ReturnComponentType => {
-  const minCardsCount = useAppSelector(getMinCardsCount);
-  const maxCardsCount = useAppSelector(getMaxCardsCount);
+type PropsType = {
+  minCount: number;
+  maxCount: number;
+};
 
+export const NumberOfCards: React.FC<PropsType> = ({ minCount, maxCount }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [value, setValue] = useState<Array<number>>([
-    Number(searchParams.get('min')) || minCardsCount,
-    Number(searchParams.get('max')) || maxCardsCount,
+    Number(searchParams.get('min')) || minCount,
+    Number(searchParams.get('max')) || maxCount,
   ]);
 
   const onChangeHandle = (event: Event, newValue: number | Array<number>): void => {
@@ -28,30 +27,36 @@ export const NumberOfCards = (): ReturnComponentType => {
   const onChangeCommittedHandle = useCallback((): void => {
     const queryParams: { min?: string; max?: string } = {};
 
-    if (value[0] !== minCardsCount) queryParams.min = String(value[0]);
+    if (value[0] !== minCount) queryParams.min = String(value[0]);
     else searchParams.delete('min');
 
-    if (value[1] !== maxCardsCount) queryParams.max = String(value[1]);
+    if (value[1] !== maxCount) queryParams.max = String(value[1]);
     else searchParams.delete('max');
 
     setSearchParams({
       ...Object.fromEntries(searchParams),
       ...queryParams,
     });
-  }, [maxCardsCount, minCardsCount, searchParams, setSearchParams, value]);
+  }, [maxCount, minCount, searchParams, setSearchParams, value]);
 
   useEffect(() => {
     setValue([
-      Number(searchParams.get('min')) || minCardsCount,
-      Number(searchParams.get('max')) || maxCardsCount,
+      Number(searchParams.get('min')) || minCount,
+      Number(searchParams.get('max')) || maxCount,
     ]);
-  }, [maxCardsCount, minCardsCount, searchParams]);
+  }, [maxCount, minCount, searchParams]);
 
   return (
     <div className={styles.main}>
       <Typography className={styles.title}>Number of cards</Typography>
       <div className={styles.params}>
-        <NumberOfCardsInput activeThumb={0} value={value} setValue={setValue} />
+        <NumberOfCardsInput
+          activeThumb={0}
+          value={value}
+          setValue={setValue}
+          minCount={minCount}
+          maxCount={maxCount}
+        />
 
         <Slider
           className={styles.slider}
@@ -59,11 +64,17 @@ export const NumberOfCards = (): ReturnComponentType => {
           onChange={onChangeHandle}
           onChangeCommitted={onChangeCommittedHandle}
           disableSwap
-          min={minCardsCount}
-          max={maxCardsCount}
+          min={minCount}
+          max={maxCount}
         />
 
-        <NumberOfCardsInput activeThumb={1} value={value} setValue={setValue} />
+        <NumberOfCardsInput
+          activeThumb={1}
+          value={value}
+          setValue={setValue}
+          minCount={minCount}
+          maxCount={maxCount}
+        />
       </div>
     </div>
   );

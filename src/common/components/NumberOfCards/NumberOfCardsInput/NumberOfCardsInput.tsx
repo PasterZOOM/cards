@@ -2,28 +2,26 @@ import React, { ChangeEvent } from 'react';
 
 import styles from './NumberOfCardsInput.module.scss';
 
-import { useAppSelector } from 'common/hooks/hooks';
-import { getMaxCardsCount, getMinCardsCount } from 'features/Cards/Packs/packsSelectors';
-
 type PropsType = {
   value: Array<number>;
   setValue: (numbers: Array<number>) => void;
   activeThumb: 0 | 1;
+  minCount: number;
+  maxCount: number;
 };
 export const NumberOfCardsInput: React.FC<PropsType> = ({
   value,
   setValue,
   activeThumb,
+  minCount,
+  maxCount,
 }) => {
-  const minCardsCount = useAppSelector(getMinCardsCount);
-  const maxCardsCount = useAppSelector(getMaxCardsCount);
-
   const changeInputValue =
     (activeThumb: number) => (event: ChangeEvent<HTMLInputElement>) => {
       let currentValue = event.currentTarget.valueAsNumber;
 
-      if (currentValue < minCardsCount) currentValue = minCardsCount;
-      if (currentValue > maxCardsCount) currentValue = maxCardsCount;
+      if (currentValue < minCount) currentValue = minCount;
+      if (currentValue > maxCount) currentValue = maxCount;
 
       if (activeThumb === 0)
         setValue([!currentValue ? 0 : Math.trunc(currentValue), value[1]]);

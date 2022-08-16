@@ -13,12 +13,12 @@ import { useAppSelector } from 'common/hooks/hooks';
 import { useDebounce } from 'common/hooks/useDebounce';
 
 type PropsType = {
-  search: 'packName' | 'cardQuestion';
+  search: 'packName' | 'cardQuestion' | 'userName';
 };
 
 export const Search: React.FC<PropsType> = ({ search }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [value, setValue] = useState<string>(searchParams.get('packName') || '');
+  const [value, setValue] = useState<string>(searchParams.get(search) || '');
 
   const debouncedValue = useDebounce<string>(value);
   const status = useAppSelector(getAppStatus);
@@ -28,7 +28,8 @@ export const Search: React.FC<PropsType> = ({ search }) => {
   };
 
   useEffect(() => {
-    const queryParams: { packName?: string; cardQuestion?: string } = {};
+    const queryParams: { packName?: string; cardQuestion?: string; userName?: string } =
+      {};
 
     if (debouncedValue) {
       queryParams[search] = debouncedValue;

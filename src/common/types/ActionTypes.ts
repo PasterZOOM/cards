@@ -4,7 +4,7 @@ import { changeRedirect } from 'features/Auth/Forgot/forgotReducer';
 import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
 import { setCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
-import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
+import { setCardPacksParams } from 'features/Cards/Packs/PacksParams/packsParamsReducer';
 import { closeModal, openModal } from 'features/Modal/modalReducer';
 
 export type AppActionsType =

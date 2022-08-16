@@ -1,9 +1,0 @@
-@import "src/assets/styles/scss/variables";
-@import "src/assets/styles/scss/mixins";
-
-.main {
-  .title {
-    @include text(14px, 500, 17px);
-    margin: 0 0 8px;
-  }
-}

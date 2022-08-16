@@ -4,9 +4,9 @@ import ButtonGroup from '@mui/material/ButtonGroup/ButtonGroup';
 import Typography from '@mui/material/Typography/Typography';
 import { useSearchParams } from 'react-router-dom';
 
-import { FilterButton } from './FilterButton/FilterButton';
 import styles from './OwnPacks.module.scss';
 
+import { FilterButton } from 'common/components/OwnPacks/FilterButton/FilterButton';
 import { packsOwn } from 'common/enums/packsOwn';
 import { useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';

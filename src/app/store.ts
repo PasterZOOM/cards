@@ -9,7 +9,7 @@ import { authReducer } from 'features/Auth/User/Login/authReducer';
 import { profileReducer } from 'features/Auth/User/Profile/profileReducer';
 import { cardsParamsReducer } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
 import { cardsReducer } from 'features/Cards/Cards/cardsReducer';
-import { packsParamsReducer } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
+import { packsParamsReducer } from 'features/Cards/Packs/PacksParams/packsParamsReducer';
 import { packsReducer } from 'features/Cards/Packs/packsReducer';
 import { modalsReducer } from 'features/Modal/modalReducer';
 import { usersParamsReducer } from 'features/Social/Users/UsersParams/usersParamsReducer';

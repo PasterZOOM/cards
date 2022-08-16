@@ -12,10 +12,10 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualPacksParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import { PacksParams } from 'features/Cards/Packs/CardPacksParams/PacksParams';
-import { setCardPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsReducer';
-import { getPacksParams } from 'features/Cards/Packs/CardPacksParams/packsParamsSelectors';
 import styles from 'features/Cards/Packs/Packs.module.scss';
+import { PacksParams } from 'features/Cards/Packs/PacksParams/PacksParams';
+import { setCardPacksParams } from 'features/Cards/Packs/PacksParams/packsParamsReducer';
+import { getPacksParams } from 'features/Cards/Packs/PacksParams/packsParamsSelectors';
 import { loadPacks } from 'features/Cards/Packs/packsReducer';
 import {
   getCardPacks,
