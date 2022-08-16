@@ -33,6 +33,7 @@ export const PackModal = (): ReturnComponentType => {
           data: {
             name: values.packName,
             private: values.packPrivate,
+            deckCover: values.deckCover,
           },
           params,
         }),
@@ -46,6 +47,7 @@ export const PackModal = (): ReturnComponentType => {
             _id: data._id,
             name: values.packName,
             private: values.packPrivate,
+            deckCover: values.deckCover,
           },
           params,
           loadPacks: data.loadPacks,
@@ -61,6 +63,7 @@ export const PackModal = (): ReturnComponentType => {
       initialValues={{
         packName: data.name,
         packPrivate: data.private,
+        deckCover: data.deckCover,
       }}
       validationSchema={validatePackModalForm}
       onSubmit={submitModal}

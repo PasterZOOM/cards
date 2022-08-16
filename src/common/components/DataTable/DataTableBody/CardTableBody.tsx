@@ -22,7 +22,7 @@ type CardTableBodyProps = {
 export const CardTableBody: React.FC<CardTableBodyProps> = ({
   card,
 }): ReturnComponentType => {
-  const { updated, question, answer, _id } = card;
+  const { updated, question, answer, _id, answerImg, questionImg } = card;
   const updateDate = new Date(updated).toLocaleDateString('ru');
   const dispatch = useAppDispatch();
   const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
@@ -31,7 +31,7 @@ export const CardTableBody: React.FC<CardTableBodyProps> = ({
     dispatch(
       openModal({
         title: modal.EDIT_CARD,
-        data: { _id, question, answer },
+        data: { _id, question, answer, answerImg, questionImg },
       }),
     );
   };

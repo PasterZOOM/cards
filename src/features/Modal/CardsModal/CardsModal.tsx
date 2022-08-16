@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Formik, FormikHelpers } from 'formik';
 import { useSearchParams } from 'react-router-dom';
@@ -23,6 +23,8 @@ export const CardsModal = (): ReturnComponentType => {
   const title = useAppSelector(getModalTitle);
 
   const params = getActualCardsParams(searchParams);
+  const format = updateData.answerImg || updateData.questionImg ? 'image' : 'text';
+  const [question, setQuestion] = useState<string>(format);
 
   const submitModal = async (
     values: CardModalFormTypes,
@@ -31,11 +33,18 @@ export const CardsModal = (): ReturnComponentType => {
     if (title === modal.ADD_CARD) {
       await dispatch(
         createCard({
-          data: {
-            answer: values.answer,
-            question: values.question,
-            cardsPack_id: createData.cardsPack_id,
-          },
+          data:
+            question === 'text'
+              ? {
+                  answer: values.answer,
+                  question: values.question,
+                  cardsPack_id: createData.cardsPack_id,
+                }
+              : {
+                  answerImg: values.answerImg,
+                  questionImg: values.questionImg,
+                  cardsPack_id: createData.cardsPack_id,
+                },
           params,
         }),
       );
@@ -44,7 +53,13 @@ export const CardsModal = (): ReturnComponentType => {
     if (title === modal.EDIT_CARD) {
       await dispatch(
         updateCard({
-          data: { answer: values.answer, question: values.question, _id: updateData._id },
+          data: {
+            answer: values.answer,
+            question: values.question,
+            _id: updateData._id,
+            answerImg: values.answerImg,
+            questionImg: values.questionImg,
+          },
           params,
         }),
       );
@@ -58,11 +73,20 @@ export const CardsModal = (): ReturnComponentType => {
       initialValues={{
         answer: updateData.answer || '',
         question: updateData.question || '',
+        answerImg: updateData.answerImg || '',
+        questionImg: updateData.questionImg || '',
       }}
-      validationSchema={validateCardModalForm}
+      validationSchema={question === 'text' ? validateCardModalForm : null}
       onSubmit={submitModal}
     >
-      {formik => <CardModalForm formik={formik} />}
+      {formik => (
+        <CardModalForm
+          title={title}
+          question={question}
+          setQuestion={setQuestion}
+          formik={formik}
+        />
+      )}
     </Formik>
   );
 };

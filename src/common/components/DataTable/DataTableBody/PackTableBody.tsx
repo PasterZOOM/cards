@@ -25,7 +25,7 @@ type PacksTableBodyProps = {
 export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   pack,
 }): ReturnComponentType => {
-  const { _id, name, updated, user_name, cardsCount, user_id } = { ...pack };
+  const { _id, name, updated, user_name, cardsCount, user_id, deckCover } = { ...pack };
   const updateDate = new Date(updated).toLocaleDateString('ru');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -40,7 +40,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     dispatch(
       openModal({
         title: modal.EDIT_PACK,
-        data: { _id, name, private: pack.private, loadPacks: true },
+        data: { _id, name, private: pack.private, loadPacks: true, deckCover },
       }),
     );
   };

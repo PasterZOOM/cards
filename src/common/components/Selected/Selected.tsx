@@ -7,11 +7,20 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
-export const Selected = (): ReturnComponentType => {
-  const [value, setValue] = React.useState('text');
+type SelectedPropsType = {
+  callback: (value: string) => void;
+  question: string;
+};
+
+export const Selected: React.FC<SelectedPropsType> = ({
+  callback,
+  question,
+}): ReturnComponentType => {
+  const [value, setValue] = React.useState(question);
 
   const handleChange = (event: SelectChangeEvent): void => {
     setValue(event.target.value as string);
+    callback(event.target.value as string);
   };
 
   return (

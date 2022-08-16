@@ -117,7 +117,7 @@ const slice = createSlice({
         updated: '',
         more_id: '',
         __v: 0,
-        deckCover: null,
+        deckCover: '',
       },
     ],
     page: 1,

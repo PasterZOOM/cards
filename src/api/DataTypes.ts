@@ -26,6 +26,7 @@ export type PacksParamsType = {
 export type PackDataType = {
   name: string;
   private: boolean;
+  deckCover: string;
 };
 export type CreatePackDataType = PackDataType;
 export type UpdatePackDataType = {
@@ -41,8 +42,10 @@ export type CardsParamsType = {
   pageCount?: number;
 };
 export type CardDataType = {
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
+  answerImg?: string;
+  questionImg?: string;
 };
 export type CreateCardDataType = { cardsPack_id: string } & CardDataType;
 export type UpdateCardDataType = { _id: string } & CardDataType;

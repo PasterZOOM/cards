@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Checkbox, FormControlLabel } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
+
+import { ImageInput } from '../../../../common/components/Forms/ImageInput/ImageInput';
 
 import styles from './PackModalForm.module.scss';
 
@@ -18,7 +20,14 @@ type PropsType = {
 };
 export const PackModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, handleChange, values, dirty, isSubmitting } = { ...formik };
+  const [val, setVal] = useState(values);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const changeValue = (value: string): void => {
+    values.deckCover = value;
+    setVal({ ...val, deckCover: value });
+    setIsDirty(true);
+  };
 
   const onClose = (): void => {
     dispatch(closeModal());
@@ -27,6 +36,13 @@ export const PackModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentT
   return (
     <Form>
       <FormGroup className={styles.main}>
+        <ImageInput
+          name="deckCover"
+          title="Download cover"
+          value={values.deckCover}
+          changeValue={changeValue}
+        />
+
         <ProjectTextField name="packName" label="Name Pack" disabled={isSubmitting} />
 
         <FormControlLabel
@@ -40,7 +56,7 @@ export const PackModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentT
             />
           }
         />
-        <ModalButtonGroup onClose={onClose} dirty={dirty} isValid={isValid} />
+        <ModalButtonGroup onClose={onClose} dirty={dirty || isDirty} isValid={isValid} />
       </FormGroup>
     </Form>
   );
