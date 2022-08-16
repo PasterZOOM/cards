@@ -42,10 +42,10 @@ export type CardsParamsType = {
   pageCount?: number;
 };
 export type CardDataType = {
-  question: string;
-  answer: string;
-  answerImg: string;
-  questionImg: string;
+  question?: string;
+  answer?: string;
+  answerImg?: string;
+  questionImg?: string;
 };
 export type CreateCardDataType = { cardsPack_id: string } & CardDataType;
 export type UpdateCardDataType = { _id: string } & CardDataType;

@@ -12,7 +12,6 @@ type ImageInputPropsType = {
   changeValue: (value: string) => void;
   title: string;
   name: string;
-  /* handleChange?: (e: string | ChangeEvent<any>) => void; */
 };
 
 export const ImageInput: React.FC<ImageInputPropsType> = ({
@@ -69,7 +68,6 @@ export const ImageInput: React.FC<ImageInputPropsType> = ({
         name={name}
         type="file"
         onChange={uploadHandler}
-        /*  onChange={handleChange} */
         style={{ display: 'none' }}
       />
       {value && !errorSize ? <img className={styles.image} src={value} alt="" /> : null}

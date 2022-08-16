@@ -4,6 +4,8 @@ import FormGroup from '@mui/material/FormGroup/FormGroup';
 import { Form, FormikProps } from 'formik';
 
 import { ImageInput } from '../../../../common/components/Forms/ImageInput/ImageInput';
+import { modal } from '../../../../common/enums/modal';
+import { Nullable } from '../../../../common/types/Nullable';
 
 import styles from './CardModalForm.module.scss';
 
@@ -19,29 +21,32 @@ type PropsType = {
   formik: FormikProps<CardModalFormTypes>;
   setQuestion: (value: string) => void;
   question: string;
+  title: Nullable<modal>;
 };
 export const CardModalForm: React.FC<PropsType> = ({
   formik,
   setQuestion,
   question,
+  title,
 }): ReturnComponentType => {
   const { isValid, dirty, isSubmitting, values } = {
     ...formik,
   };
+
   const dispatch = useAppDispatch();
   const [val, setVal] = useState(values);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
 
-  console.log('formik: ', isValid, dirty);
-  console.log(values);
-  console.log(question);
   const changeQuestionValue = (value: string): void => {
     values.questionImg = value;
     setVal({ ...val, questionImg: value });
+    setIsDirty(true);
   };
 
   const changeAnswerValue = (value: string): void => {
     values.answerImg = value;
     setVal({ ...val, answerImg: value });
+    setIsDirty(true);
   };
 
   const onClose = (): void => {
@@ -51,9 +56,12 @@ export const CardModalForm: React.FC<PropsType> = ({
   return (
     <Form>
       <FormGroup className={styles.main}>
-        <div className={styles.select}>
-          <Selected callback={setQuestion} />
-        </div>
+        {title === modal.ADD_CARD ? (
+          <div className={styles.select}>
+            <Selected question={question} callback={setQuestion} />
+          </div>
+        ) : null}
+
         <div className={styles.fields}>
           {question === 'text' ? (
             <div>
@@ -86,7 +94,7 @@ export const CardModalForm: React.FC<PropsType> = ({
         ) : (
           <ModalButtonGroup
             onClose={onClose}
-            dirty
+            dirty={isDirty}
             isValid={!!(values.questionImg && values.answerImg)}
           />
         )}

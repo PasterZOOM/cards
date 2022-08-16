@@ -21,10 +21,12 @@ type PropsType = {
 export const PackModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentType => {
   const { isValid, handleChange, values, dirty, isSubmitting } = { ...formik };
   const [val, setVal] = useState(values);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const changeValue = (value: string): void => {
     values.deckCover = value;
     setVal({ ...val, deckCover: value });
+    setIsDirty(true);
   };
 
   const onClose = (): void => {
@@ -54,7 +56,7 @@ export const PackModalForm: React.FC<PropsType> = ({ formik }): ReturnComponentT
             />
           }
         />
-        <ModalButtonGroup onClose={onClose} dirty={dirty} isValid={isValid} />
+        <ModalButtonGroup onClose={onClose} dirty={dirty || isDirty} isValid={isValid} />
       </FormGroup>
     </Form>
   );

@@ -60,7 +60,6 @@ export const PackModal = (): ReturnComponentType => {
 
   return (
     <Formik
-      /* enableReinitialize */
       initialValues={{
         packName: data.name,
         packPrivate: data.private,

@@ -9,12 +9,14 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type SelectedPropsType = {
   callback: (value: string) => void;
+  question: string;
 };
 
 export const Selected: React.FC<SelectedPropsType> = ({
   callback,
+  question,
 }): ReturnComponentType => {
-  const [value, setValue] = React.useState('text');
+  const [value, setValue] = React.useState(question);
 
   const handleChange = (event: SelectChangeEvent): void => {
     setValue(event.target.value as string);

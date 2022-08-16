@@ -31,16 +31,20 @@ export const CardsModal = (): ReturnComponentType => {
     { setSubmitting }: FormikHelpers<CardModalFormTypes>,
   ): Promise<void> => {
     if (title === modal.ADD_CARD) {
-      debugger;
       await dispatch(
         createCard({
-          data: {
-            answer: values.answer,
-            question: values.question,
-            cardsPack_id: createData.cardsPack_id,
-            answerImg: values.answerImg,
-            questionImg: values.questionImg,
-          },
+          data:
+            question === 'text'
+              ? {
+                  answer: values.answer,
+                  question: values.question,
+                  cardsPack_id: createData.cardsPack_id,
+                }
+              : {
+                  answerImg: values.answerImg,
+                  questionImg: values.questionImg,
+                  cardsPack_id: createData.cardsPack_id,
+                },
           params,
         }),
       );
@@ -76,7 +80,12 @@ export const CardsModal = (): ReturnComponentType => {
       onSubmit={submitModal}
     >
       {formik => (
-        <CardModalForm question={question} setQuestion={setQuestion} formik={formik} />
+        <CardModalForm
+          title={title}
+          question={question}
+          setQuestion={setQuestion}
+          formik={formik}
+        />
       )}
     </Formik>
   );
