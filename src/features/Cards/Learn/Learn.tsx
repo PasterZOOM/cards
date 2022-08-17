@@ -49,13 +49,13 @@ export const Learn = (): ReturnComponentType => {
         <LearnPaper card={card} onClick={onNext} buttonLabel="Next">
           <div>
             <Typography className={styles.answer}>
-              <b>Answer:</b>
+              <b>Answer: </b>
               {card.answerImg ? (
                 <div>
                   <img src={card.answerImg} alt="question" className={styles.answerImg} />
                 </div>
               ) : (
-                card.question
+                card.answer
               )}
             </Typography>
             <Grades setGrade={setGrade} />

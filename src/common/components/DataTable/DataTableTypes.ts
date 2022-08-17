@@ -1,4 +1,5 @@
 export type Order = 'asc' | 'desc';
+export type TableType = 'packs' | 'cards' | 'users';
 
 export type PackData = {
   name: string;
@@ -16,13 +17,21 @@ export type CardData = {
   grade: string;
 };
 
-export type DataKeys = keyof PackData | keyof CardData;
+export type UsersData = {
+  email: string;
+  name: string;
+  publicCardPacksCount: number;
+  avatar: string | null;
+};
+
+export type DataKeys = keyof PackData | keyof CardData | keyof UsersData;
 
 export type HeadCellType = {
-  id: keyof PackData | keyof CardData;
+  id: DataKeys;
   label: string;
   isSortable: boolean;
-  tableType: 'packs' | 'cards';
+  tableType: TableType;
   width: string;
   isOwner?: boolean;
+  withoutPadding?: boolean;
 };

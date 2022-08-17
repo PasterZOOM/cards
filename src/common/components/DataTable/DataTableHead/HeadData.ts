@@ -14,6 +14,7 @@ export const headCellsPacks: readonly HeadCellType[] = [
     isSortable: true,
     tableType: 'packs',
     width: '25%',
+    withoutPadding: true,
   },
   {
     id: 'cardsCount',
@@ -65,7 +66,7 @@ export const headCellsCards: readonly HeadCellType[] = [
     label: 'Last Updated',
     isSortable: true,
     tableType: 'cards',
-    width: '15%',
+    width: '12%',
   },
   {
     id: 'grade',
@@ -81,5 +82,37 @@ export const headCellsCards: readonly HeadCellType[] = [
     tableType: 'cards',
     width: '8%',
     isOwner: true,
+  },
+];
+
+export const headCellsUsers: readonly HeadCellType[] = [
+  {
+    id: 'avatar',
+    label: '',
+    isSortable: false,
+    tableType: 'users',
+    width: '5%',
+  },
+  {
+    id: 'name',
+    label: 'Name',
+    isSortable: false,
+    tableType: 'users',
+    width: '35%',
+    withoutPadding: true,
+  },
+  {
+    id: 'email',
+    label: 'Email',
+    isSortable: false,
+    tableType: 'users',
+    width: '35%',
+  },
+  {
+    id: 'publicCardPacksCount',
+    label: 'Cards Count',
+    isSortable: false,
+    tableType: 'users',
+    width: '15%',
   },
 ];

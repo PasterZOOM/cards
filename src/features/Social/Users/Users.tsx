@@ -54,7 +54,7 @@ export const Users = (): ReturnComponentType => {
       <div className={styles.body}>
         {users.length !== 0 ? (
           <div>
-            <DataTable tableType="packs" />
+            <DataTable tableType="users" />
             <Paginator totalCount={usersTotalCount} />
           </div>
         ) : (
