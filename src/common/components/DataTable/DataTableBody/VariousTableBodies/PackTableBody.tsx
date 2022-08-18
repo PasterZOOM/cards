@@ -55,7 +55,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     );
   };
 
-  const showDeckCoverImage = (): ReactElement | undefined => {
+  const showDeckCoverIfAvailable = (): ReactElement | undefined => {
     const countOfSymbols = 11;
 
     if (deckCover) {
@@ -71,7 +71,7 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
     <TableRow hover>
       <TableCell>
         <Box component="span" className={s.deckCoverContainer}>
-          {showDeckCoverImage()}
+          {showDeckCoverIfAvailable()}
         </Box>
       </TableCell>
       <TableCell padding="none">

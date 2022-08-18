@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -13,6 +13,7 @@ import {
   DataKeys,
   Order,
   PackData,
+  TableType,
 } from 'common/components/DataTable/DataTableTypes';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import {
@@ -24,7 +25,7 @@ import {
 import { getActualCardsParams, getActualPacksParams } from 'common/utils/getActualParams';
 
 type DataTableProps = {
-  tableType: 'packs' | 'cards';
+  tableType: TableType;
 };
 
 export const DataTable: React.FC<DataTableProps> = ({
@@ -55,6 +56,17 @@ export const DataTable: React.FC<DataTableProps> = ({
     setOrder(isAsc ? 'asc' : 'desc');
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    if (tableType === 'packs') {
+      setOrder(setCurrentOrder(actualSortPackUrlValue as string));
+      setOrderBy(setCurrentOrderBy(actualSortPackUrlValue as string));
+    }
+    if (tableType === 'cards') {
+      setOrder(setCurrentOrder(actualSorCardUrlValue as string));
+      setOrderBy(setCurrentOrderBy(actualSorCardUrlValue as string));
+    }
+  }, [actualSorCardUrlValue, actualSortPackUrlValue, searchParams, tableType]);
 
   return (
     <Box sx={{ width: '100%' }}>

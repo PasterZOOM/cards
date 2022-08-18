@@ -37,3 +37,8 @@
 .userNameColumn {
   @include forLongTextInColumns(200px)
 }
+
+.cardColumns {
+  max-width: 150px;
+  word-wrap: break-word;
+}
