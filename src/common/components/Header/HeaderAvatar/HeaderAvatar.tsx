@@ -8,6 +8,7 @@ import styles from './HeaderAvatar.module.scss';
 
 import logout from 'assets/images/logout.svg';
 import profile from 'assets/images/profile.svg';
+import users from 'assets/images/users.svg';
 import { OptionMenu } from 'common/components/OptionMenu/OptionMenu';
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
@@ -31,7 +32,7 @@ export const HeaderAvatar = (): ReturnComponentType => {
     },
     {
       title: 'Users',
-      icon: profile,
+      icon: users,
       action: (): void => {
         navigate(path.USERS);
       },
