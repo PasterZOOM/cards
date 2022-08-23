@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
+import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput';
 import Typography from '@mui/material/Typography/Typography';
@@ -25,6 +27,9 @@ export const Search: React.FC<PropsType> = ({ search }) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);
+  };
+  const clearSearch = (): void => {
+    setValue('');
   };
 
   useEffect(() => {
@@ -55,6 +60,15 @@ export const Search: React.FC<PropsType> = ({ search }) => {
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />
+          </InputAdornment>
+        }
+        endAdornment={
+          <InputAdornment position="end">
+            {value && (
+              <IconButton size="small" onClick={clearSearch}>
+                <ClearIcon />
+              </IconButton>
+            )}
           </InputAdornment>
         }
       />

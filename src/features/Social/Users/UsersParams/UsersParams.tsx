@@ -15,7 +15,7 @@ import {
 export const UsersParams = (): ReturnComponentType => {
   const minCount = useAppSelector(getMinPublicCardPacksCount);
   const maxCount = useAppSelector(getMaxPublicCardPacksCount);
-  const clearParams = ['userName', 'min', 'max', 'sortUsers', 'page', 'pageCount'];
+  const clearParams = ['min', 'max', 'sortUsers', 'page', 'pageCount'];
 
   return (
     <div className={styles.main}>
