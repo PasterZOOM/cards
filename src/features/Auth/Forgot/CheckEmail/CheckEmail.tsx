@@ -4,13 +4,15 @@ import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { useNavigate } from 'react-router-dom';
 
+import styles from './CheckEmail.module.scss';
+
+import { setAppStatus } from 'app/appReducer';
 import checkEmail from 'assets/images/checkEmail.svg';
 import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import { path } from 'common/enums/path';
+import { requestStatus } from 'common/enums/requestStatus';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import styles from 'features/Auth/Forgot/CheckEmail/CheckEmail.module.scss';
-import { changeRedirect } from 'features/Auth/Forgot/forgotReducer';
 
 export const CheckEmail = (): ReturnComponentType => {
   const email = useAppSelector(state => state.forgot.email);
@@ -22,7 +24,7 @@ export const CheckEmail = (): ReturnComponentType => {
   };
 
   useEffect(() => {
-    dispatch(changeRedirect({ redirect: false }));
+    dispatch(setAppStatus({ status: requestStatus.IDLE }));
   }, [dispatch]);
 
   return (

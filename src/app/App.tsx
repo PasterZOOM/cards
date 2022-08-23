@@ -13,13 +13,16 @@ import { RoutesPage } from 'common/components/RoutesPage/RoutesPage';
 import { requestStatus } from 'common/enums/requestStatus';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { getModalChildren } from 'common/utils/getModalChildren';
 import { BasicModal } from 'features/Modal/BasicModal';
+import { getModalTitle } from 'features/Modal/modalSelectors';
 
 export const App = (): ReturnComponentType => {
   const isInitialized = useAppSelector(getInitialized);
   const status = useAppSelector(getAppStatus);
   const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
+  const title = useAppSelector(getModalTitle);
 
   useEffect(() => {
     dispatch(initializeApp());
@@ -44,10 +47,11 @@ export const App = (): ReturnComponentType => {
         <CircularProgress color="inherit" />
       </Backdrop>
 
-      <InfoSnackbar />
-      <BasicModal />
       <Header />
       <RoutesPage />
+
+      <BasicModal title={title}>{getModalChildren(title)}</BasicModal>
+      <InfoSnackbar />
     </div>
   );
 };

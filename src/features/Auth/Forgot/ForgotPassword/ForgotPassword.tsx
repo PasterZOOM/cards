@@ -5,18 +5,21 @@ import Typography from '@mui/material/Typography/Typography';
 import { Formik, FormikHelpers } from 'formik';
 import { Navigate, NavLink } from 'react-router-dom';
 
+import styles from './ForgotPassword.module.scss';
+
+import { getAppStatus } from 'app/appSelectors';
 import { path } from 'common/enums/path';
+import { requestStatus } from 'common/enums/requestStatus';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { ForgotForm } from 'features/Auth/Forgot/ForgotPassword/ForgotForm/ForgotForm';
 import { validateForgotForm } from 'features/Auth/Forgot/ForgotPassword/ForgotForm/validateForgotForm';
-import styles from 'features/Auth/Forgot/ForgotPassword/ForgotPassword.module.scss';
 import { ForgotPasswordFormType } from 'features/Auth/Forgot/ForgotPassword/ForgotPasswordTypes';
 import { sendEmail } from 'features/Auth/Forgot/forgotReducer';
 
 export const ForgotPassword = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const redirect = useAppSelector(state => state.forgot.redirect);
+  const status = useAppSelector(getAppStatus);
 
   const submitRegisterForm = async (
     { email }: ForgotPasswordFormType,
@@ -26,7 +29,7 @@ export const ForgotPassword = (): ReturnComponentType => {
     setSubmitting(false);
   };
 
-  if (redirect) return <Navigate to={path.CHECK_EMAIL} />;
+  if (status === requestStatus.SUCCEEDED) return <Navigate to={path.CHECK_EMAIL} />;
 
   return (
     <Paper elevation={3} className={styles.main}>

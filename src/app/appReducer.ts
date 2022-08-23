@@ -29,7 +29,7 @@ export const initializeApp = createAsyncThunk(
 const slice = createSlice({
   name: 'app',
   initialState: {
-    status: requestStatus.LOADING,
+    status: requestStatus.IDLE,
     snackbar: {} as SnackbarType,
     isInitialized: false,
   },

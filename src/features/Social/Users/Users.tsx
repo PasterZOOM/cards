@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
 import styles from './Users.module.scss';
 
+import { BackToCardPacks } from 'common/components/BackToCardPacks/BackToCardPacks';
 import { DataTable } from 'common/components/DataTable/DataTable';
 import { Paginator } from 'common/components/Paginator/Paginator';
 import { path } from 'common/enums/path';
@@ -47,6 +48,9 @@ export const Users = (): ReturnComponentType => {
 
   return (
     <div className={styles.main}>
+      <div className={styles.backButton}>
+        <BackToCardPacks />
+      </div>
       <div className={styles.head}>
         <Typography className={styles.title}>Users</Typography>
       </div>
