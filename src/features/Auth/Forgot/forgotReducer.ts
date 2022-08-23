@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { repairPasswordAPI } from 'api/authAPI';
 import { setAppSnackbarValue, setAppStatus } from 'app/appReducer';
@@ -23,7 +23,6 @@ export const sendEmail = createAsyncThunk(
       dispatch(
         setAppSnackbarValue({ type: snackbarType.SUCCESS, message: res.data.info }),
       );
-      dispatch(changeRedirect({ redirect: true }));
 
       return { email };
     } catch (e) {
@@ -39,7 +38,6 @@ export const sendNewPassword = createAsyncThunk(
       const res = await repairPasswordAPI.sendNewPassword(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
-      dispatch(changeRedirect({ redirect: true }));
       dispatch(
         setAppSnackbarValue({ type: snackbarType.SUCCESS, message: res.data.info }),
       );
@@ -52,11 +50,7 @@ export const sendNewPassword = createAsyncThunk(
 const slice = createSlice({
   name: 'forgot',
   initialState: { email: 'your email' as string | undefined, redirect: false },
-  reducers: {
-    changeRedirect: (state, action: PayloadAction<{ redirect: boolean }>) => {
-      state.redirect = action.payload.redirect;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(sendEmail.fulfilled, (state, action) => {
       if (action.payload !== undefined) state.email = action.payload.email;
@@ -65,4 +59,3 @@ const slice = createSlice({
 });
 
 export const forgotReducer = slice.reducer;
-export const { changeRedirect } = slice.actions;

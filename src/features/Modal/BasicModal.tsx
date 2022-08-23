@@ -4,20 +4,20 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography/Typography';
 
-import closeIcon from 'assets/images/closeIcon.svg';
-import { modal } from 'common/enums/modal';
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import styles from 'features/Modal/BasicModal.module.scss';
-import { CardsModal } from 'features/Modal/CardsModal/CardsModal';
-import { DeleteModal } from 'features/Modal/DeleteModal/DeleteModal';
-import { closeModal } from 'features/Modal/modalReducer';
-import { getModalTitle } from 'features/Modal/modalSelectors';
-import { PackModal } from 'features/Modal/PackModal/PackModal';
+import styles from './BasicModal.module.scss';
 
-export const BasicModal = (): ReturnComponentType => {
+import closeIcon from 'assets/images/closeIcon.svg';
+import { useAppDispatch } from 'common/hooks/hooks';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { closeModal } from 'features/Modal/modalReducer';
+
+type PropsType = {
+  children?: ReturnComponentType;
+  title: string | null;
+};
+
+export const BasicModal: React.FC<PropsType> = ({ children, title }) => {
   const dispatch = useAppDispatch();
-  const title = useAppSelector(getModalTitle);
 
   const onClose = (): void => {
     dispatch(closeModal());
@@ -32,13 +32,7 @@ export const BasicModal = (): ReturnComponentType => {
             <img src={closeIcon} alt="close" />
           </IconButton>
         </div>
-        <div className={styles.body}>
-          {(title === modal.ADD_PACK || title === modal.EDIT_PACK) && <PackModal />}
-          {(title === modal.ADD_CARD || title === modal.EDIT_CARD) && <CardsModal />}
-          {(title === modal.DELETE_PACK || title === modal.DELETE_CARD) && (
-            <DeleteModal />
-          )}
-        </div>
+        <div className={styles.body}>{children}</div>
       </div>
     </Modal>
   );

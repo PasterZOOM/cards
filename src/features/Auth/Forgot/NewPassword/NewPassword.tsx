@@ -5,11 +5,12 @@ import Typography from '@mui/material/Typography/Typography';
 import { Formik, FormikHelpers } from 'formik';
 import { Navigate, useParams } from 'react-router-dom';
 
+import styles from './NewPassword.module.scss';
+
 import { path } from 'common/enums/path';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { sendNewPassword } from 'features/Auth/Forgot/forgotReducer';
-import styles from 'features/Auth/Forgot/NewPassword/NewPassword.module.scss';
 import { NewPasswordForm } from 'features/Auth/Forgot/NewPassword/NewPasswordForm/NewPasswordForm';
 import { validateNewPasswordForm } from 'features/Auth/Forgot/NewPassword/NewPasswordForm/validateNewPasswordForm';
 import { NewPasswordFormType } from 'features/Auth/Forgot/NewPassword/NewPasswordTypes';
