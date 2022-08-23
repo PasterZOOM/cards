@@ -1,0 +1,19 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  .paper {
+    width: 350px;
+    height: 500px;
+
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}

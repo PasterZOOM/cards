@@ -14,6 +14,7 @@ import { requestStatus } from 'common/enums/requestStatus';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getModalChildren } from 'common/utils/getModalChildren';
+import { Chat } from 'features/Chat/Chat';
 import { BasicModal } from 'features/Modal/BasicModal';
 import { getModalTitle } from 'features/Modal/modalSelectors';
 
@@ -50,6 +51,7 @@ export const App = (): ReturnComponentType => {
       <Header />
       <RoutesPage />
 
+      <Chat />
       <BasicModal title={title}>{getModalChildren(title)}</BasicModal>
       <InfoSnackbar />
     </div>
