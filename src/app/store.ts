@@ -11,6 +11,7 @@ import { cardsParamsReducer } from 'features/Cards/Cards/CardsParams/cardsParams
 import { cardsReducer } from 'features/Cards/Cards/cardsReducer';
 import { packsParamsReducer } from 'features/Cards/Packs/PacksParams/packsParamsReducer';
 import { packsReducer } from 'features/Cards/Packs/packsReducer';
+import { chatReducer } from 'features/Chat/chatReducer';
 import { modalsReducer } from 'features/Modal/modalReducer';
 import { usersParamsReducer } from 'features/Social/Users/UsersParams/usersParamsReducer';
 import { usersReducer } from 'features/Social/Users/usersReducer';
@@ -27,6 +28,7 @@ export const rootReducer = combineReducers({
   modals: modalsReducer,
   users: usersReducer,
   usersParams: usersParamsReducer,
+  chat: chatReducer,
 });
 
 export const store = configureStore({
