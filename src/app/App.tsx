@@ -14,13 +14,16 @@ import { requestStatus } from 'common/enums/requestStatus';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getModalChildren } from 'common/utils/getModalChildren';
+import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
+import { Chat } from 'features/Chat/Chat';
 import { BasicModal } from 'features/Modal/BasicModal';
 import { getModalTitle } from 'features/Modal/modalSelectors';
 
 export const App = (): ReturnComponentType => {
-  const isInitialized = useAppSelector(getInitialized);
-  const status = useAppSelector(getAppStatus);
   const dispatch = useAppDispatch();
+  const status = useAppSelector(getAppStatus);
+  const isInitialized = useAppSelector(getInitialized);
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
   const [open, setOpen] = React.useState(false);
   const title = useAppSelector(getModalTitle);
 
@@ -50,6 +53,7 @@ export const App = (): ReturnComponentType => {
       <Header />
       <RoutesPage />
 
+      {isLoggedIn && <Chat />}
       <BasicModal title={title}>{getModalChildren(title)}</BasicModal>
       <InfoSnackbar />
     </div>

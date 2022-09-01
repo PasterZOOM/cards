@@ -1,0 +1,54 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.main {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  .paper {
+    width: 350px;
+    height: 500px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+
+      .title {
+        @include text(20px, 600, 20px);
+      }
+    }
+
+    .messages {
+      width: 350px;
+      height: 402px;
+      overflow-y: scroll;
+
+      .message {
+        padding: 5px;
+        margin: 5px 5px 5px 20px;
+        background: #E8E8E8;
+        border-radius: 5px 5px 5px 0;
+        position: relative;
+        word-break: break-word;
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          right: 100%;
+          display: block;
+          width: 10px;
+          height: 10px;
+          background: radial-gradient(20px at top left, transparent 50%, #E8E8E8 0) no-repeat right bottom;
+        }
+      }
+    }
+
+    .input {
+      width: 350px;
+      padding: 5px 10px;
+    }
+  }
+}

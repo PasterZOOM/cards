@@ -30,7 +30,7 @@ const Transition =
   (dispatch: Dispatch, snackbar: SnackbarType) =>
   (props: TransitionProps): React.ReactElement => {
     return (
-      <Slide {...props} direction="left">
+      <Slide {...props} direction="right">
         <Alert
           onClose={handleClose(dispatch)}
           severity={snackbar.type}
@@ -53,7 +53,7 @@ export const InfoSnackbar = (): ReturnComponentType => {
 
   return (
     <Snackbar
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       open={!!snackbar.message}
       autoHideDuration={4000}
       onClose={handleClose(dispatch)}

@@ -4,6 +4,7 @@ import { changeLoggedIn } from 'features/Auth/User/Login/authReducer';
 import { sendUserDate } from 'features/Auth/User/Profile/profileReducer';
 import { setCardsParams } from 'features/Cards/Cards/CardsParams/cardsParamsReducer';
 import { setCardPacksParams } from 'features/Cards/Packs/PacksParams/packsParamsReducer';
+import { initMessagesHandle, newMessageSandHandle } from 'features/Chat/chatReducer';
 import { closeModal, openModal } from 'features/Modal/modalReducer';
 
 export type AppActionsType =
@@ -16,4 +17,6 @@ export type AppActionsType =
   | ReturnType<typeof setCardPacksParams>
   | ReturnType<typeof openModal>
   | ReturnType<typeof closeModal>
+  | ReturnType<typeof initMessagesHandle>
+  | ReturnType<typeof newMessageSandHandle>
   | ReturnType<typeof setCardsParams>;

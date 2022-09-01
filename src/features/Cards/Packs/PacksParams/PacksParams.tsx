@@ -13,15 +13,7 @@ import { getMaxCardsCount, getMinCardsCount } from 'features/Cards/Packs/packsSe
 export const PacksParams = (): ReturnComponentType => {
   const minCount = useAppSelector(getMinCardsCount);
   const maxCount = useAppSelector(getMaxCardsCount);
-  const clearParams = [
-    'page',
-    'user_id',
-    'packName',
-    'min',
-    'max',
-    'sortPacks',
-    'pageCount',
-  ];
+  const clearParams = ['page', 'user_id', 'min', 'max', 'sortPacks', 'pageCount'];
 
   return (
     <div className={styles.main}>
