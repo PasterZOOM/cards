@@ -3,9 +3,10 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import SendIcon from '@mui/icons-material/Send';
-import { Input } from '@mui/material';
+import { InputBase } from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Paper from '@mui/material/Paper/Paper';
+import Typography from '@mui/material/Typography/Typography';
 
 import styles from './Chat.module.scss';
 
@@ -18,6 +19,7 @@ import {
   setClient,
   setMessage,
 } from 'features/Chat/chatReducer';
+import { getMessages } from 'features/Chat/chatSelectors';
 
 export type MessageType = {
   message: string;
@@ -30,9 +32,9 @@ export type MessageType = {
 
 export const Chat = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const messages = useAppSelector(state => state.chat.messages);
-  const userName = useAppSelector(getUserName);
-  const userId = useAppSelector(getUserId);
+  const messages = useAppSelector(getMessages);
+  const name = useAppSelector(getUserName);
+  const chatUserId = useAppSelector(getUserId);
   const [viewChat, setViewChat] = useState(false);
   const [value, setValue] = useState('');
 
@@ -49,33 +51,38 @@ export const Chat = (): ReturnComponentType => {
 
   useEffect(() => {
     dispatch(createConnection());
-    dispatch(setClient({ chatUserId: userId, name: userName }));
+    dispatch(setClient({ chatUserId, name }));
 
     return () => {
       dispatch(destroyConnection());
     };
-  }, [dispatch, userId, userName]);
+  }, [dispatch, chatUserId, name]);
 
   return (
     <div className={styles.main}>
       {viewChat ? (
         <Paper elevation={3} className={styles.paper}>
-          <IconButton
-            onClick={() => setViewChat(false)}
-            size="small"
-            className={styles.close}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-          {messages.map(message => (
-            <div key={message._id}>
-              <div>
-                <b>{message.user.name}</b>
+          <div className={styles.header}>
+            <Typography className={styles.title}>Chat</Typography>
+            <IconButton onClick={() => setViewChat(false)} size="small">
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </div>
+
+          <div className={styles.messages}>
+            {messages.map(message => (
+              <div key={message._id} className={styles.message}>
+                <div>
+                  <b>{message.user.name}</b>
+                </div>
+                <div>{message.message}</div>
               </div>
-              <div>{message.message}</div>
-            </div>
-          ))}
-          <Input
+            ))}
+          </div>
+
+          <InputBase
+            className={styles.input}
+            placeholder="Write a message..."
             value={value}
             onChange={onChangeMessage}
             endAdornment={

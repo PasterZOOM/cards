@@ -32,7 +32,9 @@ export const destroyConnection = createAsyncThunk('chat/destroyConnection', () =
 
 const slice = createSlice({
   name: 'chat',
-  initialState: { messages: [] as Array<MessageType> },
+  initialState: {
+    messages: [] as Array<MessageType>,
+  },
   reducers: {
     initMessagesHandle(state, action: PayloadAction<Array<MessageType>>) {
       state.messages = action.payload;
