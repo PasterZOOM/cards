@@ -4,8 +4,10 @@ import { MessageType } from 'features/Chat/Chat';
 
 export const chatAPI = {
   socket: null as null | any,
-  createConnection() {
-    this.socket = socketIo('https://neko-back.herokuapp.com/');
+  createConnection(_id: string, name: string, avatar: string | null) {
+    // this.socket = socketIo('https://neko-back.herokuapp.com/');
+    this.socket = socketIo('http://localhost:7542/', { query: { _id, name, avatar } });
+    this.socket?.emit('init');
   },
 
   subscribe(
@@ -16,16 +18,12 @@ export const chatAPI = {
     this.socket?.on('new-message-sent', newMessageSandHandle);
   },
 
-  sentClient(chatUserId: string, name: string) {
-    this.socket?.emit('init', chatUserId);
-    this.socket?.emit('client-name-sent', name);
-  },
   sentMessage(messageText: string) {
     this.socket?.emit('client-message-sent', messageText);
   },
 
   destroyConnection() {
-    this.socket?.disconnect();
+    this.socket.disconnect();
     this.socket = null;
   },
 };

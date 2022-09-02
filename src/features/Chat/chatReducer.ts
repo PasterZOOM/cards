@@ -5,8 +5,8 @@ import { MessageType } from 'features/Chat/Chat';
 
 export const createConnection = createAsyncThunk(
   'chat/createConnection',
-  (param, { dispatch }) => {
-    chatAPI.createConnection();
+  (params: { userId: string; name: string; avatar: string | null }, { dispatch }) => {
+    chatAPI.createConnection(params.userId, params.name, params.avatar);
     chatAPI.subscribe(
       messages => {
         dispatch(initMessagesHandle(messages));
@@ -17,12 +17,7 @@ export const createConnection = createAsyncThunk(
     );
   },
 );
-export const setClient = createAsyncThunk(
-  'chat/setClientName',
-  (params: { chatUserId: string; name: string }) => {
-    chatAPI.sentClient(params.chatUserId, params.name);
-  },
-);
+
 export const setMessage = createAsyncThunk('chat/setClientName', (param: string) => {
   chatAPI.sentMessage(param);
 });

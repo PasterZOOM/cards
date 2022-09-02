@@ -1,9 +1,16 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useState,
+  KeyboardEvent,
+} from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import SendIcon from '@mui/icons-material/Send';
 import { InputBase } from '@mui/material';
+import Avatar from '@mui/material/Avatar/Avatar';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
@@ -12,11 +19,14 @@ import styles from './Chat.module.scss';
 
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getUserId, getUserName } from 'features/Auth/User/Profile/profileSelectors';
+import {
+  getAvatar,
+  getUserId,
+  getUserName,
+} from 'features/Auth/User/Profile/profileSelectors';
 import {
   createConnection,
   destroyConnection,
-  setClient,
   setMessage,
 } from 'features/Chat/chatReducer';
 import { getMessages } from 'features/Chat/chatSelectors';
@@ -27,14 +37,16 @@ export type MessageType = {
   user: {
     _id: string;
     name: string;
+    avatar: string;
   };
 };
 
 export const Chat = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+  const avatar = useAppSelector(getAvatar);
   const messages = useAppSelector(getMessages);
   const name = useAppSelector(getUserName);
-  const chatUserId = useAppSelector(getUserId);
+  const userId = useAppSelector(getUserId);
   const [viewChat, setViewChat] = useState(false);
   const [value, setValue] = useState('');
 
@@ -45,18 +57,26 @@ export const Chat = (): ReturnComponentType => {
   };
 
   const sendMessage = useCallback((): void => {
-    dispatch(setMessage(value));
+    if (value.trim().length) {
+      dispatch(setMessage(value));
+    }
     setValue('');
   }, [dispatch, value]);
 
+  const onKeyUpEnter = useCallback(
+    (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+      if (e.key === 'Enter' && value) sendMessage();
+    },
+    [sendMessage, value],
+  );
+
   useEffect(() => {
-    dispatch(createConnection());
-    dispatch(setClient({ chatUserId, name }));
+    dispatch(createConnection({ userId, name, avatar }));
 
     return () => {
       dispatch(destroyConnection());
     };
-  }, [dispatch, chatUserId, name]);
+  }, [dispatch, userId, name, avatar]);
 
   return (
     <div className={styles.main}>
@@ -71,11 +91,23 @@ export const Chat = (): ReturnComponentType => {
 
           <div className={styles.messages}>
             {messages.map(message => (
-              <div key={message._id} className={styles.message}>
-                <div>
-                  <b>{message.user.name}</b>
+              <div
+                key={message._id}
+                className={
+                  userId === message.user._id
+                    ? styles.myMessageBlock
+                    : styles.messageBlock
+                }
+              >
+                {userId !== message.user._id && (
+                  <Avatar alt="avatar" src={message.user.avatar || undefined} />
+                )}
+                <div className={styles.message}>
+                  {userId !== message.user._id && (
+                    <div className={styles.name}>{message.user.name}</div>
+                  )}
+                  <div className={styles.text}>{message.message}</div>
                 </div>
-                <div>{message.message}</div>
               </div>
             ))}
           </div>
@@ -84,10 +116,11 @@ export const Chat = (): ReturnComponentType => {
             className={styles.input}
             placeholder="Write a message..."
             value={value}
+            onKeyUp={onKeyUpEnter}
             onChange={onChangeMessage}
             endAdornment={
-              <IconButton onClick={sendMessage}>
-                <SendIcon fontSize="inherit" />
+              <IconButton onClick={sendMessage} disabled={!value}>
+                <SendIcon fontSize="inherit" color={value ? 'primary' : undefined} />
               </IconButton>
             }
           />

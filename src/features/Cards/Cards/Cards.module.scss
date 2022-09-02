@@ -21,9 +21,12 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-
       .packName {
         @include text(22px, 600, 27px);
+        max-width: 500px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin: 0 10px 0 0;
       }
 
