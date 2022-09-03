@@ -1,6 +1,8 @@
 import React from 'react';
 
+import OverlayScrollbars from 'overlayscrollbars';
 import ReactDOM from 'react-dom/client';
+import 'overlayscrollbars/css/OverlayScrollbars.css';
 import './index.css';
 import { Provider } from 'react-redux/es/exports';
 import { HashRouter } from 'react-router-dom';
@@ -19,5 +21,11 @@ root.render(
     </Provider>
   </HashRouter>,
 );
+
+OverlayScrollbars(document.body, {
+  scrollbars: {
+    clickScrolling: true,
+  },
+});
 
 reportWebVitals();

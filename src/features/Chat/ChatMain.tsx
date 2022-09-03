@@ -1,9 +1,10 @@
 import React, {
   ChangeEvent,
+  KeyboardEvent,
   useCallback,
   useEffect,
+  useRef,
   useState,
-  KeyboardEvent,
 } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,6 +15,7 @@ import Avatar from '@mui/material/Avatar/Avatar';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
+import OverlayScrollbars from 'overlayscrollbars';
 
 import styles from './Chat.module.scss';
 
@@ -41,7 +43,7 @@ export type MessageType = {
   };
 };
 
-export const Chat = (): ReturnComponentType => {
+export const ChatMain = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const avatar = useAppSelector(getAvatar);
   const messages = useAppSelector(getMessages);
@@ -49,6 +51,29 @@ export const Chat = (): ReturnComponentType => {
   const userId = useAppSelector(getUserId);
   const [viewChat, setViewChat] = useState(false);
   const [value, setValue] = useState('');
+  const chatMessages = useRef(null);
+
+  useEffect(() => {
+    let instance: OverlayScrollbars;
+
+    if (chatMessages.current) {
+      instance = OverlayScrollbars(chatMessages.current, {
+        scrollbars: {
+          clickScrolling: true,
+          autoHide: 'leave',
+          autoHideDelay: 0,
+        },
+      });
+
+      instance.scroll({ y: '100%' });
+    }
+
+    return () => {
+      if (instance) {
+        instance.destroy();
+      }
+    };
+  }, [chatMessages, messages]);
 
   const onChangeMessage = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -88,8 +113,7 @@ export const Chat = (): ReturnComponentType => {
               <CloseIcon fontSize="inherit" />
             </IconButton>
           </div>
-
-          <div className={styles.messages}>
+          <div ref={chatMessages} className={styles.messages}>
             {messages.map(message => (
               <div
                 key={message._id}

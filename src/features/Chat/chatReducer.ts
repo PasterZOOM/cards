@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { chatAPI } from 'api/chatAPI';
-import { MessageType } from 'features/Chat/Chat';
+import { MessageType } from 'features/Chat/ChatMain';
 
 export const createConnection = createAsyncThunk(
   'chat/createConnection',

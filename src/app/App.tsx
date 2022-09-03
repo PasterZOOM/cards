@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getModalChildren } from 'common/utils/getModalChildren';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
-import { Chat } from 'features/Chat/Chat';
+import { ChatMain } from 'features/Chat/ChatMain';
 import { BasicModal } from 'features/Modal/BasicModal';
 import { getModalTitle } from 'features/Modal/modalSelectors';
 
@@ -53,7 +53,7 @@ export const App = (): ReturnComponentType => {
       <Header />
       <RoutesPage />
 
-      {isLoggedIn && <Chat />}
+      {isLoggedIn && <ChatMain />}
       <BasicModal title={title}>{getModalChildren(title)}</BasicModal>
       <InfoSnackbar />
     </div>

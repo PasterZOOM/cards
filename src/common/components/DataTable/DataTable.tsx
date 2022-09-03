@@ -1,9 +1,10 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { useSearchParams } from 'react-router-dom';
 
 import { DataTableBody } from 'common/components/DataTable/DataTableBody/DataTableBody';
@@ -44,6 +45,7 @@ export const DataTable: React.FC<DataTableProps> = ({
       ? setCurrentOrderBy(actualSortPackUrlValue as string)
       : setCurrentOrderBy(actualSorCardUrlValue as string),
   );
+  const table = useRef<OverlayScrollbarsComponent>(null);
 
   const handleRequestSort = (event: MouseEvent<unknown>, property: DataKeys): void => {
     const isAsc = orderBy === property && order === 'desc';
@@ -72,15 +74,24 @@ export const DataTable: React.FC<DataTableProps> = ({
     <Box sx={{ width: '100%' }}>
       <Paper elevation={3} sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
-          <Table sx={{ minWidth: 1080 }} aria-labelledby="tableTitle">
-            <DataTableHead
-              tableType={tableType}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
-            <DataTableBody tableType={tableType} />
-          </Table>
+          <OverlayScrollbarsComponent
+            ref={table}
+            options={{
+              scrollbars: {
+                clickScrolling: true,
+              },
+            }}
+          >
+            <Table sx={{ minWidth: 1080 }} aria-labelledby="tableTitle">
+              <DataTableHead
+                tableType={tableType}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+              <DataTableBody tableType={tableType} />
+            </Table>
+          </OverlayScrollbarsComponent>
         </TableContainer>
       </Paper>
     </Box>

@@ -5,6 +5,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 2;
 
   .paper {
     width: 400px;
@@ -26,7 +27,6 @@
       flex-direction: column;
       justify-content: start;
       height: 402px;
-      overflow-y: auto;
 
       .messageBlock, .myMessageBlock {
         display: flex;
@@ -64,6 +64,7 @@
       .myMessageBlock {
         justify-content: end;
         margin-left: 50px;
+
         .message {
           background: #0077FF0F;
           border-radius: 7px 7px 0 7px;
