@@ -137,3 +137,12 @@ type TokenType = {
   token: string;
   tokenDeathTime: number;
 };
+export type MessageType = {
+  message: string;
+  _id: string;
+  user: {
+    _id: string;
+    name: string;
+    avatar: string;
+  };
+};
