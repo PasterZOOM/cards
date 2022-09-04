@@ -1,0 +1,10 @@
+@import "src/assets/styles/scss/variables";
+@import "src/assets/styles/scss/mixins";
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  height: 402px;
+}
+

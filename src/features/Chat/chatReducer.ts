@@ -28,7 +28,18 @@ export const destroyConnection = createAsyncThunk('chat/destroyConnection', () =
 const slice = createSlice({
   name: 'chat',
   initialState: {
-    messages: [] as Array<MessageType>,
+    messages: [
+      {
+        message: '',
+        _id: '',
+        user: {
+          _id: '',
+          name: '',
+          avatar: '',
+        },
+      },
+    ] as Array<MessageType>,
+    oldScrollPosition: 0,
   },
   reducers: {
     initMessagesHandle(state, action: PayloadAction<Array<MessageType>>) {
@@ -37,8 +48,12 @@ const slice = createSlice({
     newMessageSandHandle(state, action: PayloadAction<MessageType>) {
       state.messages.push(action.payload);
     },
+    setOldScrollPosition(state, action: PayloadAction<number>) {
+      state.oldScrollPosition = action.payload;
+    },
   },
 });
 
 export const chatReducer = slice.reducer;
-export const { initMessagesHandle, newMessageSandHandle } = slice.actions;
+export const { initMessagesHandle, newMessageSandHandle, setOldScrollPosition } =
+  slice.actions;

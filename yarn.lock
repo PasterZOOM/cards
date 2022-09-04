@@ -7043,6 +7043,11 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
+os-scroll-chain@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/os-scroll-chain/-/os-scroll-chain-2.0.0.tgz#f73e581822c503628a165929830899573af15097"
+  integrity sha512-KYWbc8jP/Gcv4i/kkZNafJFn2bK8jPsiLOvXjJfC+pdMlPsw2WcRMmnpQplP358ASKufWNp9S/g+7tcfXUckaQ==
+
 overlayscrollbars-react@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/overlayscrollbars-react/-/overlayscrollbars-react-0.3.0.tgz#6d18e741897131643aa8afbc7fed735fbd106c9c"
