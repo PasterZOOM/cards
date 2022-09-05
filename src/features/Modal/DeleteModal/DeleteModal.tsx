@@ -9,7 +9,7 @@ import { modal } from 'common/enums/modal';
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { useBack } from 'common/hooks/useBack';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { getActualCardsParams } from 'common/utils/getActualParams';
+import { getActualCardsParams, getActualPacksParams } from 'common/utils/getActualParams';
 import { deleteCard } from 'features/Cards/Cards/cardsReducer';
 import { deletePack } from 'features/Cards/Packs/packsReducer';
 import styles from 'features/Modal/BasicModal.module.scss';
@@ -22,7 +22,8 @@ export const DeleteModal = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(getPackData) as DeleteParamType & { loadPacks: boolean };
   const title = useAppSelector(getModalTitle);
-  const params = getActualCardsParams(searchParams);
+  const packsParams = getActualPacksParams(searchParams);
+  const cardsParams = getActualCardsParams(searchParams);
   const navigate = useNavigate();
   const backToPacks = useBack();
 
@@ -32,13 +33,15 @@ export const DeleteModal = (): ReturnComponentType => {
 
   const deleteItem = async (): Promise<void> => {
     if (title === modal.DELETE_PACK) {
-      await dispatch(deletePack({ packId: data._id, params, loadPacks: data.loadPacks }));
+      await dispatch(
+        deletePack({ packId: data._id, params: packsParams, loadPacks: data.loadPacks }),
+      );
       onClose();
       if (!data.loadPacks) navigate(backToPacks);
     }
 
     if (title === modal.DELETE_CARD) {
-      await dispatch(deleteCard({ cardId: data._id, params }));
+      await dispatch(deleteCard({ cardId: data._id, params: cardsParams }));
       onClose();
     }
   };
