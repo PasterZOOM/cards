@@ -36,7 +36,7 @@ export const headCellsPacks: readonly HeadCellType[] = [
     isSortable: true,
     tableType: 'packs',
     width: '15%',
-    isOwner: true,
+    createdBy: true,
   },
   {
     id: 'actions',

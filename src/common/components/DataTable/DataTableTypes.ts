@@ -34,4 +34,5 @@ export type HeadCellType = {
   width: string;
   isOwner?: boolean;
   withoutPadding?: boolean;
+  createdBy?: boolean;
 };

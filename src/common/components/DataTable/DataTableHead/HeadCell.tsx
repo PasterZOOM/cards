@@ -28,16 +28,19 @@ export const HeadCell: React.FC<HeadCellProps> = ({
   sortCallback,
 }): ReturnComponentType => {
   const [searchParams] = useSearchParams();
-  const ownPack =
-    useAppSelector(getUserId) === useAppSelector(getCardsPackUserId) ||
-    !searchParams.get('user_id');
+  const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
+  const ownPacks = searchParams.get('user_id');
 
   return (
     <TableCell
       key={headCell.id}
       sortDirection={orderBy === headCell.id ? order : false}
       width={headCell.width}
-      style={!ownPack && headCell.isOwner ? { display: 'none' } : {}}
+      style={
+        (!ownPack && headCell.isOwner) || (ownPacks && headCell.createdBy)
+          ? { display: 'none' }
+          : {}
+      }
       padding={headCell.withoutPadding ? 'none' : 'normal'}
     >
       {headCell.isSortable ? (
