@@ -22,32 +22,32 @@ export const ChatMessages: React.FC<PropsType> = ({
   setScrollDown,
 }) => {
   const messages = useAppSelector(getMessages);
-  const chatMessages = useRef<OverlayScrollbarsComponent>(null);
+  const chatMessagesRef = useRef<OverlayScrollbarsComponent>(null);
 
   const onHostSizeChanged = (): void => {
-    if (chatMessages.current) {
-      chatMessages.current.osInstance()?.scroll({ y: '100%' });
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.osInstance()?.scroll({ y: '100%' });
     }
   };
 
   const onContentSizeChanged = (): void => {
-    if (chatMessages.current) {
-      const { overflowAmount, scrollPosition } = getScroll(chatMessages.current);
+    if (chatMessagesRef.current) {
+      const { overflowAmount, scrollPosition } = getScroll(chatMessagesRef.current);
 
       if (overflowAmount - scrollPosition > differenceScrollPosition) {
-        if (scrollDown && chatMessages.current) {
-          chatMessages.current.osInstance()?.scroll({ y: '100%' });
+        if (scrollDown && chatMessagesRef.current) {
+          chatMessagesRef.current.osInstance()?.scroll({ y: '100%' });
           setScrollDown(false);
-        } else chatMessages.current.osInstance()?.scroll({ y: scrollPosition });
+        } else chatMessagesRef.current.osInstance()?.scroll({ y: scrollPosition });
       } else {
-        chatMessages.current.osInstance()?.scroll({ y: '100%' });
+        chatMessagesRef.current.osInstance()?.scroll({ y: '100%' });
       }
     }
   };
 
   const onScrollStop = (): void => {
-    if (chatMessages.current) {
-      const { overflowAmount, scrollPosition } = getScroll(chatMessages.current);
+    if (chatMessagesRef.current) {
+      const { overflowAmount, scrollPosition } = getScroll(chatMessagesRef.current);
 
       if (overflowAmount - scrollPosition < differenceScrollPosition) {
         clearUnreadMessages(0);
@@ -70,7 +70,7 @@ export const ChatMessages: React.FC<PropsType> = ({
 
   return (
     <OverlayScrollbarsComponent
-      ref={chatMessages}
+      ref={chatMessagesRef}
       className={styles.messages}
       options={options}
     >
