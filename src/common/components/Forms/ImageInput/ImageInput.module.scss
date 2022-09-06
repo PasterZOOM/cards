@@ -1,11 +1,13 @@
 .cover {
-.image {
-    width: 100%;
-    height: 120px;
-    margin-top: 30px;
-}
-.error {
+  .image {
+    display: block;
+    max-width: 170px;
+    max-height: 108px;
+    margin: 30px auto 0;
+  }
+
+  .error {
     text-align: center;
     color: red;
-}
+  }
 }

@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 import Backdrop from '@mui/material/Backdrop/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
-import { Options } from 'overlayscrollbars';
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import styles from './App.module.scss';
 
@@ -28,7 +26,6 @@ export const App = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const [open, setOpen] = React.useState(false);
   const title = useAppSelector(getModalTitle);
-  const appRef = useRef<OverlayScrollbarsComponent>(null);
 
   useEffect(() => {
     dispatch(initializeApp());
@@ -47,27 +44,15 @@ export const App = (): ReturnComponentType => {
     );
   }
 
-  const options: Options = {
-    scrollbars: {
-      clickScrolling: true,
-    },
-  };
-
   return (
     <div>
       <Backdrop open={open} sx={{ color: '#fff', zIndex: 10 }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <OverlayScrollbarsComponent
-        ref={appRef}
-        className={styles.messages}
-        options={options}
-      >
-        <div className={styles.main}>
-          <Header />
-          <RoutesPage />
-        </div>
-      </OverlayScrollbarsComponent>
+
+      <Header />
+      <RoutesPage />
+
       {isLoggedIn && <Chat />}
       <BasicModal title={title}>{getModalChildren(title)}</BasicModal>
       <InfoSnackbar />

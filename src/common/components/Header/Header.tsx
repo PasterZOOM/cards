@@ -23,7 +23,7 @@ export const Header = (): ReturnComponentType => {
   };
 
   return (
-    <AppBar position="static" className={styles.main}>
+    <AppBar className={styles.main} sx={{ zIndex: 1 }}>
       <Toolbar className={styles.toolbar}>
         <NavLink to={path.PACKS}>
           <img src={logo} alt="logo" className={styles.logo} />

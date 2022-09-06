@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import styles from './RoutesPage.module.scss';
+
 import { Error404 } from 'common/components/Error404/Error404';
 import { path } from 'common/enums/path';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
@@ -32,7 +34,7 @@ export const RoutesPage = (): ReturnComponentType => {
   ];
 
   return (
-    <div>
+    <div className={styles.main}>
       <Routes>
         <Route path="/" element={<Navigate to={path.LOGIN} />} />
         {routes.map(route => (

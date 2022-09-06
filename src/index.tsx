@@ -1,5 +1,6 @@
 import React from 'react';
 
+import OverlayScrollbars from 'overlayscrollbars';
 import ReactDOM from 'react-dom/client';
 import 'overlayscrollbars/css/OverlayScrollbars.css';
 import './index.css';
@@ -21,10 +22,10 @@ root.render(
   </HashRouter>,
 );
 
-// OverlayScrollbars(document.body, {
-//   scrollbars: {
-//     clickScrolling: true,
-//   },
-// });
+OverlayScrollbars(document.body, {
+  scrollbars: {
+    clickScrolling: true,
+  },
+});
 
 reportWebVitals();

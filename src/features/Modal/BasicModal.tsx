@@ -24,16 +24,18 @@ export const BasicModal: React.FC<PropsType> = ({ children, title }) => {
   };
 
   return (
-    <Modal open={!!title} onClose={onClose} sx={{ zIndex: 1 }}>
-      <div className={styles.main}>
-        <div className={styles.header}>
-          <Typography className={styles.title}>{title}</Typography>
-          <IconButton onClick={onClose}>
-            <img src={closeIcon} alt="close" />
-          </IconButton>
+    <div>
+      <Modal disablePortal open={!!title} onClose={onClose} sx={{ zIndex: 1 }}>
+        <div className={styles.main}>
+          <div className={styles.header}>
+            <Typography className={styles.title}>{title}</Typography>
+            <IconButton onClick={onClose}>
+              <img src={closeIcon} alt="close" />
+            </IconButton>
+          </div>
+          <div className={styles.body}>{children}</div>
         </div>
-        <div className={styles.body}>{children}</div>
-      </div>
-    </Modal>
+      </Modal>{' '}
+    </div>
   );
 };
