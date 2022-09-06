@@ -6,6 +6,7 @@ import { GetPacksResponseType } from 'api/ResponseTypes';
 import { setAppStatus } from 'app/appReducer';
 import { requestStatus } from 'common/enums/requestStatus';
 import { handleError } from 'common/utils/handleError';
+import { loadUser } from 'features/Social/User/userReducer';
 
 export const loadPacks = createAsyncThunk(
   'packs/loadPacks',
@@ -14,6 +15,8 @@ export const loadPacks = createAsyncThunk(
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
       const res = await packAPI.getPacks(param);
+
+      if (param.user_id) dispatch(loadUser(param.user_id));
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 

@@ -15,16 +15,17 @@ export type UserType = {
   updated: string;
   __v: number;
   avatar: string | null;
-} & TokenType;
+};
 export type RegisterResponseType = {
   addedUser: UserType;
   error?: string;
-};
-export type MeResponseType = UserType & {
-  error?: string;
-};
+} & TokenType;
+export type MeResponseType = UserType &
+  TokenType & {
+    error?: string;
+  };
 export type UpdatedUserResponseType = {
-  updatedUser: UserType;
+  updatedUser: UserType & TokenType;
   error?: string;
 } & TokenType;
 
@@ -124,13 +125,19 @@ export type UpdateGradeResponseType = {
   updatedGrade: UpdatedGradeType;
 } & TokenType;
 
+export type AnotherUserType = Omit<UserType, 'rememberMe' | '__v'>;
+
 export type GetUsersResponseType = {
-  users: Array<Omit<UserType, 'rememberMe' | '__v'>>;
+  users: Array<AnotherUserType>;
   page: number;
   pageCount: number;
   usersTotalCount: number;
   minPublicCardPacksCount: number;
   maxPublicCardPacksCount: number;
+} & TokenType;
+
+export type GetUserResponseType = {
+  user: AnotherUserType;
 } & TokenType;
 
 type TokenType = {

@@ -13,6 +13,7 @@ import { packsParamsReducer } from 'features/Cards/Packs/PacksParams/packsParams
 import { packsReducer } from 'features/Cards/Packs/packsReducer';
 import { chatReducer } from 'features/Chat/chatReducer';
 import { modalsReducer } from 'features/Modal/modalReducer';
+import { userReducer } from 'features/Social/User/userReducer';
 import { usersParamsReducer } from 'features/Social/Users/UsersParams/usersParamsReducer';
 import { usersReducer } from 'features/Social/Users/usersReducer';
 
@@ -27,6 +28,7 @@ export const rootReducer = combineReducers({
   packsParams: packsParamsReducer,
   modals: modalsReducer,
   users: usersReducer,
+  user: userReducer,
   usersParams: usersParamsReducer,
   chat: chatReducer,
 });

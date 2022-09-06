@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { PackType } from 'api/ResponseTypes';
 import deleteIco from 'assets/images/delete.svg';
@@ -27,10 +27,12 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
   pack,
 }): ReturnComponentType => {
   const { _id, name, updated, user_name, cardsCount, user_id, deckCover } = { ...pack };
+  const [searchParams] = useSearchParams();
   const updateDate = new Date(updated).toLocaleDateString('ru');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const myId = useAppSelector(getUserId);
+  const ownPack = searchParams.get('user_id');
 
   const onClickLearnHandle = async (): Promise<void> => {
     await dispatch(loadCards({ cardsPack_id: _id, pageCount: cardsCount }));
@@ -83,11 +85,15 @@ export const PackTableBody: React.FC<PacksTableBodyProps> = ({
       </TableCell>
       <TableCell>{cardsCount}</TableCell>
       <TableCell>{updateDate}</TableCell>
-      <TableCell>
-        <Box component="span" className={s.userNameColumn}>
-          {user_name}
-        </Box>
-      </TableCell>
+      {!ownPack && (
+        <TableCell>
+          <Box component="span" className={s.userNameColumn}>
+            <NavLink to={`${path.PACKS}?user_id=${user_id}`} className={s.nameLink}>
+              {user_name}
+            </NavLink>
+          </Box>
+        </TableCell>
+      )}
       <TableCell>
         <IconButton
           className={`${s.ico} + ${s.disable}`}

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
+import Avatar from '@mui/material/Avatar/Avatar';
 import Typography from '@mui/material/Typography/Typography';
 import { Navigate, useSearchParams } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks/hooks';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { getActualPacksParams } from 'common/utils/getActualParams';
 import { getIsLoggedIn } from 'features/Auth/User/Login/authSelectors';
+import { getUserId } from 'features/Auth/User/Profile/profileSelectors';
 import styles from 'features/Cards/Packs/Packs.module.scss';
 import { PacksParams } from 'features/Cards/Packs/PacksParams/PacksParams';
 import { setCardPacksParams } from 'features/Cards/Packs/PacksParams/packsParamsReducer';
@@ -22,15 +24,19 @@ import {
   getCardPacksTotalCount,
 } from 'features/Cards/Packs/packsSelectors';
 import { openModal } from 'features/Modal/modalReducer';
+import { getAnotherUser } from 'features/Social/User/userSelectors';
 
 export const Packs = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   const [searchParams] = useSearchParams();
 
+  const user = useAppSelector(getAnotherUser);
+  const isMyPacks = useAppSelector(getUserId) === user._id;
   const isLoggedIn = useAppSelector(getIsLoggedIn);
   const cardPacksTotalCount = useAppSelector(getCardPacksTotalCount);
   const packs = useAppSelector(getCardPacks);
+  const isPacksAnotherUser = user._id === searchParams.get('user_id');
 
   const stateParams = useAppSelector(getPacksParams);
   const URLParams = useMemo(() => getActualPacksParams(searchParams), [searchParams]);
@@ -63,7 +69,18 @@ export const Packs = (): ReturnComponentType => {
     <div className={styles.main}>
       <div className={styles.head}>
         <Typography className={styles.title}>Packs list</Typography>
-        <GeneralButton label="Add new pack" onClick={createNewPack} />
+        {isPacksAnotherUser && !isMyPacks ? (
+          <div className={styles.userInfo}>
+            <Typography className={styles.userName}>{user.name}</Typography>
+            <Avatar
+              alt="avatar"
+              src={user.avatar || undefined}
+              className={styles.avatar}
+            />
+          </div>
+        ) : (
+          <GeneralButton label="Add new pack" onClick={createNewPack} />
+        )}
       </div>
       <PacksParams />
       <div className={styles.body}>

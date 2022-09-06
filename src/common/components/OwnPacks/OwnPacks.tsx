@@ -17,7 +17,13 @@ export const OwnPacks = (): ReturnComponentType => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const userId = useAppSelector(getUserId);
-  const packsOwnLS = searchParams.get('user_id') ? packsOwn.MY : packsOwn.ALL;
+  let packsOwnLS;
+
+  if (searchParams.get('user_id') === null) {
+    packsOwnLS = packsOwn.ALL;
+  } else if (searchParams.get('user_id') === userId) {
+    packsOwnLS = packsOwn.MY;
+  } else packsOwnLS = packsOwn.USER;
 
   const onClickButton = (buttonName: packsOwn): void => {
     const queryParams: { user_id?: string } = {};
@@ -33,25 +39,24 @@ export const OwnPacks = (): ReturnComponentType => {
     });
   };
 
-  const buttons = [
-    <FilterButton
-      key={packsOwn.MY}
-      title={packsOwn.MY}
-      onClickButton={onClickButton}
-      packsOwnLS={packsOwnLS}
-    />,
-    <FilterButton
-      key={packsOwn.ALL}
-      title={packsOwn.ALL}
-      onClickButton={onClickButton}
-      packsOwnLS={packsOwnLS}
-    />,
-  ];
-
   return (
     <div className={styles.main}>
       <Typography className={styles.title}>Show packs cards</Typography>
-      <ButtonGroup>{buttons}</ButtonGroup>
+      <ButtonGroup>
+        <FilterButton
+          key={packsOwn.MY}
+          title={packsOwn.MY}
+          onClickButton={onClickButton}
+          packsOwnLS={packsOwnLS}
+        />
+
+        <FilterButton
+          key={packsOwn.ALL}
+          title={packsOwn.ALL}
+          onClickButton={onClickButton}
+          packsOwnLS={packsOwnLS}
+        />
+      </ButtonGroup>
     </div>
   );
 };

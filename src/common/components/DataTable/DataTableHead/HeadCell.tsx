@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   DataKeys,
@@ -26,7 +27,10 @@ export const HeadCell: React.FC<HeadCellProps> = ({
   orderBy,
   sortCallback,
 }): ReturnComponentType => {
-  const ownPack = useAppSelector(getUserId) === useAppSelector(getCardsPackUserId);
+  const [searchParams] = useSearchParams();
+  const ownPack =
+    useAppSelector(getUserId) === useAppSelector(getCardsPackUserId) ||
+    !searchParams.get('user_id');
 
   return (
     <TableCell
