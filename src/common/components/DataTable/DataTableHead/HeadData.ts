@@ -97,7 +97,7 @@ export const headCellsUsers: readonly HeadCellType[] = [
   {
     id: 'name',
     label: 'Name',
-    isSortable: false,
+    isSortable: true,
     tableType: 'users',
     width: '35%',
     withoutPadding: true,
@@ -105,14 +105,14 @@ export const headCellsUsers: readonly HeadCellType[] = [
   {
     id: 'email',
     label: 'Email',
-    isSortable: false,
+    isSortable: true,
     tableType: 'users',
     width: '35%',
   },
   {
     id: 'publicCardPacksCount',
     label: 'Cards Count',
-    isSortable: false,
+    isSortable: true,
     tableType: 'users',
     width: '15%',
   },

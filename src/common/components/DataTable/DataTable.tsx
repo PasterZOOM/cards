@@ -15,6 +15,7 @@ import {
   Order,
   PackData,
   TableType,
+  UsersData,
 } from 'common/components/DataTable/DataTableTypes';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import {
@@ -22,8 +23,13 @@ import {
   setCurrentOrderBy,
   sortCardsHelper,
   sortPacksHelper,
+  sortUsersHelper,
 } from 'common/utils/dataTableSortHelper';
-import { getActualCardsParams, getActualPacksParams } from 'common/utils/getActualParams';
+import {
+  getActualCardsParams,
+  getActualPacksParams,
+  getActualUsersParams,
+} from 'common/utils/getActualParams';
 
 type DataTableProps = {
   tableType: TableType;
@@ -35,6 +41,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const actualSortPackUrlValue = getActualPacksParams(searchParams).sortPacks;
   const actualSorCardUrlValue = getActualCardsParams(searchParams).sortCards;
+  const actualSorUsersUrlValue = getActualUsersParams(searchParams).sortUsers;
   const [order, setOrder] = useState<Order>(
     tableType === 'packs'
       ? setCurrentOrder(actualSortPackUrlValue as string)
@@ -54,6 +61,8 @@ export const DataTable: React.FC<DataTableProps> = ({
       sortPacksHelper(property as keyof PackData, order, setSearchParams, searchParams);
     if (tableType === 'cards')
       sortCardsHelper(property as keyof CardData, order, setSearchParams, searchParams);
+    if (tableType === 'users')
+      sortUsersHelper(property as keyof UsersData, order, setSearchParams, searchParams);
 
     setOrder(isAsc ? 'asc' : 'desc');
     setOrderBy(property);
@@ -67,6 +76,10 @@ export const DataTable: React.FC<DataTableProps> = ({
     if (tableType === 'cards') {
       setOrder(setCurrentOrder(actualSorCardUrlValue as string));
       setOrderBy(setCurrentOrderBy(actualSorCardUrlValue as string));
+    }
+    if (tableType === 'users') {
+      setOrder(setCurrentOrder(actualSorUsersUrlValue as string));
+      setOrderBy(setCurrentOrderBy(actualSorUsersUrlValue as string));
     }
   }, [actualSorCardUrlValue, actualSortPackUrlValue, searchParams, tableType]);
 

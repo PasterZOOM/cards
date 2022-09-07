@@ -5,9 +5,11 @@ import {
   DataKeys,
   Order,
   PackData,
+  UsersData,
 } from 'common/components/DataTable/DataTableTypes';
 import { sortCards } from 'common/enums/sortCards';
 import { sortPacks } from 'common/enums/sortPacks';
+import { sortUsers } from 'common/enums/sortUsers';
 
 export const sortPacksHelper = (
   property: keyof PackData,
@@ -84,6 +86,46 @@ export const sortCardsHelper = (
       queryParams.sortCards = sortCards.ASC_GRADE;
     } else {
       queryParams.sortCards = sortCards.DESC_GRADE;
+    }
+  }
+
+  searchParams.delete('page');
+
+  setSearchParams({
+    ...Object.fromEntries(searchParams),
+    ...queryParams,
+  });
+};
+export const sortUsersHelper = (
+  property: keyof UsersData,
+  order: Order,
+  setSearchParams: (
+    nextInit: URLSearchParamsInit,
+    navigateOptions?: { replace?: boolean | undefined; state?: any } | undefined,
+  ) => void,
+  searchParams: URLSearchParams,
+): void => {
+  const queryParams: { sortUsers?: string } = {};
+
+  if (property === 'name') {
+    if (order === 'asc') {
+      queryParams.sortUsers = sortUsers.ASC_NAME;
+    } else {
+      queryParams.sortUsers = sortUsers.DESC_NAME;
+    }
+  }
+  if (property === 'email') {
+    if (order === 'asc') {
+      queryParams.sortUsers = sortUsers.ASC_EMAIL;
+    } else {
+      queryParams.sortUsers = sortUsers.DESC_EMAIL;
+    }
+  }
+  if (property === 'publicCardPacksCount') {
+    if (order === 'asc') {
+      queryParams.sortUsers = sortUsers.ASC_PACKS_COUNT;
+    } else {
+      queryParams.sortUsers = sortUsers.DESC_PACKS_COUNT;
     }
   }
 
