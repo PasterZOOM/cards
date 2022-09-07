@@ -7043,11 +7043,6 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-os-scroll-chain@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/os-scroll-chain/-/os-scroll-chain-2.0.0.tgz#f73e581822c503628a165929830899573af15097"
-  integrity sha512-KYWbc8jP/Gcv4i/kkZNafJFn2bK8jPsiLOvXjJfC+pdMlPsw2WcRMmnpQplP358ASKufWNp9S/g+7tcfXUckaQ==
-
 overlayscrollbars-react@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/overlayscrollbars-react/-/overlayscrollbars-react-0.3.0.tgz#6d18e741897131643aa8afbc7fed735fbd106c9c"
@@ -7057,11 +7052,6 @@ overlayscrollbars@1.13.3:
   version "1.13.3"
   resolved "https://registry.yarnpkg.com/overlayscrollbars/-/overlayscrollbars-1.13.3.tgz#992c96fd2c8535802d1e56c40bc12ec03076c626"
   integrity sha512-1nB/B5kaakJuHXaLXLRK0bUIilWhUGT6q5g+l2s5vqYdLle/sd0kscBHkQC1kuuDg9p9WR4MTdySDOPbeL/86g==
-
-overlayscrollbarschat@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/overlayscrollbarschat/-/overlayscrollbarschat-0.3.0.tgz#50cb5b0b500058addd6d07453d904e0ab2b259ab"
-  integrity sha512-55oS0bTXRDz63A/cMU6dE5/vkvaxggtV/zfMXJJBARxdUijBVowhmac6QHhhc67D0PqZYmK8NA1SP10VRbMKeg==
 
 p-limit@^1.1.0:
   version "1.3.0"

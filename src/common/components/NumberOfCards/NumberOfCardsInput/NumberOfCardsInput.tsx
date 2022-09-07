@@ -35,6 +35,7 @@ export const NumberOfCardsInput: React.FC<PropsType> = ({
       className={styles.input}
       value={value[activeThumb].toFixed()}
       onChange={changeInputValue(activeThumb)}
+      disabled
     />
   );
 };

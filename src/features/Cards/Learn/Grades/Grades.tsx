@@ -5,18 +5,17 @@ import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
-import { v1 } from 'uuid';
 
 import styles from './Grades.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 const grades = [
-  { id: v1(), value: 1, label: 'Did not know' },
-  { id: v1(), value: 2, label: 'Forgot' },
-  { id: v1(), value: 3, label: 'A lot of thought' },
-  { id: v1(), value: 4, label: 'Confused' },
-  { id: v1(), value: 5, label: 'Knew the answer' },
+  { id: '1', value: 1, label: 'Did not know' },
+  { id: '2', value: 2, label: 'Forgot' },
+  { id: '3', value: 3, label: 'A lot of thought' },
+  { id: '4', value: 4, label: 'Confused' },
+  { id: '5', value: 5, label: 'Knew the answer' },
 ];
 
 type PropsType = {
