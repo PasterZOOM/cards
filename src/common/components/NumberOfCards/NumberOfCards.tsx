@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import styles from './NumberOfCards.module.scss';
 
 import { NumberOfCardsInput } from 'common/components/NumberOfCards/NumberOfCardsInput/NumberOfCardsInput';
+import { useDebounce } from 'common/hooks/useDebounce';
 
 type PropsType = {
   minCount: number;
@@ -19,9 +20,12 @@ export const NumberOfCards: React.FC<PropsType> = ({ minCount, maxCount }) => {
     Number(searchParams.get('min')) || minCount,
     Number(searchParams.get('max')) || maxCount,
   ]);
+  const [isDebounced, setIsDebounced] = useState(true);
+  const debouncedValue = useDebounce<Array<number>>(value);
 
   const onChangeHandle = (event: Event, newValue: number | Array<number>): void => {
     setValue(newValue as Array<number>);
+    setIsDebounced(false);
   };
 
   const onChangeCommittedHandle = useCallback((): void => {
@@ -40,6 +44,24 @@ export const NumberOfCards: React.FC<PropsType> = ({ minCount, maxCount }) => {
   }, [maxCount, minCount, searchParams, setSearchParams, value]);
 
   useEffect(() => {
+    if (isDebounced) {
+      const queryParams: { min?: string; max?: string } = {};
+
+      if (debouncedValue[0] !== minCount) {
+        queryParams.min = String(debouncedValue[0]);
+      } else searchParams.delete('min');
+      if (debouncedValue[1] !== maxCount) {
+        queryParams.max = String(debouncedValue[1]);
+      } else searchParams.delete('max');
+
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
+        ...queryParams,
+      });
+    }
+  }, [debouncedValue, searchParams, setSearchParams]);
+
+  useEffect(() => {
     setValue([
       Number(searchParams.get('min')) || minCount,
       Number(searchParams.get('max')) || maxCount,
@@ -54,6 +76,7 @@ export const NumberOfCards: React.FC<PropsType> = ({ minCount, maxCount }) => {
           activeThumb={0}
           value={value}
           setValue={setValue}
+          setIsDebounced={setIsDebounced}
           minCount={minCount}
           maxCount={maxCount}
         />
@@ -72,6 +95,7 @@ export const NumberOfCards: React.FC<PropsType> = ({ minCount, maxCount }) => {
           activeThumb={1}
           value={value}
           setValue={setValue}
+          setIsDebounced={setIsDebounced}
           minCount={minCount}
           maxCount={maxCount}
         />

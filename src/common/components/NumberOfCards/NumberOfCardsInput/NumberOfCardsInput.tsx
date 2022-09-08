@@ -5,6 +5,7 @@ import styles from './NumberOfCardsInput.module.scss';
 type PropsType = {
   value: Array<number>;
   setValue: (numbers: Array<number>) => void;
+  setIsDebounced: (isDebounce: boolean) => void;
   activeThumb: 0 | 1;
   minCount: number;
   maxCount: number;
@@ -12,12 +13,14 @@ type PropsType = {
 export const NumberOfCardsInput: React.FC<PropsType> = ({
   value,
   setValue,
+  setIsDebounced,
   activeThumb,
   minCount,
   maxCount,
 }) => {
   const changeInputValue =
     (activeThumb: number) => (event: ChangeEvent<HTMLInputElement>) => {
+      setIsDebounced(true);
       let currentValue = event.currentTarget.valueAsNumber;
 
       if (currentValue < minCount) currentValue = minCount;
@@ -35,7 +38,6 @@ export const NumberOfCardsInput: React.FC<PropsType> = ({
       className={styles.input}
       value={value[activeThumb].toFixed()}
       onChange={changeInputValue(activeThumb)}
-      disabled
     />
   );
 };
