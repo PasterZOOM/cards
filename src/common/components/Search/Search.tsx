@@ -46,7 +46,7 @@ export const Search: React.FC<PropsType> = ({ search }) => {
       ...Object.fromEntries(searchParams),
       ...queryParams,
     });
-  }, [debouncedValue, search, searchParams, setSearchParams]);
+  }, [debouncedValue, search, setSearchParams]);
 
   return (
     <div className={styles.main}>
