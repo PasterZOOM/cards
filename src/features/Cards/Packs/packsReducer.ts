@@ -14,9 +14,9 @@ export const loadPacks = createAsyncThunk(
     try {
       dispatch(setAppStatus({ status: requestStatus.LOADING }));
 
-      const res = await packAPI.getPacks(param);
+      if (param.user_id) await dispatch(loadUser(param.user_id));
 
-      if (param.user_id) dispatch(loadUser(param.user_id));
+      const res = await packAPI.getPacks(param);
 
       dispatch(setAppStatus({ status: requestStatus.SUCCEEDED }));
 
