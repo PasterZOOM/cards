@@ -42,6 +42,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   const actualSortPackUrlValue = getActualPacksParams(searchParams).sortPacks;
   const actualSorCardUrlValue = getActualCardsParams(searchParams).sortCards;
   const actualSorUsersUrlValue = getActualUsersParams(searchParams).sortUsers;
+  const table = useRef<OverlayScrollbarsComponent>(null);
   const [order, setOrder] = useState<Order>(
     tableType === 'packs'
       ? setCurrentOrder(actualSortPackUrlValue as string)
@@ -52,7 +53,6 @@ export const DataTable: React.FC<DataTableProps> = ({
       ? setCurrentOrderBy(actualSortPackUrlValue as string)
       : setCurrentOrderBy(actualSorCardUrlValue as string),
   );
-  const table = useRef<OverlayScrollbarsComponent>(null);
 
   const handleRequestSort = (event: MouseEvent<unknown>, property: DataKeys): void => {
     const isAsc = orderBy === property && order === 'desc';

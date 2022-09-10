@@ -1741,6 +1741,16 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.5.tgz#db5a11bf66bdab39569719555b0f76e138d7bd64"
   integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
 
+"@react-buddy/ide-toolbox@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@react-buddy/ide-toolbox/-/ide-toolbox-2.2.1.tgz#44d5977fbd9459d0221dce9f558f09032864eba9"
+  integrity sha512-oQWiiY0MJKeeHjW0wm6mO4ebarUdAW5z2g2p3gY5lF4ybDqm6CSU0oA9A6VFqGHLyG93w9W6rvRt/Ajd5cNNAQ==
+
+"@react-buddy/palette-mui@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@react-buddy/palette-mui/-/palette-mui-1.2.2.tgz#4bc67e77d20a4650682e4f9da3112dbc5d4ade92"
+  integrity sha512-wqzE7bbaJ6NnXCSMwXrs7uvfkKpEsvaaC8aLpfChzu0iRsiSl/8rA53drS1E76AqVf8ySEGc3OJtFGtu2Z2hPA==
+
 "@reduxjs/toolkit@^1.8.3":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.8.3.tgz#9c6a9c497bde43a67618d37a4175a00ae12efeb2"
