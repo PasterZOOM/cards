@@ -2,11 +2,10 @@ import React from 'react';
 
 import AppBar from '@mui/material/AppBar/AppBar';
 import Toolbar from '@mui/material/Toolbar/Toolbar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { HeaderAvatar } from './HeaderAvatar/HeaderAvatar';
 
-import logo from 'assets/images/logo.svg';
 import { GeneralButton } from 'common/components/Buttons/GeneralButton/GeneralButton';
 import styles from 'common/components/Header/Header.module.scss';
 import { path } from 'common/enums/path';
@@ -25,9 +24,6 @@ export const Header = (): ReturnComponentType => {
   return (
     <AppBar className={styles.main} sx={{ zIndex: 1 }}>
       <Toolbar className={styles.toolbar}>
-        <NavLink to={path.PACKS}>
-          <img src={logo} alt="logo" className={styles.logo} />
-        </NavLink>
         {!isLoggedIn ? (
           <GeneralButton label="Sign In" onClick={onClickButtonHandle} />
         ) : (
